@@ -7,9 +7,9 @@ public class Movie {
     private String titel;
     private String genre;
     private Date releaseDate;
-    private Integer iMDBID;
-    private Integer runningTimeInMin;
-    private Integer ownRating;
+    private int iMDBID;
+    private int runningTimeInMin;
+    private int ownRating;
     private Double iMDBRating;
     private Double metascore;
 
@@ -17,9 +17,9 @@ public class Movie {
     private Credits actor;
     private Credits screenwriter;
 
-    private Enum availability;
+    private Availability availability;
 
-    public Movie(String titel, String genre, Date releaseDate, Integer iMDBID, Integer runningTimeInMin, Integer ownRating, Double iMDBRating, Double metascore, Credits director, Credits actor, Credits screenwriter, Enum availability) {
+    public Movie(String titel, String genre, Date releaseDate, int iMDBID, int runningTimeInMin, int ownRating, Double iMDBRating, Double metascore, Credits director, Credits actor, Credits screenwriter, Availability availability) {
         this.titel = titel;
         this.genre = genre;
         this.releaseDate = releaseDate;
@@ -58,27 +58,27 @@ public class Movie {
         this.releaseDate = releaseDate;
     }
 
-    public Integer getiMDBID() {
+    public int getiMDBID() {
         return iMDBID;
     }
 
-    public void setiMDBID(Integer iMDBID) {
+    public void setiMDBID(int iMDBID) {
         this.iMDBID = iMDBID;
     }
 
-    public Integer getRunningTimeInMin() {
+    public int getRunningTimeInMin() {
         return runningTimeInMin;
     }
 
-    public void setRunningTimeInMin(Integer runningTimeInMin) {
+    public void setRunningTimeInMin(int runningTimeInMin) {
         this.runningTimeInMin = runningTimeInMin;
     }
 
-    public Integer getOwnRating() {
+    public int getOwnRating() {
         return ownRating;
     }
 
-    public void setOwnRating(Integer ownRating) {
+    public void setOwnRating(int ownRating) {
         this.ownRating = ownRating;
     }
 
@@ -122,11 +122,11 @@ public class Movie {
         this.screenwriter = screenwriter;
     }
 
-    public Enum getAvailability() {
+    public Availability getAvailability() {
         return availability;
     }
 
-    public void setAvailability(Enum availability) {
+    public void setAvailability(Availability availability) {
         this.availability = availability;
     }
 }
