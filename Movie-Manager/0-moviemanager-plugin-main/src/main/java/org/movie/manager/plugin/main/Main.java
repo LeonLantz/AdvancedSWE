@@ -1,4 +1,4 @@
-package src.main.java.org.movie.manager.plugin.main;
+package org.movie.manager.plugin.main;
 
 public class Main {
 
