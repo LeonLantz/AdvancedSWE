@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="1-moviemanager-adapters" />
+        <module name="2-moviemanager-application" />
+        <module name="3-moviemanager-domain" />
+        <module name="0-moviemanager-plugin-imbd" />
+        <module name="0-moviemanager-plugin-main" />
+        <module name="0-moviemanager-plugin-database" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="Main" target="17" />
+    </bytecodeTargetLevel>
+  </component>
+</project>
