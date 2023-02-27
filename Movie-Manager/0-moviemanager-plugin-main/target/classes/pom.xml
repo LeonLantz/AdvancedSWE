@@ -5,24 +5,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>org.movie.manager</groupId>
-    <artifactId>Movie-Manager</artifactId>
+    <artifactId>0-moviemanager-plugin-main</artifactId>
     <version>1.0</version>
-    <packaging>pom</packaging>
-
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <modules>
-        <module>3-moviemanager-domain</module>
-        <module>2-moviemanager-application</module>
-        <module>1-moviemanager-adapters</module>
-        <module>0-moviemanager-plugin-database</module>
-        <module>0-moviemanager-plugin-imbd</module>
-        <module>0-moviemanager-plugin-main</module>
-    </modules>
 
 </project>
