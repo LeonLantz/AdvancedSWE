@@ -1,4 +1,4 @@
-package src.main.java.org.movie.manager.domain;
+package org.movie.manager.domain;
 
 import java.util.Date;
 
