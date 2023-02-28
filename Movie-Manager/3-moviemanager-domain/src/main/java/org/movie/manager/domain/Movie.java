@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class Movie {
 
+    //A change should be possible, as typing errors can occur -> no final and for each variable getter and setter functions
     private String titel;
     private String genre;
     private Date releaseDate;

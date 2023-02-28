@@ -2,7 +2,7 @@ package org.movie.manager.domain;
 
 public class Credits {
 
-    private String firstName;
+    private final String firstName;
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
@@ -14,10 +14,6 @@ public class Credits {
 
     public String getFirstName() {
         return firstName;
-    }
-
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
     }
 
     public String getSecondName() {

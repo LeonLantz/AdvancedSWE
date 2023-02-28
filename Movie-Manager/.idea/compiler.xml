@@ -9,8 +9,8 @@
         <module name="1-moviemanager-adapters" />
         <module name="2-moviemanager-application" />
         <module name="3-moviemanager-domain" />
-        <module name="0-moviemanager-plugin-imbd" />
         <module name="0-moviemanager-plugin-main" />
+        <module name="0-moviemanager-plugin-imbd" />
         <module name="0-moviemanager-plugin-database" />
       </profile>
     </annotationProcessing>
