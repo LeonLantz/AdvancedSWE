@@ -6,11 +6,11 @@ import org.movie.manager.domain.MovieRepository;
 import java.util.Collection;
 import java.util.UUID;
 
-public class FilmService {
+public class MovieService {
 
     private final MovieRepository repository;
 
-    public FilmService(MovieRepository repository) {
+    public MovieService(MovieRepository repository) {
         super();
         this.repository = repository;
     }
