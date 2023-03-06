@@ -1,6 +1,7 @@
 package org.movie.manager.domain;
 
 import java.util.Date;
+import java.util.UUID;
 
 public class Movie {
 
@@ -9,6 +10,8 @@ public class Movie {
     private String genre;
     private Date releaseDate;
     private int iMDBID;
+
+    private UUID movieID;
     private int runningTimeInMin;
     private int ownRating;
     private Double iMDBRating;
@@ -20,10 +23,11 @@ public class Movie {
 
     private Availability availability;
 
-    public Movie(String titel, String genre, Date releaseDate, int iMDBID, int runningTimeInMin, int ownRating, Double iMDBRating, Double metascore, Credits director, Credits actor, Credits screenwriter, Availability availability) {
+    public Movie(String titel, String genre, Date releaseDate, UUID movieID, int iMDBID, int runningTimeInMin, int ownRating, Double iMDBRating, Double metascore, Credits director, Credits actor, Credits screenwriter, Availability availability) {
         this.titel = titel;
         this.genre = genre;
         this.releaseDate = releaseDate;
+        this.movieID = movieID;
         this.iMDBID = iMDBID;
         this.runningTimeInMin = runningTimeInMin;
         this.ownRating = ownRating;
@@ -33,6 +37,10 @@ public class Movie {
         this.actor = actor;
         this.screenwriter = screenwriter;
         this.availability = availability;
+    }
+
+    public UUID getMovieID() {
+        return movieID;
     }
 
     public String getTitel() {
