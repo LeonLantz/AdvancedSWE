@@ -6,22 +6,43 @@ import java.util.UUID;
 public class Movie {
 
     //A change should be possible, as typing errors can occur -> no final and for each variable getter and setter functions
+
+    /*
+    Issue ID:
+    - Do IDs belong to the domain layer?
+    - No: Has nothing to do with films per se, only with administration
+    - Yes: Also interesting if you want to label your own media library. Then ID's also belong to the film. Of course also implement advantages, since it is easy to implement, can still be used later for other storage options. The idea of the program is simple use of the video library. CSV files offer the advantage of being able to be read without a program and by many other programs that support CSV.
+    - Decision yes to ID in domain layer! Also for other classes, because of KISS and same structure principle
+    */
+    private final UUID movieID; //only getFunction()
     private String titel;
     private String genre;
     private Date releaseDate;
-    private int iMDBID;
-
-    private UUID movieID;
     private int runningTimeInMin;
-    private int ownRating;
-    private Double iMDBRating;
-    private Double metascore;
-
     private Credits director;
     private Credits actor;
     private Credits screenwriter;
-
     private Availability availability;
+
+    /*
+    Must be in its own aggregate, not part of a film.
+    There can be a rating for the film, but it is not necessarily part of it.
+    Especially if the film is new, this always has no rating.
+    */
+    private int iMDBID;
+    private Double iMDBRating;
+    private Double metascore;
+    /*
+    Own rating:
+-   5-Star vs 10-Star Rating: 10-Star Rating more possible,
+    more flexibility, 5-Star is basically multiplied by 2 is a 10-Star Rating,
+    with IMBD your own rating is also a 10-Star Rating,
+    everything speaks for you fixed 10-star rating
+
+    Has to implemt as a value object!
+     */
+    private int ownRating;
+
 
     public Movie(String titel, String genre, Date releaseDate, UUID movieID, int iMDBID, int runningTimeInMin, int ownRating, Double iMDBRating, Double metascore, Credits director, Credits actor, Credits screenwriter, Availability availability) {
         this.titel = titel;

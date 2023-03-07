@@ -4,6 +4,7 @@ import java.util.UUID;
 
 public interface MovieRepository {
     Collection<Movie> getAllMovies();
+
     Movie getMovie(UUID movieID);
 
     void remove(UUID movieID);
