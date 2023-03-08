@@ -1,5 +1,6 @@
 package org.movie.manager.plugin.imbd;
 
+import org.movie.manager.adapters.IMDBapi;
 import org.movie.manager.adapters.PropertyManager;
 
 import java.io.*;
@@ -17,7 +18,7 @@ import org.json.JSONObject;
 
     FREE: 1,000 daily limit
  */
-public class OMDBapi {
+public class OMDBapi implements IMDBapi {
 
     private String apiKey;
 
@@ -45,15 +46,6 @@ public class OMDBapi {
 
     public void setApiKeyFromPropertyManager() {
         apiKey = propertyManager.getProperty("API_KEY");
-    }
-
-    public String readAll(Reader rd) throws IOException {
-        StringBuilder sb = new StringBuilder();
-        int cp;
-        while ((cp = rd.read()) != -1) {
-            sb.append((char) cp);
-        }
-        return sb.toString();
     }
 
     public Map<String, String> requestWithTitle(String movieTitle){
@@ -92,5 +84,14 @@ public class OMDBapi {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
     }
 }

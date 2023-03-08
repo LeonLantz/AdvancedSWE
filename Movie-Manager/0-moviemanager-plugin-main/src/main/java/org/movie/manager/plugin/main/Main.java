@@ -2,6 +2,7 @@ package org.movie.manager.plugin.main;
 
 import org.movie.manager.adapters.Controller;
 import org.movie.manager.adapters.EntityFactory;
+import org.movie.manager.adapters.IMDBapi;
 import org.movie.manager.adapters.PersistentRepositories.PersistentCreditsRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMetadataRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMovieRepository;
@@ -48,7 +49,7 @@ public class Main {
         }
 
         // Creation of IMBD-API
-        OMDBapi imbdAPI = new OMDBapi(proMan);
+        IMDBapi imbdAPI = new OMDBapi(proMan);
 
         // Creation of CSV-DB
         CSVDatabaseManager csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
@@ -59,7 +60,7 @@ public class Main {
         MetadataService metadataService = new MetadataService(metadataRepository);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(elementFactory, csvDB, movieServie, creditsService, metadataService);
+        Controller controller = new Controller(elementFactory, csvDB, movieServie, creditsService, metadataService, imbdAPI);
         controller.loadCSVData();
 
         //stop movie manager

@@ -17,12 +17,15 @@ public class Controller {
     private CreditsService creditsService;
     private MetadataService metadataService;
 
-    public Controller(EntityFactory elementFactory, CSVDatabase csvDatabase, MovieService movieService, CreditsService creditsService, MetadataService metadataService) {
+    private IMDBapi imbdAPI;
+
+    public Controller(EntityFactory elementFactory, CSVDatabase csvDatabase, MovieService movieService, CreditsService creditsService, MetadataService metadataService, IMDBapi imbdAPI) {
         this.elementFactory = elementFactory;
         this.csvDatabase = csvDatabase;
         this.movieService = movieService;
         this.creditsService = creditsService;
         this.metadataService = metadataService;
+        this.imbdAPI = imbdAPI;
     }
 
     public void loadCSVData(){
