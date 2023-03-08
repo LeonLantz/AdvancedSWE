@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         String default_property_file_path= "0-moviemanager-plugin-main/target/classes/Conf/config.properties";
-        String default_csv_folder_path= "./CSVFiles/";
+        String default_csv_folder_path= "0-moviemanager-plugin-main/target/classes/CSVFiles/";
 
         final String PROPERTY_FILE_PATH;
         final String CSV_FOLDER_PATH;
