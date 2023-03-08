@@ -1,5 +1,8 @@
 package org.movie.manager.plugin.main;
 
+import org.movie.manager.adapters.Mapper.PersistentCreditsMapper;
+import org.movie.manager.adapters.Mapper.PersistentMetadatenMapper;
+import org.movie.manager.adapters.Mapper.PersistentMovieMapper;
 import org.movie.manager.domain.Metadaten.*;
 import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Movie.Movie;
@@ -76,27 +79,30 @@ public class CreateFiles {
             filePath = CSV_PATH_DEFAULT + "Credits.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabase(filePath);
             objectArray2Dem = new Object[4][];
-            objectArray2Dem[0]= direktor1.getCSVData();
-            objectArray2Dem[1]= direktor2.getCSVData();
-            objectArray2Dem[2]= actor1_1.getCSVData();
-            objectArray2Dem[3]= actor1_2.getCSVData();
-            writer.writeDataToFile(objectArray2Dem, Credits.getCSVHeader());
+            PersistentCreditsMapper persistentCreditsMapper = new PersistentCreditsMapper();
+            objectArray2Dem[0]= persistentCreditsMapper.getCSVData(direktor1);
+            objectArray2Dem[1]= persistentCreditsMapper.getCSVData(direktor2);
+            objectArray2Dem[2]= persistentCreditsMapper.getCSVData(actor1_1);
+            objectArray2Dem[3]= persistentCreditsMapper.getCSVData(actor1_2);
+            writer.writeDataToFile(objectArray2Dem, PersistentCreditsMapper.getCSVHeader());
 
             filePath = CSV_PATH_DEFAULT + "Movie.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabase(filePath);
             objectArray2Dem = new Object[3][];
-            objectArray2Dem[0]= movie1.getCSVData();
-            objectArray2Dem[1]= movie2.getCSVData();
-            objectArray2Dem[2]= movie3.getCSVData();
-            writer.writeDataToFile(objectArray2Dem, Movie.getCSVHeader());
+            PersistentMovieMapper persistentMovieMapper = new PersistentMovieMapper();
+            objectArray2Dem[0]= persistentMovieMapper.getCSVData(movie1);
+            objectArray2Dem[1]= persistentMovieMapper.getCSVData(movie2);
+            objectArray2Dem[2]= persistentMovieMapper.getCSVData(movie3);
+            writer.writeDataToFile(objectArray2Dem, PersistentMovieMapper.getCSVHeader());
 
             filePath = CSV_PATH_DEFAULT + "Metadata.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabase(filePath);
             objectArray2Dem = new Object[3][];
-            objectArray2Dem[0]= metadata1.getCSVData();
-            objectArray2Dem[1]= metadata2.getCSVData();
-            objectArray2Dem[2]= metadata3.getCSVData();
-            writer.writeDataToFile(objectArray2Dem, Metadata.getCSVHeader());
+            PersistentMetadatenMapper persistentMetadatenMapper = new PersistentMetadatenMapper();
+            objectArray2Dem[0]= persistentMetadatenMapper.getCSVData(metadata1);
+            objectArray2Dem[1]= persistentMetadatenMapper.getCSVData(metadata2);
+            objectArray2Dem[2]= persistentMetadatenMapper.getCSVData(metadata3);
+            writer.writeDataToFile(objectArray2Dem, PersistentMetadatenMapper.getCSVHeader());
 
 
         } catch (IOException e) {

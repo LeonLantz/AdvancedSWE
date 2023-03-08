@@ -2,13 +2,11 @@
 Adopted/inspired by the lecture Software Engineering 4th semester DHBW 2022 by Mr. Lutz
  */
 package org.movie.manager.application;
-import org.movie.manager.domain.IPersistable;
+import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Metadaten.*;
 import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Movie.Movie;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class EntityFactory {
@@ -17,7 +15,7 @@ public class EntityFactory {
 
     private GenericEntityManager entityManager = null;
 
-    private IPersistable persistableElement = null;
+    private Persistable persistableElement = null;
 
     public EntityFactory(GenericEntityManager em) {
         this.entityManager = em;
@@ -30,7 +28,7 @@ public class EntityFactory {
      * @return the instance of the element just created
      * @throws Exception
      */
-    public IPersistable createElement(Class<?> c, String[] csvData) throws Exception { // 1. Credits, 2. Movies, 3. Metadate
+    public Persistable createElement(Class<?> c, String[] csvData) throws Exception { // 1. Credits, 2. Movies, 3. Metadate
 
         if (c == null) {
             throw new IllegalArgumentException("class must not be null");
@@ -43,8 +41,8 @@ public class EntityFactory {
             String listOfMoviesString = csvData[Credits.CSVPositions.MOVIES.ordinal()];
             List<Movie> listMovies = null;
             try {
-                List<IPersistable> realRefsTemp = this.getReferences(Credits.class, listOfMoviesString);
-                for (IPersistable iP : realRefsTemp) {
+                List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfMoviesString);
+                for (Persistable iP : realRefsTemp) {
                     listMovies.add((Movie) iP);
                 }
 
@@ -75,8 +73,8 @@ public class EntityFactory {
             String listOfDirectorsString = csvData[Movie.CSVPositions.DIRECTORS.ordinal()];
             List<Credits> listDirectors = null;
             try {
-                List<IPersistable> realRefsTemp = this.getReferences(Credits.class, listOfDirectorsString);
-                for (IPersistable iP : realRefsTemp) {
+                List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfDirectorsString);
+                for (Persistable iP : realRefsTemp) {
                     listDirectors.add((Credits) iP);
                 }
 
@@ -87,8 +85,8 @@ public class EntityFactory {
             String listOfActorsString = csvData[Movie.CSVPositions.ACTORS.ordinal()];
             List<Credits> listActors = null;
             try {
-                List<IPersistable> realRefsTemp = this.getReferences(Credits.class, listOfActorsString);
-                for (IPersistable iP : realRefsTemp) {
+                List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfActorsString);
+                for (Persistable iP : realRefsTemp) {
                     listActors.add((Credits) iP);
                 }
 
@@ -99,8 +97,8 @@ public class EntityFactory {
             String listOfScreenwritersString = csvData[Movie.CSVPositions.SCREENWRITERS.ordinal()];
             List<Credits> listScreenwriters = null;
             try {
-                List<IPersistable> realRefsTemp = this.getReferences(Credits.class, listOfScreenwritersString);
-                for (IPersistable iP : realRefsTemp) {
+                List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfScreenwritersString);
+                for (Persistable iP : realRefsTemp) {
                     listScreenwriters.add((Credits) iP);
                 }
 
@@ -155,15 +153,15 @@ public class EntityFactory {
      * @return
      * @throws Exception
      */
-    private List<IPersistable> getReferences(Class<?> c, String stringIDs) throws Exception {
-        List<IPersistable> refs = new ArrayList<>();
+    private List<Persistable> getReferences(Class<?> c, String stringIDs) throws Exception {
+        List<Persistable> refs = new ArrayList<>();
         if( stringIDs == null  ||  stringIDs.isEmpty() ) throw new RuntimeException( "List of refs is empty or null" );
 
         String[] arrIDs = stringIDs.split(",");
 
         for( String sId: arrIDs ){
             if( !sId.isEmpty() && !(sId.indexOf( ' ' ) >= 0) ){
-                IPersistable ae = entityManager.find(c, "getPrimaryKey", sId );
+                Persistable ae = entityManager.find(c, "getPrimaryKey", sId );
                 if( ae != null )
                     refs.add( ae );
             }
@@ -186,11 +184,11 @@ public class EntityFactory {
      */
     public void resolveUnreferencedReferences() throws Exception {
         for( String key : this.mapOfUnreferencedElements.keySet() ){
-            IPersistable ip = this.entityManager.find( key );
+            Persistable ip = this.entityManager.find( key );
             String refs = this.mapOfUnreferencedElements.get( key );
 
             if( ip instanceof Credits ) { // Movies should be initialized after Credits
-                List<IPersistable> refList = getReferences(Movie.class, refs);
+                List<Persistable> refList = getReferences(Movie.class, refs);
                 refList.forEach( e -> ((Credits)ip).addMovie( (Movie)e ) );
             }
         }

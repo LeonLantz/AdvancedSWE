@@ -1,6 +1,6 @@
 package org.movie.manager.plugin.imbd;
 
-import org.movie.manager.adapters.IPropertyManager;
+import org.movie.manager.adapters.PropertyManager;
 
 import java.io.*;
 import java.net.URL;
@@ -21,7 +21,7 @@ public class OMDBapi {
 
     private String apiKey;
 
-    private IPropertyManager propertyManager;
+    private PropertyManager propertyManager;
 
     private final String[] ATTRIBUTES = {
             "Title",
@@ -38,7 +38,7 @@ public class OMDBapi {
     };
 
 
-    public OMDBapi(IPropertyManager propertyManager) {
+    public OMDBapi(PropertyManager propertyManager) {
         this.propertyManager = propertyManager;
         this.apiKey = propertyManager.getProperty("API_KEY");;
     }

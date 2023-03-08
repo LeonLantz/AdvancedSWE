@@ -7,7 +7,7 @@ Adopted/inspired by the lecture Software Engineering 4th semester DHBW 2022 by M
 //
 
 package org.movie.manager.application;
-import org.movie.manager.domain.IPersistable;
+import org.movie.manager.domain.Persistable;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GenericEntityManager<T extends IPersistable> {
+public class GenericEntityManager<T extends Persistable> {
     private Map<Object, T> allElements;
 
     public GenericEntityManager() {
@@ -40,13 +40,13 @@ public class GenericEntityManager<T extends IPersistable> {
     public T find(Class<?> c, String method, Object key) {
         Iterator var4 = this.allElements.values().iterator();
 
-        IPersistable t;
+        Persistable t;
         do {
             if (!var4.hasNext()) {
                 return null;
             }
 
-            t = (IPersistable)var4.next();
+            t = (Persistable)var4.next();
         } while(!c.isInstance(t) || !t.getPrimaryKey().equals(key));
 
         return (T) t;

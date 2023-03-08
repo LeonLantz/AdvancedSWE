@@ -8,7 +8,7 @@ Adopted/inspired by the lecture Software Engineering 4th semester DHBW 2022 by M
 
 package org.movie.manager.domain;
 
-public interface IPersistable {
+public interface Persistable {
     Object getPrimaryKey();
 }
 

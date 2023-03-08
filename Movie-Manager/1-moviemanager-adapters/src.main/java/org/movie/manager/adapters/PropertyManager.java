@@ -10,7 +10,7 @@ package org.movie.manager.adapters;
 import java.io.IOException;
 import java.io.PrintStream;
 
-public interface IPropertyManager {
+public interface PropertyManager {
     void setProperty(String var1, String var2);
 
     String getProperty(String var1);

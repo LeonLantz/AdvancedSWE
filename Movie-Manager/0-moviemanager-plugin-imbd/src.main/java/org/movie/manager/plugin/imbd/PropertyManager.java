@@ -5,15 +5,13 @@
 //
 package org.movie.manager.plugin.imbd;
 
-import org.movie.manager.adapters.IPropertyManager;
-
 import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class PropertyManager implements IPropertyManager {
+public class PropertyManager implements org.movie.manager.adapters.PropertyManager {
     private static final String MSG_PROPERTY_NAME_MUST_NOT_BE_EMPTY_OR_NULL = "Error setting list property! The property name must not be empty or NULL";
     private static final String MSG_PROPERTY_NAME_MUST_BE_GIVEN = "a property name must be given!";
     public static final String DEFAULT_PROPERTIES_FILENAME = "application.properties";
