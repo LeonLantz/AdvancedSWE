@@ -9,7 +9,5 @@ public interface MovieRepository {
 
     Movie getMovie(UUID movieID);
 
-    void remove(UUID movieID);
-
     void update(Movie movie);
 }

@@ -1,5 +1,6 @@
 package org.movie.manager.adapters.PersistentRepositories;
 
+import org.movie.manager.adapters.CSVDatabase;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Metadaten.Metadata;
 import org.movie.manager.domain.Metadaten.MetadataRepository;
@@ -11,9 +12,11 @@ import java.util.UUID;
 public class PersistentMetadataRepository implements MetadataRepository {
     private final GenericEntityManager entityManager;
 
+    private CSVDatabase csvDB;
 
-    public PersistentMetadataRepository(GenericEntityManager entityManager) {
+    public PersistentMetadataRepository(GenericEntityManager entityManager, CSVDatabase csvDB) {
         this.entityManager = entityManager;
+        this.csvDB = csvDB;
     }
 
     @Override
@@ -27,12 +30,12 @@ public class PersistentMetadataRepository implements MetadataRepository {
     }
 
     @Override
-    public void remove(UUID movieID) {
-
-    }
-
-    @Override
-    public void update(Movie movie) {
-
+    public void update(Metadata metadata) {
+        entityManager.remove(entityManager.find(Movie.class, metadata.getImbDdata()));
+        try {
+            entityManager.persist(metadata);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

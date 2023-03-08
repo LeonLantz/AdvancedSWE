@@ -10,9 +10,7 @@ public interface CreditsRepository {
 
     Collection<Credits> getAllCredits();
 
-    Credits getMetadata(UUID creditsID);
-
-    void remove(UUID creditsID);
+    Credits getCredits(UUID creditsID);
 
     void update(Credits credits);
 }

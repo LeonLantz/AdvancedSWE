@@ -1,5 +1,6 @@
 package org.movie.manager.domain.Metadaten;
 
+import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.util.Collection;
@@ -11,7 +12,5 @@ public interface MetadataRepository {
 
     Metadata getMetadata(UUID metadataID);
 
-    void remove(UUID metadataID);
-
-    void update(Movie Metadata);
+    void update(Metadata metadata);
 }

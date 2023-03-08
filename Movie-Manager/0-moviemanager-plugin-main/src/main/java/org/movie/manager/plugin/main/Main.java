@@ -11,13 +11,9 @@ import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.application.Services.CreditsService;
 import org.movie.manager.application.Services.MetadataService;
 import org.movie.manager.application.Services.MovieService;
-import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
-
-import java.io.IOException;
-import java.util.UUID;
 
 
 public class Main {
@@ -40,9 +36,10 @@ public class Main {
         EntityFactory elementFactory = new EntityFactory(entityManager, csvDB);
         elementFactory.loadCSVData();
 
-        PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager);
-        PersistentCreditsRepository creditsRepository = new PersistentCreditsRepository(entityManager);
-        PersistentMetadataRepository metadataRepository = new PersistentMetadataRepository(entityManager);
+        // Discuss: csvDB in each Repository or in entityManager?
+        PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager, csvDB);
+        PersistentCreditsRepository creditsRepository = new PersistentCreditsRepository(entityManager, csvDB);
+        PersistentMetadataRepository metadataRepository = new PersistentMetadataRepository(entityManager, csvDB);
 
         // Creation of an PropertyManager
         PropertyManager proMan;
