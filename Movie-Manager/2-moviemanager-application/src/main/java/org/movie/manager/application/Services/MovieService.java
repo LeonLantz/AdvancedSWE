@@ -1,4 +1,4 @@
-package org.movie.manager.application;
+package org.movie.manager.application.Services;
 import org.movie.manager.domain.Metadaten.Rating;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Metadaten.Availability;

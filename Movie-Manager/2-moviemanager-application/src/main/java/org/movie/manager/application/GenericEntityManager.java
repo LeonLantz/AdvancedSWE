@@ -37,7 +37,7 @@ public class GenericEntityManager<T extends Persistable> {
         this.allElements.remove(element.getPrimaryKey());
     }
 
-    public T find(Class<?> c, String method, Object key) {
+    public T find(Class<?> c, Object key) {
         Iterator var4 = this.allElements.values().iterator();
 
         Persistable t;

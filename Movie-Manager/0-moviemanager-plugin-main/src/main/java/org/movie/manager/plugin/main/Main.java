@@ -3,9 +3,9 @@ package org.movie.manager.plugin.main;
 import org.movie.manager.adapters.Controller;
 import org.movie.manager.adapters.EntityFactory;
 import org.movie.manager.application.GenericEntityManager;
-import org.movie.manager.application.MovieService;
+import org.movie.manager.application.Services.MovieService;
 import org.movie.manager.domain.Movie.Movie;
-import org.movie.manager.plugin.database.CSVDatabase;
+import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
 
@@ -55,7 +55,7 @@ public class Main {
         //MovieRepository movieRepository = new MovieRepository(entityManager);
 
         // Creation of CSV DB
-        CSVDatabase csvDB = new CSVDatabase(CSV_FOLDER_PATH);
+        CSVDatabaseManager csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
 
         // Creation of Frontend-Design
 
@@ -76,7 +76,7 @@ public class Main {
         MovieService movieServie = new MovieService(null);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(default_csv_folder_path, elementFactory);
+        Controller controller = new Controller(elementFactory, csvDB);
         controller.loadCSVData();
 
         Movie movie = (Movie)entityManager.find(UUID.fromString("14a42dff-6c77-4ced-bf29-77e6068352ce"));

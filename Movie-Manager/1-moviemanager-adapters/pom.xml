@@ -28,8 +28,8 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.movie.manager.plugin.database</groupId>
-            <artifactId>0-moviemanager-plugin-database</artifactId>
+            <groupId>org.movie.manager.domain</groupId>
+            <artifactId>3-moviemanager-domain</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
