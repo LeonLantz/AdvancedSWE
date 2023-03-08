@@ -15,14 +15,15 @@ import java.util.*;
 
 public class EntityFactory { // for creating a family of objects
 
-    private HashMap<String, String> mapOfUnreferencedElements = new HashMap<>();
+    private HashMap<String, String> mapOfUnreferencedElements;
 
-    private GenericEntityManager entityManager = null;
+    private GenericEntityManager entityManager;
 
     private Persistable persistableElement = null;
 
     public EntityFactory(GenericEntityManager em) {
         this.entityManager = em;
+        this.mapOfUnreferencedElements = new HashMap<>();
     }
 
     /**
@@ -149,6 +150,9 @@ public class EntityFactory { // for creating a family of objects
 
         return persistableElement;
     }
+
+
+
 
     /**
      *

@@ -1,20 +1,28 @@
 package org.movie.manager.adapters;
 
+import org.movie.manager.application.Services.CreditsService;
+import org.movie.manager.application.Services.MetadataService;
+import org.movie.manager.application.Services.MovieService;
 import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Metadaten.Metadata;
 import org.movie.manager.domain.Movie.Movie;
 
-import java.io.IOException;
 import java.util.List;
 
 public class Controller {
 
     private EntityFactory elementFactory;
     private CSVDatabase csvDatabase;
+    private MovieService movieService;
+    private CreditsService creditsService;
+    private MetadataService metadataService;
 
-    public Controller(EntityFactory elementFactory, CSVDatabase csvDatabase) {
+    public Controller(EntityFactory elementFactory, CSVDatabase csvDatabase, MovieService movieService, CreditsService creditsService, MetadataService metadataService) {
         this.elementFactory = elementFactory;
         this.csvDatabase = csvDatabase;
+        this.movieService = movieService;
+        this.creditsService = creditsService;
+        this.metadataService = metadataService;
     }
 
     public void loadCSVData(){
