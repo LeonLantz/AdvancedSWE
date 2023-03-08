@@ -11,7 +11,7 @@
         <module name="3-moviemanager-domain" />
         <module name="0-moviemanager-plugin-main" />
         <module name="0-moviemanager-plugin-imbd" />
-        <module name="0-moviemanager-plugin-database" />
+        <module name="0-moviemanager-plugin-csvdatabase" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

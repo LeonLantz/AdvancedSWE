@@ -18,12 +18,52 @@ public class EntityFactory { // for creating a family of objects
     private HashMap<String, String> mapOfUnreferencedElements;
 
     private GenericEntityManager entityManager;
+    private CSVDatabase csvDB;
 
     private Persistable persistableElement = null;
 
-    public EntityFactory(GenericEntityManager em) {
+    public EntityFactory(GenericEntityManager em, CSVDatabase csvDB) {
         this.entityManager = em;
+        this.csvDB = csvDB;
         this.mapOfUnreferencedElements = new HashMap<>();
+    }
+
+    public void loadCSVData(){
+        String filePath;
+        List<String[]> csvData;
+
+        //Credits
+        filePath = "Credits.csv";
+        csvData = csvDB.readData(filePath);
+        csvData.forEach( e -> {
+            try {
+                this.createElement(Credits.class, e);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        //Movie
+        filePath = "Movie.csv";
+        csvData = csvDB.readData(filePath);
+        csvData.forEach( e -> {
+            try {
+                this.createElement(Movie.class, e);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
+
+        //Metadata
+        filePath = "Metadata.csv";
+        csvData = csvDB.readData(filePath);
+        csvData.forEach( e -> {
+            try {
+                this.createElement(Metadata.class, e);
+            } catch (Exception e1) {
+                e1.printStackTrace();
+            }
+        });
     }
 
     /**
@@ -150,10 +190,6 @@ public class EntityFactory { // for creating a family of objects
 
         return persistableElement;
     }
-
-
-
-
     /**
      *
      * @param c

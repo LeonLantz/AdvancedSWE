@@ -1,5 +1,6 @@
 package org.movie.manager.plugin.main;
 
+import org.movie.manager.adapters.CSVDatabase;
 import org.movie.manager.adapters.Controller;
 import org.movie.manager.adapters.EntityFactory;
 import org.movie.manager.adapters.IMDBapi;
@@ -31,9 +32,13 @@ public class Main {
         //init argument(s)
         initArguments(args);
 
+        // Creation of CSV-DB
+        CSVDatabase csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
+
         // Initialisation of an EntityManager and EntityManagerFactory
         GenericEntityManager entityManager = new GenericEntityManager();
-        EntityFactory elementFactory = new EntityFactory( entityManager );
+        EntityFactory elementFactory = new EntityFactory(entityManager, csvDB);
+        elementFactory.loadCSVData();
 
         PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager);
         PersistentCreditsRepository creditsRepository = new PersistentCreditsRepository(entityManager);
@@ -51,17 +56,13 @@ public class Main {
         // Creation of IMBD-API
         IMDBapi imbdAPI = new OMDBapi(proMan);
 
-        // Creation of CSV-DB
-        CSVDatabaseManager csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
-
         // Creation of Services
         MovieService movieServie = new MovieService(movieRepository);
         CreditsService creditsService = new CreditsService(creditsRepository);
         MetadataService metadataService = new MetadataService(metadataRepository);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(elementFactory, csvDB, movieServie, creditsService, metadataService, imbdAPI);
-        controller.loadCSVData();
+        Controller controller = new Controller(movieServie, creditsService, metadataService, imbdAPI);
 
         //stop movie manager
         System.out.println("Stop movie manager");
