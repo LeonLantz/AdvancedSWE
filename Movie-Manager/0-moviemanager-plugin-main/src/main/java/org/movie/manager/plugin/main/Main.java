@@ -10,6 +10,7 @@ import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
 
 import java.io.IOException;
+import java.util.Map;
 import java.util.UUID;
 
 
@@ -47,13 +48,9 @@ public class Main {
             throw new IllegalArgumentException("Wrong Argument(s)");
         }
 
-
-
         // Initialisation of an Entity Manager Factory
         GenericEntityManager entityManager = new GenericEntityManager();
         EntityFactory elementFactory = new EntityFactory( entityManager );
-
-
 
         // The Entity Manager Factory create a Entity Manager for MovieRepository: something like: MovieRepository movieRepository = new MovieRepository(elementFactory);
         //MovieRepository movieRepository = new MovieRepository(entityManager);
@@ -65,15 +62,16 @@ public class Main {
 
 
         // Creation of an PropertyManager
+        PropertyManager proMan;
         try {
-            PropertyManager proMan = new PropertyManager(PROPERTY_FILE_PATH, null, null);
+            proMan = new PropertyManager(PROPERTY_FILE_PATH, null, null);
             proMan.printout(System.out, true);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
         // Creation of IMBD-API which need a PropertyManger
-        OMDBapi imbdAPI = new OMDBapi();
+        OMDBapi imbdAPI = new OMDBapi(proMan);
 
         // Creation of MovieService
         MovieService movieServie = new MovieService(null);
