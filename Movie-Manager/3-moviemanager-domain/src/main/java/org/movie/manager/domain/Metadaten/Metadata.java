@@ -1,8 +1,10 @@
 package org.movie.manager.domain.Metadaten;
 
+import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.IPersistable;
 import org.movie.manager.domain.Movie.Movie;
 
+import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Metadata implements IPersistable {
@@ -22,7 +24,7 @@ public class Metadata implements IPersistable {
         STATE,
         NAMEORMEDIUM,
         DESCRIPTION,
-        IMBDDATA,
+        IMBDID,
         IMDBRATING,
         METASCORE,
         RATING,
@@ -33,7 +35,11 @@ public class Metadata implements IPersistable {
     }
 
     public Metadata(UUID metadataID, Availability availability, IMBDdata imbDdata, Rating ownRating, Movie movie) {
-        this.metadataID = metadataID;
+        if(metadataID != null)
+            this.metadataID = metadataID;
+        else
+            this.metadataID = UUID.randomUUID();
+
         this.availability = availability;
         this.imbDdata = imbDdata;
         this.ownRating = ownRating;
@@ -71,6 +77,25 @@ public class Metadata implements IPersistable {
     @Override
     public Object getPrimaryKey() {
         return metadataID;
+    }
+
+    public String[] getCSVData() {
+        String[] atts = new String[Metadata.CSVPositions.values().length];
+        atts[Metadata.CSVPositions.METADATAID.ordinal()] = String.valueOf(this.getMetadataID());
+        atts[Metadata.CSVPositions.STATE.ordinal()] = this.getAvailability().getState().toString();
+        atts[Metadata.CSVPositions.NAMEORMEDIUM.ordinal()] = this.getAvailability().getNameOrMedium();
+        atts[Metadata.CSVPositions.DESCRIPTION.ordinal()] = this.getAvailability().getDescription();
+        atts[Metadata.CSVPositions.IMBDID.ordinal()] = this.getImbDdata().getiMDBID();
+        atts[Metadata.CSVPositions.IMDBRATING.ordinal()] = String.valueOf(this.getImbDdata().getiMDBRating());
+        atts[Metadata.CSVPositions.METASCORE.ordinal()] = String.valueOf(this.getImbDdata().getMetascore());
+        atts[Metadata.CSVPositions.RATING.ordinal()] = String.valueOf(this.getOwnRating().getRating());
+        atts[Metadata.CSVPositions.MOVIE.ordinal()] = String.valueOf(this.getMovie().getMovieID());
+        return atts;
+    }
+    public static String[] getCSVHeader() {
+        return new String[]{Metadata.CSVPositions.METADATAID.name(), Metadata.CSVPositions.STATE.name(), Metadata.CSVPositions.NAMEORMEDIUM.name(),
+                Metadata.CSVPositions.DESCRIPTION.name(), Metadata.CSVPositions.IMBDID.name(), Metadata.CSVPositions.IMDBRATING.name(),
+                Metadata.CSVPositions.METASCORE.name(), Metadata.CSVPositions.RATING.name(), Metadata.CSVPositions.MOVIE.name()};
     }
 
     public Movie getMovie() {

@@ -19,6 +19,7 @@ public class CSVDatabase {
     private File csvFile = null;
     public CSVDatabase(String csvFileName) {
         this.csvFileName= csvFileName;
+        this.csvFile = this.checkFile(this.csvFileName, true);
     }
 
     private final File checkFile(String fileName, boolean create) throws IllegalArgumentException {

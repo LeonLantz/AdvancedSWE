@@ -2,7 +2,7 @@ package org.movie.manager.domain.Metadaten;
 
 public class IMBDdata {
 
-    private int iMDBID;
+    private String iMDBID;
     /*
     Must be in its own aggregate, not part of a film.
     There can be a rating for the film, but it is not necessarily part of it.
@@ -12,20 +12,20 @@ public class IMBDdata {
     private double iMDBRating;
 
     // METASCORE is a weighted average of reviews from top critics and publications for a given movie
-    private double metascore;
+    private int metascore;
 
 
-    public IMBDdata(int iMDBID, double iMDBRating, double metascore) {
+    public IMBDdata(String iMDBID, double iMDBRating, int metascore) {
         this.iMDBID = iMDBID;
         this.iMDBRating = iMDBRating;
         this.metascore = metascore;
     }
 
-    public int getiMDBID() {
+    public String getiMDBID() {
         return iMDBID;
     }
 
-    public void setiMDBID(int iMDBID) {
+    public void setiMDBID(String iMDBID) {
         this.iMDBID = iMDBID;
     }
 
@@ -37,11 +37,11 @@ public class IMBDdata {
         this.iMDBRating = iMDBRating;
     }
 
-    public double getMetascore() {
+    public int getMetascore() {
         return metascore;
     }
 
-    public void setMetascore(double metascore) {
+    public void setMetascore(int metascore) {
         this.metascore = metascore;
     }
 }

@@ -4,7 +4,7 @@ Adopted/inspired by the lecture Software Engineering 4th semester DHBW 2022 by M
 package org.movie.manager.application;
 import org.movie.manager.domain.IPersistable;
 import org.movie.manager.domain.Metadaten.*;
-import org.movie.manager.domain.Movie.Credits;
+import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.time.LocalDate;
@@ -58,13 +58,9 @@ public class EntityFactory {
             UUID movieID = UUID.fromString(csvData[Movie.CSVPositions.MOVIEID.ordinal()]);
             String titel = csvData[Movie.CSVPositions.TITEL.ordinal()];
             String genre = csvData[Movie.CSVPositions.GENRE.ordinal()];
-            String releaseYearString = csvData[Movie.CSVPositions.RELEASEDATE.ordinal()];
-            LocalDate releaseYear = null;
-            if (releaseYearString != null && !releaseYearString.isEmpty()) {
-                releaseYear = LocalDate.parse(releaseYearString, DateTimeFormatter.ofPattern("yyyy"));
-            }
+            int releaseYear = Integer.parseInt(csvData[Movie.CSVPositions.RELEASEYEAR.ordinal()]);
 
-            int runningTimeInMin = Integer.parseInt(csvData[Movie.CSVPositions.TITEL.ordinal()]);
+            int runningTimeInMin = Integer.parseInt(csvData[Movie.CSVPositions.RUNNINGTIMEINMIN.ordinal()]);
 
 
             String metadatenString = csvData[Movie.CSVPositions.METADATA.ordinal()];
@@ -126,9 +122,9 @@ public class EntityFactory {
             Availability availability = new Availability(state, nameOrMedium, description);
 
             //imbDdata
-            int iMDBID = Integer.parseInt(csvData[Metadata.CSVPositions.IMBDDATA.ordinal()]);
+            String iMDBID = csvData[Metadata.CSVPositions.IMBDID.ordinal()];
             double iMDBRating = Double.parseDouble(csvData[Metadata.CSVPositions.IMDBRATING.ordinal()]);
-            double metascore = Double.parseDouble(csvData[Metadata.CSVPositions.METASCORE.ordinal()]);
+            int metascore = Integer.parseInt(csvData[Metadata.CSVPositions.METASCORE.ordinal()]);
             IMBDdata imbDdata = new IMBDdata(iMDBID, iMDBRating, metascore );
 
             //ownRating

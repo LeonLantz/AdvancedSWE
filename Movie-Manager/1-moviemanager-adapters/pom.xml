@@ -20,4 +20,19 @@
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.movie.manager.application</groupId>
+            <artifactId>2-moviemanager-application</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.movie.manager.plugin.database</groupId>
+            <artifactId>0-moviemanager-plugin-database</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
+
 </project>

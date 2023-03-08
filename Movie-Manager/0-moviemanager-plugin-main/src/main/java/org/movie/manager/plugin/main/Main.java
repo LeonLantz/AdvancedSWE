@@ -4,14 +4,18 @@ import org.movie.manager.adapters.Controller;
 import org.movie.manager.application.EntityFactory;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.application.MovieService;
+import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.plugin.database.CSVDatabase;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
 
+import java.io.IOException;
+import java.util.UUID;
+
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String default_property_file_path= "0-moviemanager-plugin-main/target/classes/Conf/config.properties";
         String default_csv_folder_path= "0-moviemanager-plugin-main/target/classes/CSVFiles/";
 
@@ -75,8 +79,11 @@ public class Main {
         MovieService movieServie = new MovieService(null);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller();
+        Controller controller = new Controller(default_csv_folder_path, elementFactory);
+        controller.loadCSVData();
 
+        Movie movie = (Movie)entityManager.find(UUID.fromString("14a42dff-6c77-4ced-bf29-77e6068352ce"));
+        System.out.println(movie.getTitel());
 
         System.out.println("Stop movie manager");
     }
