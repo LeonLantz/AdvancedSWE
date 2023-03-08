@@ -1,7 +1,7 @@
 package org.movie.manager.plugin.main;
 
 import org.movie.manager.adapters.Controller;
-import org.movie.manager.application.EntityFactory;
+import org.movie.manager.adapters.EntityFactory;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.application.MovieService;
 import org.movie.manager.domain.Movie.Movie;
@@ -10,7 +10,6 @@ import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
 
 import java.io.IOException;
-import java.util.Map;
 import java.util.UUID;
 
 

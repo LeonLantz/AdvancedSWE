@@ -1,6 +1,5 @@
 package org.movie.manager.adapters;
 
-import org.movie.manager.application.EntityFactory;
 import org.movie.manager.domain.Credits.Credits;
 import org.movie.manager.domain.Metadaten.Metadata;
 import org.movie.manager.domain.Movie.Movie;

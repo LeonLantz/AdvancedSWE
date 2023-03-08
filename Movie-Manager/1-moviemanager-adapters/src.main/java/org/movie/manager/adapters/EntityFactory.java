@@ -1,7 +1,11 @@
 /*
 Adopted/inspired by the lecture Software Engineering 4th semester DHBW 2022 by Mr. Lutz
  */
-package org.movie.manager.application;
+package org.movie.manager.adapters;
+import org.movie.manager.adapters.Mapper.PersistentCreditsMapper;
+import org.movie.manager.adapters.Mapper.PersistentMetadatenMapper;
+import org.movie.manager.adapters.Mapper.PersistentMovieMapper;
+import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Metadaten.*;
 import org.movie.manager.domain.Credits.Credits;
@@ -33,12 +37,12 @@ public class EntityFactory {
         if (c == null) {
             throw new IllegalArgumentException("class must not be null");
         } else if( c == Credits.class ) {
-            UUID CreditsID = UUID.fromString(csvData[Credits.CSVPositions.CREDITSID.ordinal()]);
-            String firstName = csvData[Credits.CSVPositions.FIRSTNAME.ordinal()];
-            String secondName = csvData[Credits.CSVPositions.SECONDNAME.ordinal()];
-            String biography = csvData[Credits.CSVPositions.BIOGRAPHY.ordinal()];
+            UUID CreditsID = UUID.fromString(csvData[PersistentCreditsMapper.CSVPositions.CREDITSID.ordinal()]);
+            String firstName = csvData[PersistentCreditsMapper.CSVPositions.FIRSTNAME.ordinal()];
+            String secondName = csvData[PersistentCreditsMapper.CSVPositions.SECONDNAME.ordinal()];
+            String biography = csvData[PersistentCreditsMapper.CSVPositions.BIOGRAPHY.ordinal()];
 
-            String listOfMoviesString = csvData[Credits.CSVPositions.MOVIES.ordinal()];
+            String listOfMoviesString = csvData[PersistentCreditsMapper.CSVPositions.MOVIES.ordinal()];
             List<Movie> listMovies = null;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfMoviesString);
@@ -53,15 +57,15 @@ public class EntityFactory {
 
             persistableElement = new Credits(CreditsID, firstName, secondName, biography, listMovies);
         } else if( c == Movie.class ) {
-            UUID movieID = UUID.fromString(csvData[Movie.CSVPositions.MOVIEID.ordinal()]);
-            String titel = csvData[Movie.CSVPositions.TITEL.ordinal()];
-            String genre = csvData[Movie.CSVPositions.GENRE.ordinal()];
-            int releaseYear = Integer.parseInt(csvData[Movie.CSVPositions.RELEASEYEAR.ordinal()]);
+            UUID movieID = UUID.fromString(csvData[PersistentMovieMapper.CSVPositions.MOVIEID.ordinal()]);
+            String titel = csvData[PersistentMovieMapper.CSVPositions.TITEL.ordinal()];
+            String genre = csvData[PersistentMovieMapper.CSVPositions.GENRE.ordinal()];
+            int releaseYear = Integer.parseInt(csvData[PersistentMovieMapper.CSVPositions.RELEASEYEAR.ordinal()]);
 
-            int runningTimeInMin = Integer.parseInt(csvData[Movie.CSVPositions.RUNNINGTIMEINMIN.ordinal()]);
+            int runningTimeInMin = Integer.parseInt(csvData[PersistentMovieMapper.CSVPositions.RUNNINGTIMEINMIN.ordinal()]);
 
 
-            String metadatenString = csvData[Movie.CSVPositions.METADATA.ordinal()];
+            String metadatenString = csvData[PersistentMovieMapper.CSVPositions.METADATA.ordinal()];
             Metadata metadaten = null;
             try {
                 metadaten = ((Metadata) this.getReferences(Metadata.class, metadatenString).get(0));
@@ -70,7 +74,7 @@ public class EntityFactory {
             }
 
 
-            String listOfDirectorsString = csvData[Movie.CSVPositions.DIRECTORS.ordinal()];
+            String listOfDirectorsString = csvData[PersistentMovieMapper.CSVPositions.DIRECTORS.ordinal()];
             List<Credits> listDirectors = null;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfDirectorsString);
@@ -82,7 +86,7 @@ public class EntityFactory {
                 this.mapOfUnreferencedElements.put(movieID.toString(), listOfDirectorsString);
             }
 
-            String listOfActorsString = csvData[Movie.CSVPositions.ACTORS.ordinal()];
+            String listOfActorsString = csvData[PersistentMovieMapper.CSVPositions.ACTORS.ordinal()];
             List<Credits> listActors = null;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfActorsString);
@@ -94,7 +98,7 @@ public class EntityFactory {
                 this.mapOfUnreferencedElements.put(movieID.toString(), listOfActorsString);
             }
 
-            String listOfScreenwritersString = csvData[Movie.CSVPositions.SCREENWRITERS.ordinal()];
+            String listOfScreenwritersString = csvData[PersistentMovieMapper.CSVPositions.SCREENWRITERS.ordinal()];
             List<Credits> listScreenwriters = null;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(Credits.class, listOfScreenwritersString);
@@ -111,26 +115,26 @@ public class EntityFactory {
 
         } else if( c == Metadata.class ) {
             //movieID
-            UUID metaDataID = UUID.fromString(csvData[Metadata.CSVPositions.METADATAID.ordinal()]);
+            UUID metaDataID = UUID.fromString(csvData[PersistentMetadatenMapper.CSVPositions.METADATAID.ordinal()]);
 
             //availability
-            State state = State.valueOf(csvData[Metadata.CSVPositions.STATE.ordinal()]);
-            String nameOrMedium = csvData[Metadata.CSVPositions.NAMEORMEDIUM.ordinal()];
-            String description = csvData[Metadata.CSVPositions.DESCRIPTION.ordinal()];
+            State state = State.valueOf(csvData[PersistentMetadatenMapper.CSVPositions.STATE.ordinal()]);
+            String nameOrMedium = csvData[PersistentMetadatenMapper.CSVPositions.NAMEORMEDIUM.ordinal()];
+            String description = csvData[PersistentMetadatenMapper.CSVPositions.DESCRIPTION.ordinal()];
             Availability availability = new Availability(state, nameOrMedium, description);
 
             //imbDdata
-            String iMDBID = csvData[Metadata.CSVPositions.IMBDID.ordinal()];
-            double iMDBRating = Double.parseDouble(csvData[Metadata.CSVPositions.IMDBRATING.ordinal()]);
-            int metascore = Integer.parseInt(csvData[Metadata.CSVPositions.METASCORE.ordinal()]);
+            String iMDBID = csvData[PersistentMetadatenMapper.CSVPositions.IMBDID.ordinal()];
+            double iMDBRating = Double.parseDouble(csvData[PersistentMetadatenMapper.CSVPositions.IMDBRATING.ordinal()]);
+            int metascore = Integer.parseInt(csvData[PersistentMetadatenMapper.CSVPositions.METASCORE.ordinal()]);
             IMBDdata imbDdata = new IMBDdata(iMDBID, iMDBRating, metascore );
 
             //ownRating
-            int rating = Integer.parseInt(csvData[Metadata.CSVPositions.RATING.ordinal()]);
+            int rating = Integer.parseInt(csvData[PersistentMetadatenMapper.CSVPositions.RATING.ordinal()]);
             Rating ownRating = new Rating(rating);
 
             //movie
-            String movieString = csvData[Metadata.CSVPositions.MOVIE.ordinal()];
+            String movieString = csvData[PersistentMetadatenMapper.CSVPositions.MOVIE.ordinal()];
             Movie movie = null;
             try {
                 movie = ((Movie) this.getReferences(Movie.class, movieString).get(0));
