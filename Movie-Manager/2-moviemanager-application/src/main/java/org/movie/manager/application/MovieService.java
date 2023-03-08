@@ -1,7 +1,8 @@
 package org.movie.manager.application;
-import org.movie.manager.domain.Movie;
-import org.movie.manager.domain.Availability;
-import org.movie.manager.domain.MovieRepository;
+import org.movie.manager.domain.Metadaten.Rating;
+import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Metadaten.Availability;
+import org.movie.manager.domain.Movie.MovieRepository;
 
 import java.util.Collection;
 import java.util.UUID;
@@ -22,12 +23,12 @@ public class MovieService {
         return this.repository.getMovie(movieID);
     }
 
-    public void setOwnRating(UUID movieID, int ownRating){
+    public void setOwnRating(UUID movieID, Rating ownRating){
         Movie movie = this.getMovie(movieID);
         if(movie == null){ //
             throw new IllegalArgumentException("Movie was not found");
         }
-        movie.setOwnRating(ownRating);
+        movie.getMetadata().setOwnRating(ownRating);
         this.repository.update(movie);
     }
     public void setAvailability(UUID movieID, Availability availability){
@@ -35,7 +36,7 @@ public class MovieService {
         if(movie == null){ //
             throw new IllegalArgumentException("Movie was not found");
         }
-        movie.setAvailability(availability);
+        movie.getMetadata().setAvailability(availability);
         this.repository.update(movie);
     }
 }

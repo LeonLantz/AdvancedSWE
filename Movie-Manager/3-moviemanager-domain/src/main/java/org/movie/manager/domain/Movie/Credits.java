@@ -1,19 +1,37 @@
-package org.movie.manager.domain;
+package org.movie.manager.domain.Movie;
 
+import org.movie.manager.domain.IPersistable;
+
+import java.util.Collection;
 import java.util.UUID;
 
-public class Credits {
+public class Credits implements IPersistable {
 
     private final UUID creditsID; //only getFunction()
     private final String firstName;
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
-    public Credits(UUID creditsID, String firstName, String secondName, String biography) {
+    private Collection<Movie> movies;
+
+    public static enum CSVPositions {
+        CREDITSID,
+        FIRSTNAME,
+        SECONDNAME,
+        BIOGRAPHY,
+
+        MOVIES;
+
+        private CSVPositions() {
+        }
+    }
+
+    public Credits(UUID creditsID, String firstName, String secondName, String biography, Collection<Movie> movies) {
         this.creditsID = creditsID;
         this.firstName = firstName;
         this.secondName = secondName;
         this.biography = biography;
+        this.movies = movies;
     }
 
     public String getFirstName() {
@@ -37,6 +55,21 @@ public class Credits {
     }
 
     public UUID getCreditsID() {
+        return creditsID;
+    }
+
+    public void addMovie(Movie movie) {
+        movies.add(movie);
+    }
+
+    public Collection<Movie> getMovies() {
+        return movies;
+    }
+
+
+
+    @Override
+    public Object getPrimaryKey() {
         return creditsID;
     }
 }

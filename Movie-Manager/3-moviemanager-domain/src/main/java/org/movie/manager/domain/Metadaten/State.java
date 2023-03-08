@@ -1,4 +1,4 @@
-package org.movie.manager.domain;
+package org.movie.manager.domain.Metadaten;
 
 public enum State {
     ONLINE, //bought online

@@ -1,4 +1,6 @@
-package org.movie.manager.domain;
+package org.movie.manager.domain.Movie;
+import org.movie.manager.domain.Movie.Movie;
+
 import java.util.Collection;
 import java.util.UUID;
 

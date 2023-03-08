@@ -1,17 +1,13 @@
-package org.movie.manager.domain;
+package org.movie.manager.domain.Metadaten;
 
 import java.util.UUID;
 
 public class Availability {
-
-    private final UUID availabilityID; //only getFunction()
-
     private State state;
     private String nameOrMedium; //Friend's name, name of Streaming Media (owned) or Cassette, DVD
     private String description; //Quality (Poor, Good, Very Good), Resolution, Available for a limited time only
 
-    public Availability(UUID availabilityID, State state, String nameOrMedium, String description) {
-        this.availabilityID = availabilityID;
+    public Availability(State state, String nameOrMedium, String description) {
         this.state = state;
         this.nameOrMedium = nameOrMedium;
         this.description = description;
@@ -41,7 +37,4 @@ public class Availability {
         this.description = description;
     }
 
-    public UUID getAvailabilityID() {
-        return availabilityID;
-    }
 }

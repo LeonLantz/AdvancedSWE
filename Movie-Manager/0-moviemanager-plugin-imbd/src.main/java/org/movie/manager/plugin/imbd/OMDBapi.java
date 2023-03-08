@@ -12,7 +12,7 @@ import java.nio.charset.Charset;
 
     FREE: 1,000 daily limit
  */
-public class omdbapi {
+public class OMDBapi {
 
     /*
         The following commands was the first idea to use Opdbapi.
