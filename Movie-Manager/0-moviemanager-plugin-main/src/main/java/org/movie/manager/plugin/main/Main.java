@@ -18,7 +18,7 @@ import org.movie.manager.plugin.imbd.PropertyManager;
 public class Main {
 
     private static String PROPERTY_FILE_PATH= "0-moviemanager-plugin-main/target/classes/Conf/config.properties";
-    private static String CSV_FOLDER_PATH= "0-moviemanager-plugin-main/target/classes/CSVFiles/";
+    private static String Data_FOLDER_PATH = "0-moviemanager-plugin-main/target/classes/CSVFiles/";
 
     public static void main(String[] args) {
         //start movie manager
@@ -28,12 +28,12 @@ public class Main {
         initArguments(args);
 
         // Creation of CSV-DB
-        Database csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
+        Database csvDB = new CSVDatabaseManager(Data_FOLDER_PATH);
 
         // Initialisation of an EntityManager and EntityManagerFactory
         GenericEntityManager entityManager = new GenericEntityManager();
         EntityFactory elementFactory = new EntityFactory(entityManager, csvDB);
-        elementFactory.loadCSVData();
+        elementFactory.loadData();
 
         // Discuss: csvDB in each Repository or in entityManager?
         PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager, csvDB);
@@ -66,17 +66,17 @@ public class Main {
 
     private static void initArguments(String[] args) {
         if (args.length == 2 && args[0].equals("-c")){
-            CSV_FOLDER_PATH = args[1];
+            Data_FOLDER_PATH = args[1];
         } else if (args.length == 2 && args[0].equals("-p")){
             PROPERTY_FILE_PATH = args[1];
         } else if (args.length == 4 && args[0].equals("-c") && args[2].equals("-p")){
-            CSV_FOLDER_PATH = args[1];
+            Data_FOLDER_PATH = args[1];
             PROPERTY_FILE_PATH = args[3];
         }else if (args.length == 4 && args[0].equals("-p") && args[2].equals("-c")){
-            CSV_FOLDER_PATH = args[3];
+            Data_FOLDER_PATH = args[3];
             PROPERTY_FILE_PATH = args[1];
         }else if (args.length != 0){
-            System.out.println("Please use: -c <csv_folder_path>");
+            System.out.println("Please use: -c <data_folder_path>");
             System.out.println("And/or    : -p <property_file_path>");
             throw new IllegalArgumentException("Wrong Argument(s)");
         }

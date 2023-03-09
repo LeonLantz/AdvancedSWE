@@ -28,7 +28,7 @@ public class EntityFactory { // for creating a family of objects
         this.mapOfUnreferencedElements = new HashMap<>();
     }
 
-    public void loadCSVData(){
+    public void loadData(){
         String filePath;
         List<String[]> csvData;
 
@@ -216,7 +216,7 @@ public class EntityFactory { // for creating a family of objects
                 Persistable ae = entityManager.find(c, SUUID );
                 if( ae != null )
                     refs.add( ae );
-                else
+                if( sId != null && ae==null)
                     throw new IllegalStateException();
             }
         }
