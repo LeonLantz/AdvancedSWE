@@ -4,20 +4,20 @@
 // (powered by FernFlower decompiler)
 //
 package org.movie.manager.plugin.csvdatabase;
-import org.movie.manager.adapters.CSVDatabase;
+import org.movie.manager.adapters.Database;
 
 import java.io.IOException;
 import java.util.List;
 
-public class CSVDatabaseManager implements CSVDatabase {
+public class CSVDatabaseManager implements Database { // CSVReader and CSVWriter quasi Plugin
     private final String CSV_FOLDER_PATH;
 
     public CSVDatabaseManager(String CSV_FOLDER_PATH) {
         this.CSV_FOLDER_PATH = CSV_FOLDER_PATH;
     }
 
-    public List<String[]> readData(String filePath){
-        CSVReader csvReader = new CSVReader(this.CSV_FOLDER_PATH + filePath);
+    public List<String[]> readData(String fileName){
+        CSVReader csvReader = new CSVReader(this.CSV_FOLDER_PATH + fileName);
         try {
             return csvReader.readData();
         } catch (IOException e) {
@@ -25,7 +25,7 @@ public class CSVDatabaseManager implements CSVDatabase {
         }
     }
 
-    public void writeDataToFile(Object[][] data,  String[] header){
+    public void saveData(List<Object[]> data, String[] header){
         CSVWriter csvWriter = new CSVWriter(this.CSV_FOLDER_PATH, true);
         try {
             csvWriter.writeDataToFile(data,  header);

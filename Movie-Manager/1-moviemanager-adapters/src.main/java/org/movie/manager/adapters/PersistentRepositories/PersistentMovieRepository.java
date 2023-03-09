@@ -1,19 +1,22 @@
 package org.movie.manager.adapters.PersistentRepositories;
 
-import org.movie.manager.adapters.CSVDatabase;
+import org.movie.manager.adapters.Database;
+import org.movie.manager.adapters.Mapper.MovieMapper;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 public class PersistentMovieRepository implements MovieRepository {
 
     private final GenericEntityManager entityManager;
-    private CSVDatabase csvDB;
+    private Database csvDB;
 
-    public PersistentMovieRepository(GenericEntityManager entityManager, CSVDatabase csvDB) {
+    public PersistentMovieRepository(GenericEntityManager entityManager, Database csvDB) {
         this.entityManager = entityManager;
         this.csvDB = csvDB;
     }
@@ -37,5 +40,12 @@ public class PersistentMovieRepository implements MovieRepository {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        //Save
+        MovieMapper csvMovieMapper = new MovieMapper();
+        List<Object[]> csvDataMovie = new ArrayList<>();
+        List<Movie> alleMovies = this.entityManager.find( Movie.class );
+        alleMovies.forEach( e -> csvDataMovie.add( (csvMovieMapper.mapData(e) )));
+        csvDB.saveData(csvDataMovie, MovieMapper.getHeader());
     }
 }

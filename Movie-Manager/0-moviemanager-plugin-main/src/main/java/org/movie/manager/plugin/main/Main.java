@@ -1,20 +1,19 @@
 package org.movie.manager.plugin.main;
 
-import org.movie.manager.adapters.CSVDatabase;
+import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.Controller;
 import org.movie.manager.adapters.EntityFactory;
 import org.movie.manager.adapters.IMDBapi;
-import org.movie.manager.adapters.PersistentRepositories.PersistentCreditsRepository;
+import org.movie.manager.adapters.PersistentRepositories.PersistentFilmProfessionalRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMetadataRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMovieRepository;
 import org.movie.manager.application.GenericEntityManager;
-import org.movie.manager.application.Services.CreditsService;
+import org.movie.manager.application.Services.FilmProfessionalService;
 import org.movie.manager.application.Services.MetadataService;
 import org.movie.manager.application.Services.MovieService;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
-
 
 public class Main {
 
@@ -29,7 +28,7 @@ public class Main {
         initArguments(args);
 
         // Creation of CSV-DB
-        CSVDatabase csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
+        Database csvDB = new CSVDatabaseManager(CSV_FOLDER_PATH);
 
         // Initialisation of an EntityManager and EntityManagerFactory
         GenericEntityManager entityManager = new GenericEntityManager();
@@ -38,7 +37,7 @@ public class Main {
 
         // Discuss: csvDB in each Repository or in entityManager?
         PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager, csvDB);
-        PersistentCreditsRepository creditsRepository = new PersistentCreditsRepository(entityManager, csvDB);
+        PersistentFilmProfessionalRepository persistentFilmProfessionalRepository = new PersistentFilmProfessionalRepository(entityManager, csvDB);
         PersistentMetadataRepository metadataRepository = new PersistentMetadataRepository(entityManager, csvDB);
 
         // Creation of an PropertyManager
@@ -55,11 +54,11 @@ public class Main {
 
         // Creation of Services
         MovieService movieServie = new MovieService(movieRepository);
-        CreditsService creditsService = new CreditsService(creditsRepository);
+        FilmProfessionalService filmProfessionalService = new FilmProfessionalService(persistentFilmProfessionalRepository);
         MetadataService metadataService = new MetadataService(metadataRepository);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(movieServie, creditsService, metadataService, imbdAPI);
+        Controller controller = new Controller(movieServie, filmProfessionalService, metadataService, imbdAPI);
 
         //stop movie manager
         System.out.println("Stop movie manager");

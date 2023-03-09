@@ -1,11 +1,10 @@
 package org.movie.manager.domain.Movie;
-import org.movie.manager.domain.Credits.Credits;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Metadaten.Metadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.StringJoiner;
 import java.util.UUID;
 
 public class Movie implements Persistable {
@@ -27,11 +26,11 @@ public class Movie implements Persistable {
 
     private Metadata metadata;
 
-    private Collection<Credits> directors = new ArrayList<>();;
-    private Collection<Credits> actors = new ArrayList<>();;
-    private Collection<Credits> screenwriters = new ArrayList<>();;
+    private Collection<FilmProfessional> directors = new ArrayList<>();;
+    private Collection<FilmProfessional> actors = new ArrayList<>();;
+    private Collection<FilmProfessional> screenwriters = new ArrayList<>();;
 
-    public Movie(UUID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, Metadata metadata, Collection<Credits> directors, Collection<Credits> actors, Collection<Credits> screenwriters) {
+    public Movie(UUID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, Metadata metadata, Collection<FilmProfessional> directors, Collection<FilmProfessional> actors, Collection<FilmProfessional> screenwriters) {
         if(movieID != null)
             this.movieID = movieID;
         else
@@ -83,27 +82,27 @@ public class Movie implements Persistable {
         this.runningTimeInMin = runningTimeInMin;
     }
 
-    public Collection<Credits> getDirectors() {
+    public Collection<FilmProfessional> getDirectors() {
         return directors;
     }
 
-    public void addDirectors(Credits director) {
+    public void addDirectors(FilmProfessional director) {
         directors.add(director);
     }
 
-    public Collection<Credits> getActors() {
+    public Collection<FilmProfessional> getActors() {
         return actors;
     }
 
-    public void addActor(Credits actor) {
+    public void addActor(FilmProfessional actor) {
         actors.add(actor);
     }
 
-    public Collection<Credits> getScreenwriter() {
+    public Collection<FilmProfessional> getScreenwriter() {
         return screenwriters;
     }
 
-    public void addScreenwriter(Credits screenwriter) {
+    public void addScreenwriter(FilmProfessional screenwriter) {
         screenwriters.add(screenwriter);
     }
 

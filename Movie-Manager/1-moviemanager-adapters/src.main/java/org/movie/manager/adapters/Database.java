@@ -2,9 +2,9 @@ package org.movie.manager.adapters;
 
 import java.util.List;
 
-public interface CSVDatabase {
+public interface Database {
     List<String[]> readData(String filePath);
 
-    void writeDataToFile(Object[][] data,  String[] header);
+    void saveData(List<Object[]> data, String[] header);
 
 }

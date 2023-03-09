@@ -1,8 +1,5 @@
 package org.movie.manager.domain.Metadaten;
 
-import org.movie.manager.domain.Credits.Credits;
-import org.movie.manager.domain.Movie.Movie;
-
 import java.util.Collection;
 import java.util.UUID;
 

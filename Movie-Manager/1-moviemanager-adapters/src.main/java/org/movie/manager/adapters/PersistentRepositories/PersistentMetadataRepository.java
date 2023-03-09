@@ -1,6 +1,6 @@
 package org.movie.manager.adapters.PersistentRepositories;
 
-import org.movie.manager.adapters.CSVDatabase;
+import org.movie.manager.adapters.Database;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Metadaten.Metadata;
 import org.movie.manager.domain.Metadaten.MetadataRepository;
@@ -12,9 +12,9 @@ import java.util.UUID;
 public class PersistentMetadataRepository implements MetadataRepository {
     private final GenericEntityManager entityManager;
 
-    private CSVDatabase csvDB;
+    private Database csvDB;
 
-    public PersistentMetadataRepository(GenericEntityManager entityManager, CSVDatabase csvDB) {
+    public PersistentMetadataRepository(GenericEntityManager entityManager, Database csvDB) {
         this.entityManager = entityManager;
         this.csvDB = csvDB;
     }

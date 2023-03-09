@@ -1,27 +1,26 @@
-package org.movie.manager.domain.Credits;
+package org.movie.manager.domain.FilmProfessional;
 
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.StringJoiner;
 import java.util.UUID;
 
-public class Credits implements Persistable {
+public class FilmProfessional implements Persistable {
 
-    private final UUID creditsID; //only getFunction()
+    private final UUID filmProfessionalID; //only getFunction()
     private final String firstName;
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
     private Collection<Movie> movies = new ArrayList<>();
 
-    public Credits(UUID creditsID, String firstName, String secondName, String biography, Collection<Movie> movies) {
-        if(creditsID != null)
-            this.creditsID = creditsID;
+    public FilmProfessional(UUID filmProfessionalID, String firstName, String secondName, String biography, Collection<Movie> movies) {
+        if(filmProfessionalID != null)
+            this.filmProfessionalID = filmProfessionalID;
         else
-            this.creditsID = UUID.randomUUID();
+            this.filmProfessionalID = UUID.randomUUID();
 
         this.firstName = firstName;
         this.secondName = secondName;
@@ -49,8 +48,8 @@ public class Credits implements Persistable {
         this.biography = biography;
     }
 
-    public UUID getCreditsID() {
-        return creditsID;
+    public UUID getFilmProfessionalID() {
+        return filmProfessionalID;
     }
 
     public void addMovie(Movie movie) {
@@ -63,6 +62,6 @@ public class Credits implements Persistable {
 
     @Override
     public Object getPrimaryKey() {
-        return creditsID;
+        return filmProfessionalID;
     }
 }

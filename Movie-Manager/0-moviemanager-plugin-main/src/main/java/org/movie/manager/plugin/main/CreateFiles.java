@@ -1,16 +1,17 @@
 package org.movie.manager.plugin.main;
 
-import org.movie.manager.adapters.Mapper.CSVCreditsMapper;
-import org.movie.manager.adapters.Mapper.CSVMetadatenMapper;
-import org.movie.manager.adapters.Mapper.CSVMovieMapper;
+import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
+import org.movie.manager.adapters.Mapper.MetadatenMapper;
+import org.movie.manager.adapters.Mapper.MovieMapper;
 import org.movie.manager.domain.Metadaten.*;
-import org.movie.manager.domain.Credits.Credits;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 
 public class CreateFiles {
@@ -31,15 +32,15 @@ public class CreateFiles {
             if (!folder.mkdir())
                 folder.createNewFile();
 
-            //Credits
-            Credits direktor1 = new Credits(null, "Sidney", "Lumet",null, null);
-            Credits direktor2 = new Credits(null, "Christopher", "Nolan",null, null);
-            Credits actor1_1 = new Credits(null, "Henry", "Fonda",null, null);
-            Credits actor1_2 = new Credits(null, "Martin", "Balsam",null, null);
+            //FILMPROFESSIONALID
+            FilmProfessional direktor1 = new FilmProfessional(null, "Sidney", "Lumet",null, null);
+            FilmProfessional direktor2 = new FilmProfessional(null, "Christopher", "Nolan",null, null);
+            FilmProfessional actor1_1 = new FilmProfessional(null, "Henry", "Fonda",null, null);
+            FilmProfessional actor1_2 = new FilmProfessional(null, "Martin", "Balsam",null, null);
 
-            Collection<Credits> direktor1List = new ArrayList<>();
-            Collection<Credits> actor1List = new ArrayList<>();
-            Collection<Credits> direktor2List = new ArrayList<>();
+            Collection<FilmProfessional> direktor1List = new ArrayList<>();
+            Collection<FilmProfessional> actor1List = new ArrayList<>();
+            Collection<FilmProfessional> direktor2List = new ArrayList<>();
             direktor1List.add(direktor1);
             actor1List.add(actor1_1);
             actor1List.add(actor1_2);
@@ -76,33 +77,33 @@ public class CreateFiles {
             movie2.setMetadata(metadata2);
             movie3.setMetadata(metadata3);
 
-            filePath = CSV_PATH_DEFAULT + "Credits.csv"; // ohne "file:" am Anfang
+            filePath = CSV_PATH_DEFAULT + "FILMPROFESSIONALID.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabaseManager(filePath);
             objectArray2Dem = new Object[4][];
-            CSVCreditsMapper CSVCreditsMapper = new CSVCreditsMapper();
-            objectArray2Dem[0]= CSVCreditsMapper.getCSVData(direktor1);
-            objectArray2Dem[1]= CSVCreditsMapper.getCSVData(direktor2);
-            objectArray2Dem[2]= CSVCreditsMapper.getCSVData(actor1_1);
-            objectArray2Dem[3]= CSVCreditsMapper.getCSVData(actor1_2);
-            writer.writeDataToFile(objectArray2Dem, CSVCreditsMapper.getCSVHeader());
+            FilmProfessionalsMapper FilmProfessionalsMapper = new FilmProfessionalsMapper();
+            objectArray2Dem[0]= FilmProfessionalsMapper.mapData(direktor1);
+            objectArray2Dem[1]= FilmProfessionalsMapper.mapData(direktor2);
+            objectArray2Dem[2]= FilmProfessionalsMapper.mapData(actor1_1);
+            objectArray2Dem[3]= FilmProfessionalsMapper.mapData(actor1_2);
+            writer.saveData(Arrays.asList(objectArray2Dem), FilmProfessionalsMapper.getHeader());
 
             filePath = CSV_PATH_DEFAULT + "Movie.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabaseManager(filePath);
             objectArray2Dem = new Object[3][];
-            CSVMovieMapper CSVMovieMapper = new CSVMovieMapper();
-            objectArray2Dem[0]= CSVMovieMapper.getCSVData(movie1);
-            objectArray2Dem[1]= CSVMovieMapper.getCSVData(movie2);
-            objectArray2Dem[2]= CSVMovieMapper.getCSVData(movie3);
-            writer.writeDataToFile(objectArray2Dem, CSVMovieMapper.getCSVHeader());
+            MovieMapper CSVMovieMapper = new MovieMapper();
+            objectArray2Dem[0]= CSVMovieMapper.mapData(movie1);
+            objectArray2Dem[1]= CSVMovieMapper.mapData(movie2);
+            objectArray2Dem[2]= CSVMovieMapper.mapData(movie3);
+            writer.saveData(Arrays.asList(objectArray2Dem), CSVMovieMapper.getHeader());
 
             filePath = CSV_PATH_DEFAULT + "Metadata.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabaseManager(filePath);
             objectArray2Dem = new Object[3][];
-            CSVMetadatenMapper CSVMetadatenMapper = new CSVMetadatenMapper();
-            objectArray2Dem[0]= CSVMetadatenMapper.getCSVData(metadata1);
-            objectArray2Dem[1]= CSVMetadatenMapper.getCSVData(metadata2);
-            objectArray2Dem[2]= CSVMetadatenMapper.getCSVData(metadata3);
-            writer.writeDataToFile(objectArray2Dem, CSVMetadatenMapper.getCSVHeader());
+            MetadatenMapper MetadatenMapper = new MetadatenMapper();
+            objectArray2Dem[0]= MetadatenMapper.mapData(metadata1);
+            objectArray2Dem[1]= MetadatenMapper.mapData(metadata2);
+            objectArray2Dem[2]= MetadatenMapper.mapData(metadata3);
+            writer.saveData(Arrays.asList(objectArray2Dem), MetadatenMapper.getHeader());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
