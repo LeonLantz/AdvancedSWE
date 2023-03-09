@@ -49,7 +49,7 @@ public class CreateFiles {
 
             //Movies
             Movie movie1 = new Movie(null, "12 Angry Men", "Drama", 1957, 96, null, direktor1List, actor1List, null);
-            Movie movie2 = new Movie(null, "The Dark Knight", "Action,", 2008, 152, null, direktor2List, null, null);
+            Movie movie2 = new Movie(null, "The Dark Knight", "Action", 2008, 152, null, direktor2List, null, null);
             Movie movie3 = new Movie(null, "Fight Club", "Drama", 1999, 139, null, null, null, null);
 
             direktor1.addMovie(movie1);
@@ -77,7 +77,7 @@ public class CreateFiles {
             movie2.setMetadata(metadata2);
             movie3.setMetadata(metadata3);
 
-            filePath = CSV_PATH_DEFAULT + "FILMPROFESSIONALID.csv"; // ohne "file:" am Anfang
+            filePath = CSV_PATH_DEFAULT + "FilmProfessional.csv"; // ohne "file:" am Anfang
             writer = new CSVDatabaseManager(filePath);
             objectArray2Dem = new Object[4][];
             FilmProfessionalsMapper FilmProfessionalsMapper = new FilmProfessionalsMapper();

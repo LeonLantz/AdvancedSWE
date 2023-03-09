@@ -90,9 +90,9 @@ public class EntityFactory { // for creating a family of objects
             String biography = csvData[FilmProfessionalsMapper.Header.BIOGRAPHY.ordinal()];
 
             String listOfMoviesString = csvData[FilmProfessionalsMapper.Header.MOVIES.ordinal()];
-            List<Movie> listMovies = null;
+            List<Movie> listMovies = new ArrayList<Movie>();;
             try {
-                List<Persistable> realRefsTemp = this.getReferences(FilmProfessional.class, listOfMoviesString);
+                List<Persistable> realRefsTemp = this.getReferences(Movie.class, listOfMoviesString);
                 for (Persistable iP : realRefsTemp) {
                     listMovies.add((Movie) iP);
                 }
@@ -115,14 +115,14 @@ public class EntityFactory { // for creating a family of objects
             String metadatenString = csvData[MovieMapper.Header.METADATA.ordinal()];
             Metadata metadaten = null;
             try {
-                metadaten = ((Metadata) this.getReferences(Metadata.class, metadatenString).get(0));
+                metadaten = ((Metadata) this.getReferences(Metadata.class, metadatenString));
             } catch (Exception var13) {
                 this.mapOfUnreferencedElements.put(movieID.toString(), metadatenString);
             }
 
 
             String listOfDirectorsString = csvData[MovieMapper.Header.DIRECTORS.ordinal()];
-            List<FilmProfessional> listDirectors = null;
+            List<FilmProfessional> listDirectors = new ArrayList<FilmProfessional>();
             try {
                 List<Persistable> realRefsTemp = this.getReferences(FilmProfessional.class, listOfDirectorsString);
                 for (Persistable iP : realRefsTemp) {
@@ -134,7 +134,7 @@ public class EntityFactory { // for creating a family of objects
             }
 
             String listOfActorsString = csvData[MovieMapper.Header.ACTORS.ordinal()];
-            List<FilmProfessional> listActors = null;
+            List<FilmProfessional> listActors = new ArrayList<FilmProfessional>();;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(FilmProfessional.class, listOfActorsString);
                 for (Persistable iP : realRefsTemp) {
@@ -146,7 +146,7 @@ public class EntityFactory { // for creating a family of objects
             }
 
             String listOfScreenwritersString = csvData[MovieMapper.Header.SCREENWRITERS.ordinal()];
-            List<FilmProfessional> listScreenwriters = null;
+            List<FilmProfessional> listScreenwriters = new ArrayList<FilmProfessional>();;
             try {
                 List<Persistable> realRefsTemp = this.getReferences(FilmProfessional.class, listOfScreenwritersString);
                 for (Persistable iP : realRefsTemp) {
@@ -211,9 +211,13 @@ public class EntityFactory { // for creating a family of objects
 
         for( String sId: arrIDs ){
             if( !sId.isEmpty() && !(sId.indexOf( ' ' ) >= 0) ){
-                Persistable ae = entityManager.find(c, sId );
+                UUID SUUID = UUID.fromString(sId);
+
+                Persistable ae = entityManager.find(c, SUUID );
                 if( ae != null )
                     refs.add( ae );
+                else
+                    throw new IllegalStateException();
             }
         }
 
@@ -234,10 +238,14 @@ public class EntityFactory { // for creating a family of objects
      */
     public void resolveUnreferencedReferences() throws Exception {
         for( String key : this.mapOfUnreferencedElements.keySet() ){
-            Persistable ip = this.entityManager.find( key );
+            UUID keyUUID = UUID.fromString(key);
+            Persistable ip = this.entityManager.find( keyUUID );
             String refs = this.mapOfUnreferencedElements.get( key );
 
-            if( ip instanceof FilmProfessional) { // Movies should be initialized after FILMPROFESSIONALID
+            if( ip instanceof Movie) { // Movies should be initialized after FILMPROFESSIONALID
+                List<Persistable> refList = getReferences(Metadata.class, refs);
+                refList.forEach( e -> ((Movie)ip).setMetadata( (Metadata)e ) );
+            }else if( ip instanceof FilmProfessional) { // Movies should be initialized after FILMPROFESSIONALID
                 List<Persistable> refList = getReferences(Movie.class, refs);
                 refList.forEach( e -> ((FilmProfessional)ip).addMovie( (Movie)e ) );
             }

@@ -57,12 +57,16 @@ public class Metadata implements Persistable {
         this.ownRating = ownRating;
     }
 
+    public Movie getMovie() {
+        return movie;
+    }
+
+    public void setMovie(Movie movie) {
+        this.movie = movie;
+    }
+
     @Override
     public Object getPrimaryKey() {
         return metadataID;
-    }
-
-    public Movie getMovie() {
-        return movie;
     }
 }

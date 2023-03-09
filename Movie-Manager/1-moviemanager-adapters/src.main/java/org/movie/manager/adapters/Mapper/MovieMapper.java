@@ -28,6 +28,7 @@ public class MovieMapper {
         atts[Header.GENRE.ordinal()] = movieData.getGenre();
         atts[Header.RELEASEYEAR.ordinal()] = String.valueOf(movieData.getReleaseYear());
         atts[Header.RUNNINGTIMEINMIN.ordinal()] = String.valueOf(movieData.getRunningTimeInMin());
+        atts[Header.METADATA.ordinal()] = String.valueOf(movieData.getMetadata().getMetadataID());
 
         if(movieData.getDirectors().size() != 0) {
             StringJoiner sjDirector = new StringJoiner(",");
