@@ -1,13 +1,14 @@
 package org.movie.manager.domain.Metadaten;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface MetadataRepository {
 
-    Collection<Metadata> getAllMetadata();
+    Iterable<Metadata> getAllMetadata();
 
-    Metadata getMetadata(UUID metadataID);
+    Optional<Metadata> getMetadata(UUID metadataID);
 
     void update(Metadata metadata);
 }

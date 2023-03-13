@@ -1,5 +1,7 @@
 package org.movie.manager.domain.Metadaten;
 
+import java.util.Objects;
+
 public final class Rating {
 
     /*
@@ -27,6 +29,11 @@ public final class Rating {
     @Override
     public String toString() {
         return "Rating: " + rating;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(rating);
     }
 
     @Override
