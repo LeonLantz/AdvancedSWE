@@ -8,9 +8,8 @@ import org.movie.manager.adapters.PersistentRepositories.PersistentFilmProfessio
 import org.movie.manager.adapters.PersistentRepositories.PersistentMetadataRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMovieRepository;
 import org.movie.manager.application.GenericEntityManager;
-import org.movie.manager.application.Services.FilmProfessionalService;
-import org.movie.manager.application.Services.MetadataService;
-import org.movie.manager.application.Services.MovieService;
+import org.movie.manager.application.Services.MovieEditService;
+import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
@@ -37,8 +36,8 @@ public class Main {
 
         // Discuss: csvDB in each Repository or in entityManager?
         PersistentMovieRepository movieRepository = new PersistentMovieRepository(entityManager, csvDB);
-        PersistentFilmProfessionalRepository persistentFilmProfessionalRepository = new PersistentFilmProfessionalRepository(entityManager, csvDB);
         PersistentMetadataRepository metadataRepository = new PersistentMetadataRepository(entityManager, csvDB);
+        PersistentFilmProfessionalRepository filmProfessionalRepository = new PersistentFilmProfessionalRepository(entityManager, csvDB);
 
         // Creation of an PropertyManager
         PropertyManager proMan;
@@ -53,12 +52,11 @@ public class Main {
         IMDBapi imbdAPI = new OMDBapi(proMan);
 
         // Creation of Services
-        MovieService movieServie = new MovieService(movieRepository);
-        FilmProfessionalService filmProfessionalService = new FilmProfessionalService(persistentFilmProfessionalRepository);
-        MetadataService metadataService = new MetadataService(metadataRepository);
+        MovieFinderService movieServie = new MovieFinderService(movieRepository, metadataRepository, filmProfessionalRepository);
+        MovieEditService movieEditService = new MovieEditService(movieRepository, metadataRepository, filmProfessionalRepository);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(movieServie, filmProfessionalService, metadataService, imbdAPI);
+        Controller controller = new Controller(movieServie, movieEditService, imbdAPI);
 
         //stop movie manager
         System.out.println("Stop movie manager");
