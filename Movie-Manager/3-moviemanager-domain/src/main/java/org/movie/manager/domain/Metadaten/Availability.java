@@ -1,24 +1,22 @@
 package org.movie.manager.domain.Metadaten;
 
-import java.util.UUID;
-
 public class Availability {
-    private State state;
+    private Ownership ownership;
     private String nameOrMedium; //Friend's name, name of Streaming Media (owned) or Cassette, DVD
     private String description; //Quality (Poor, Good, Very Good), Resolution, Available for a limited time only
 
-    public Availability(State state, String nameOrMedium, String description) {
-        this.state = state;
+    public Availability(Ownership ownership, String nameOrMedium, String description) {
+        this.ownership = ownership;
         this.nameOrMedium = nameOrMedium;
         this.description = description;
     }
 
-    public State getState() {
-        return state;
+    public Ownership getState() {
+        return ownership;
     }
 
-    public void setState(State state) {
-        this.state = state;
+    public void setState(Ownership ownership) {
+        this.ownership = ownership;
     }
 
     public String getNameOrMedium() {

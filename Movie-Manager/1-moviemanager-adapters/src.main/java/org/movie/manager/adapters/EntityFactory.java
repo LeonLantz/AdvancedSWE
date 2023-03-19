@@ -165,10 +165,10 @@ public class EntityFactory { // for creating a family of objects
             UUID metaDataID = UUID.fromString(csvData[MetadatenMapper.Header.METADATAID.ordinal()]);
 
             //availability
-            State state = State.valueOf(csvData[MetadatenMapper.Header.STATE.ordinal()]);
+            Ownership ownership = Ownership.valueOf(csvData[MetadatenMapper.Header.STATE.ordinal()]);
             String nameOrMedium = csvData[MetadatenMapper.Header.NAMEORMEDIUM.ordinal()];
             String description = csvData[MetadatenMapper.Header.DESCRIPTION.ordinal()];
-            Availability availability = new Availability(state, nameOrMedium, description);
+            Availability availability = new Availability(ownership, nameOrMedium, description);
 
             //imbDdata
             String iMDBID = csvData[MetadatenMapper.Header.IMBDID.ordinal()];

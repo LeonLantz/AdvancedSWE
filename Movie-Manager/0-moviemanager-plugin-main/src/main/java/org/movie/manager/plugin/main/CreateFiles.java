@@ -58,9 +58,9 @@ public class CreateFiles {
             actor1_2.addMovie(movie2);
 
             //Metadata
-            Availability availability1 = new Availability(State.PHYSICALLY, "DVD", "");
-            Availability availability2 = new Availability(State.ONLINE, "Amazon", "HD");
-            Availability availability3 = new Availability(State.PHYSICALLY, "DVD", "");
+            Availability availability1 = new Availability(Ownership.PHYSICALLY, "DVD", "");
+            Availability availability2 = new Availability(Ownership.ONLINE, "Amazon", "HD");
+            Availability availability3 = new Availability(Ownership.PHYSICALLY, "DVD", "");
 
             IMBDdata imbDdata1 = new IMBDdata("tt0050083", 9.0, 97);
             IMBDdata imbDdata2 = new IMBDdata("tt0468569", 9.0, 84);
