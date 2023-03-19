@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface MetadataRepository {
 
-    Iterable<Metadata> getAllMetadata();
+    Collection<Metadata> getAllMetadata();
 
     Optional<Metadata> getMetadata(UUID metadataID);
 

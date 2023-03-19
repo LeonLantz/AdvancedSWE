@@ -7,6 +7,7 @@ import org.movie.manager.domain.Metadaten.MetadataRepository;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PersistentMetadataRepository implements MetadataRepository {
@@ -25,8 +26,8 @@ public class PersistentMetadataRepository implements MetadataRepository {
     }
 
     @Override
-    public Metadata getMetadata(UUID metadataID) {
-        return (Metadata)entityManager.find(Metadata.class, metadataID);
+    public Optional<Metadata> getMetadata(UUID metadataID) {
+        return Optional.of((Metadata)entityManager.find(Metadata.class, metadataID));
     }
 
     @Override

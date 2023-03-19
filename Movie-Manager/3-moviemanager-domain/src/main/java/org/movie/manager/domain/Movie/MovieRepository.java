@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface MovieRepository {
-    Iterable<Movie> getAllMovies();
+    Collection<Movie> getAllMovies();
 
     Optional<Movie> getMovie(UUID movieID);
 

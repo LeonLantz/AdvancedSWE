@@ -3,6 +3,7 @@ import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public class MovieService {
@@ -17,7 +18,7 @@ public class MovieService {
     public Collection<Movie> getAllMovies() {
         return this.repository.getAllMovies();
     }
-    public Movie getMovie(UUID movieID){
+    public Optional<Movie> getMovie(UUID movieID){
         return this.repository.getMovie(movieID);
     }
 }

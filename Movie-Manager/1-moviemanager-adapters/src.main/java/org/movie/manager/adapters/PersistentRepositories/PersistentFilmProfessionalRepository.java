@@ -7,6 +7,7 @@ import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 
 public class PersistentFilmProfessionalRepository implements FilmProfessionalRepository {
@@ -27,8 +28,8 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
     }
 
     @Override
-    public FilmProfessional getFilmProfessional(UUID filmProfessionalID) {
-        return (FilmProfessional)entityManager.find(FilmProfessional.class, filmProfessionalID);
+    public Optional<FilmProfessional> getFilmProfessional(UUID filmProfessionalID) {
+        return Optional.of((FilmProfessional)entityManager.find(FilmProfessional.class, filmProfessionalID));
     }
 
     @Override

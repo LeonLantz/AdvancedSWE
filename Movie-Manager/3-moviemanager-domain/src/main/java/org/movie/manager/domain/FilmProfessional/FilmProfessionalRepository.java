@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface FilmProfessionalRepository {
 
-    Iterable<FilmProfessional> getAllFilmProfessionals();
+    Collection<FilmProfessional> getAllFilmProfessionals();
 
     Optional<FilmProfessional> getFilmProfessional(UUID FilmProfessionalID);
 

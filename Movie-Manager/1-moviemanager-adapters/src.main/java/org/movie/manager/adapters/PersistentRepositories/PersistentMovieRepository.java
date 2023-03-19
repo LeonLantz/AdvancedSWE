@@ -6,10 +6,7 @@ import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PersistentMovieRepository implements MovieRepository {
 
@@ -28,8 +25,8 @@ public class PersistentMovieRepository implements MovieRepository {
     }
 
     @Override
-    public Movie getMovie(UUID movieID) {
-        return (Movie)entityManager.find(Movie.class, movieID);
+    public Optional<Movie> getMovie(UUID movieID) {
+        return Optional.of((Movie)entityManager.find(Movie.class, movieID));
     }
 
     @Override
