@@ -6,6 +6,8 @@ import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
 import org.movie.manager.adapters.Mapper.MetadatenMapper;
 import org.movie.manager.adapters.Mapper.MovieMapper;
 import org.movie.manager.application.GenericEntityManager;
+import org.movie.manager.domain.FilmProfessional.FilmProfessionalD;
+import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Metadaten.*;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
@@ -84,7 +86,7 @@ public class EntityFactory { // for creating a family of objects
         if (c == null) {
             throw new IllegalArgumentException("class must not be null");
         } else if( c == FilmProfessional.class ) {
-            UUID filmProfessionalID = UUID.fromString(csvData[FilmProfessionalsMapper.Header.FILMPROFESSIONALID.ordinal()]);
+            FilmProfessionalD filmProfessionalID = new FilmProfessionalD(UUID.fromString(csvData[FilmProfessionalsMapper.Header.FILMPROFESSIONALID.ordinal()]));
             String firstName = csvData[FilmProfessionalsMapper.Header.FIRSTNAME.ordinal()];
             String secondName = csvData[FilmProfessionalsMapper.Header.SECONDNAME.ordinal()];
             String biography = csvData[FilmProfessionalsMapper.Header.BIOGRAPHY.ordinal()];
@@ -104,7 +106,7 @@ public class EntityFactory { // for creating a family of objects
 
             persistableElement = new FilmProfessional(filmProfessionalID, firstName, secondName, biography, listMovies);
         } else if( c == Movie.class ) {
-            UUID movieID = UUID.fromString(csvData[MovieMapper.Header.MOVIEID.ordinal()]);
+            MovieID movieID = new MovieID(UUID.fromString(csvData[MovieMapper.Header.MOVIEID.ordinal()]));
             String titel = csvData[MovieMapper.Header.TITEL.ordinal()];
             String genre = csvData[MovieMapper.Header.GENRE.ordinal()];
             int releaseYear = Integer.parseInt(csvData[MovieMapper.Header.RELEASEYEAR.ordinal()]);
@@ -162,7 +164,7 @@ public class EntityFactory { // for creating a family of objects
 
         } else if( c == Metadata.class ) {
             //movieID
-            UUID metaDataID = UUID.fromString(csvData[MetadatenMapper.Header.METADATAID.ordinal()]);
+            MetadataID metaDataID = new MetadataID(UUID.fromString(csvData[MetadatenMapper.Header.METADATAID.ordinal()]));
 
             //availability
             Ownership ownership = Ownership.valueOf(csvData[MetadatenMapper.Header.STATE.ordinal()]);

@@ -18,7 +18,7 @@ public class Movie implements Persistable {
     - Yes: Also interesting if you want to label your own media library. Then ID's also belong to the film. Of course also implement advantages, since it is easy to implement, can still be used later for other storage options. The idea of the program is simple use of the video library. CSV files offer the advantage of being able to be read without a program and by many other programs that support CSV.
     - Decision yes to ID in domain layer! Also for other classes, because of KISS and same structure principle
     */
-    private final UUID movieID; //only getFunction()
+    private final MovieID movieID; //only getFunction()
     private String titel;
     private String genre;
     private int releaseYear;
@@ -30,11 +30,11 @@ public class Movie implements Persistable {
     private Collection<FilmProfessional> actors = new ArrayList<>();;
     private Collection<FilmProfessional> screenwriters = new ArrayList<>();;
 
-    public Movie(UUID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, Metadata metadata, Collection<FilmProfessional> directors, Collection<FilmProfessional> actors, Collection<FilmProfessional> screenwriters) {
+    public Movie(MovieID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, Metadata metadata, Collection<FilmProfessional> directors, Collection<FilmProfessional> actors, Collection<FilmProfessional> screenwriters) {
         if(movieID != null)
             this.movieID = movieID;
         else
-            this.movieID = UUID.randomUUID();
+            this.movieID = new MovieID(null);
 
         this.titel = titel;
         this.genre = genre;
@@ -46,7 +46,7 @@ public class Movie implements Persistable {
         if (screenwriters != null) this.screenwriters = screenwriters;
     }
 
-    public UUID getMovieID() {
+    public MovieID getMovieID() {
         return movieID;
     }
 
@@ -116,6 +116,6 @@ public class Movie implements Persistable {
 
     @Override
     public Object getPrimaryKey() {
-        return movieID;
+        return movieID.getMovieID();
     }
 }

@@ -3,11 +3,9 @@ package org.movie.manager.domain.Metadaten;
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Movie.Movie;
 
-import java.util.UUID;
-
 public class Metadata implements Persistable {
 
-    private final UUID metadataID; //only getFunction()
+    private final MetadataID metadataID; //only getFunction()
 
     private Availability availability;
 
@@ -17,11 +15,11 @@ public class Metadata implements Persistable {
 
     private Movie movie;
 
-    public Metadata(UUID metadataID, Availability availability, IMBDdata imbDdata, Rating ownRating, Movie movie) {
+    public Metadata(MetadataID metadataID, Availability availability, IMBDdata imbDdata, Rating ownRating, Movie movie) {
         if(metadataID != null)
             this.metadataID = metadataID;
         else
-            this.metadataID = UUID.randomUUID();
+            this.metadataID = new MetadataID(null);
 
         this.availability = availability;
         this.imbDdata = imbDdata;
@@ -29,7 +27,7 @@ public class Metadata implements Persistable {
         this.movie = movie;
     }
 
-    public UUID getMetadataID() {
+    public MetadataID getMetadataID() {
         return metadataID;
     }
 
@@ -67,6 +65,6 @@ public class Metadata implements Persistable {
 
     @Override
     public Object getPrimaryKey() {
-        return metadataID;
+        return metadataID.getMetadataID();
     }
 }

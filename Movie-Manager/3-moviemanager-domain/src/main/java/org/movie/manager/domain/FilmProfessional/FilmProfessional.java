@@ -9,18 +9,18 @@ import java.util.UUID;
 
 public class FilmProfessional implements Persistable {
 
-    private final UUID filmProfessionalID; //only getFunction()
+    private final FilmProfessionalD filmProfessionalID; //only getFunction()
     private final String firstName;
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
     private Collection<Movie> movies = new ArrayList<>();
 
-    public FilmProfessional(UUID filmProfessionalID, String firstName, String secondName, String biography, Collection<Movie> movies) {
+    public FilmProfessional(FilmProfessionalD filmProfessionalID, String firstName, String secondName, String biography, Collection<Movie> movies) {
         if(filmProfessionalID != null)
             this.filmProfessionalID = filmProfessionalID;
         else
-            this.filmProfessionalID = UUID.randomUUID();
+            this.filmProfessionalID = new FilmProfessionalD(null);
 
         this.firstName = firstName;
         this.secondName = secondName;
@@ -48,7 +48,7 @@ public class FilmProfessional implements Persistable {
         this.biography = biography;
     }
 
-    public UUID getFilmProfessionalID() {
+    public FilmProfessionalD getFilmProfessionalID() {
         return filmProfessionalID;
     }
 
@@ -62,6 +62,6 @@ public class FilmProfessional implements Persistable {
 
     @Override
     public Object getPrimaryKey() {
-        return filmProfessionalID;
+        return filmProfessionalID.getFilmProfessionalID();
     }
 }
