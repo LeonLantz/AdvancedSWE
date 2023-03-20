@@ -3,10 +3,10 @@ package org.movie.manager.domain.FilmProfessional;
 import java.util.Objects;
 import java.util.UUID;
 
-public final class FilmProfessionalD {
+public final class FilmProfessionalID {
     private UUID filmProfessionalID;
 
-    public FilmProfessionalD(UUID filmProfessionalID) {
+    public FilmProfessionalID(UUID filmProfessionalID) {
         if(filmProfessionalID != null)
             this.filmProfessionalID = filmProfessionalID;
         else
@@ -31,7 +31,7 @@ public final class FilmProfessionalD {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        FilmProfessionalD that = (FilmProfessionalD) o;
+        FilmProfessionalID that = (FilmProfessionalID) o;
         return filmProfessionalID.equals(that.filmProfessionalID);
     }
 }

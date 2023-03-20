@@ -2,13 +2,11 @@ package org.movie.manager.adapters.PersistentRepositories;
 
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
+import org.movie.manager.adapters.Mapper.MetadataMapper;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Metadata.MetadataRepository;
-import org.movie.manager.domain.Movie.Movie;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class PersistentMetadataRepository implements MetadataRepository {
     private final EntityManager entityManager;
@@ -27,16 +25,30 @@ public class PersistentMetadataRepository implements MetadataRepository {
 
     @Override
     public Optional<Metadata> getMetadata(UUID metadataID) {
-        return Optional.of((Metadata)entityManager.find(Metadata.class, metadataID));
+        Metadata metadata = (Metadata)entityManager.find(Metadata.class, metadataID);
+        if (metadata == null)
+            return null;
+        return Optional.of(metadata);
     }
 
     @Override
     public void update(Metadata metadata) {
-        entityManager.remove(entityManager.find(Movie.class, metadata.getImbDdata()));
+        Metadata metadataALt = entityManager.find(metadata.getPrimaryKey());
+        if(metadataALt != null){
+            entityManager.remove(metadataALt);
+        }
+
         try {
             entityManager.persist(metadata);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        //Save
+        MetadataMapper csvMetadataMapper = new MetadataMapper();
+        List<Object[]> csvDataMetadata = new ArrayList<>();
+        List<Metadata> alleMetadata = this.entityManager.find(Metadata.class);
+        alleMetadata.forEach( e -> csvDataMetadata.add( (csvMetadataMapper.mapData(e) )));
+        csvDB.saveData("Metadata.csv", csvDataMetadata, MetadataMapper.getHeader());
     }
 }

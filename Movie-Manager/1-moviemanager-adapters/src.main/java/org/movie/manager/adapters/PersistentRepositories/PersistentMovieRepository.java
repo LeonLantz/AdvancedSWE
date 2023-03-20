@@ -4,6 +4,7 @@ import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
 import org.movie.manager.adapters.Mapper.MovieMapper;
 import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Movie.MovieRepository;
 
 import java.util.*;
@@ -31,7 +32,11 @@ public class PersistentMovieRepository implements MovieRepository {
 
     @Override
     public void update(Movie movie) {
-        entityManager.remove(entityManager.find(Movie.class, movie.getMovieID()));
+        Movie movieALt = entityManager.find(movie.getPrimaryKey());
+        if(movieALt != null){
+            entityManager.remove(movieALt);
+        }
+
         try {
             entityManager.persist(movie);
         } catch (Exception e) {
@@ -43,6 +48,6 @@ public class PersistentMovieRepository implements MovieRepository {
         List<Object[]> csvDataMovie = new ArrayList<>();
         List<Movie> alleMovies = this.entityManager.find(Movie.class);
         alleMovies.forEach( e -> csvDataMovie.add( (csvMovieMapper.mapData(e) )));
-        csvDB.saveData(csvDataMovie, MovieMapper.getHeader());
+        csvDB.saveData("Movie.csv", csvDataMovie, MovieMapper.getHeader());
     }
 }

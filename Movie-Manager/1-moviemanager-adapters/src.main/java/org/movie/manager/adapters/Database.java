@@ -5,6 +5,6 @@ import java.util.List;
 public interface Database {
     List<String[]> readData(String filePath);
 
-    void saveData(List<Object[]> data, String[] header);
+    void saveData(String fileName, List<Object[]> data, String[] header);
 
 }

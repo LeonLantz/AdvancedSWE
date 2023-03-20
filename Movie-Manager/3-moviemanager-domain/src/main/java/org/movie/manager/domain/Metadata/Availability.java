@@ -11,11 +11,11 @@ public class Availability {
         this.description = description;
     }
 
-    public Ownership getState() {
+    public Ownership getOwnership() {
         return ownership;
     }
 
-    public void setState(Ownership ownership) {
+    public void setOwnership(Ownership ownership) {
         this.ownership = ownership;
     }
 

@@ -28,19 +28,19 @@ public class MovieMapper {
         atts[Header.GENRE.ordinal()] = movieData.getGenre();
         atts[Header.RELEASEYEAR.ordinal()] = String.valueOf(movieData.getReleaseYear());
         atts[Header.RUNNINGTIMEINMIN.ordinal()] = String.valueOf(movieData.getRunningTimeInMin());
-        atts[Header.METADATA.ordinal()] = String.valueOf(movieData.getMetadata().getMetadataID());
+        atts[Header.METADATA.ordinal()] = String.valueOf(movieData.getMetadataID().getMetadataID());
 
-        if(movieData.getDirectors().size() != 0) {
+        if(movieData.getDirectorIDs().size() != 0) {
             StringJoiner sjDirector = new StringJoiner(",");
-            movieData.getDirectors().forEach((e) -> sjDirector.add(e.getFilmProfessionalID().toString()));
+            movieData.getDirectorIDs().forEach((e) -> sjDirector.add(e.getFilmProfessionalID().toString()));
             atts[Header.DIRECTORS.ordinal()] = sjDirector.toString();
         } else {
             atts[Header.DIRECTORS.ordinal()] = " ";
         }
 
-        if(movieData.getActors().size() != 0) {
+        if(movieData.getActorIDs().size() != 0) {
             StringJoiner sjActor = new StringJoiner(",");
-            movieData.getActors().forEach((e) -> sjActor.add(e.getFilmProfessionalID().toString()));
+            movieData.getActorIDs().forEach((e) -> sjActor.add(e.getFilmProfessionalID().toString()));
             atts[Header.ACTORS.ordinal()] = sjActor.toString();
         } else {
             atts[Header.ACTORS.ordinal()] = " ";

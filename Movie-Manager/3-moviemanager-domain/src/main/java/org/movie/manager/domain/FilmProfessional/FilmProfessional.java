@@ -1,26 +1,26 @@
 package org.movie.manager.domain.FilmProfessional;
 
+import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Movie.Movie;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 public class FilmProfessional implements Persistable {
 
-    private final FilmProfessionalD filmProfessionalID; //only getFunction()
+    private final FilmProfessionalID filmProfessionalID; //only getFunction()
     private final String firstName;
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
-    private Collection<Movie> movies = new ArrayList<>();
+    private Collection<MovieID> movies = new ArrayList<>();
 
-    public FilmProfessional(FilmProfessionalD filmProfessionalID, String firstName, String secondName, String biography, Collection<Movie> movies) {
+    public FilmProfessional(FilmProfessionalID filmProfessionalID, String firstName, String secondName, String biography, Collection<MovieID> movies) {
         if(filmProfessionalID != null)
             this.filmProfessionalID = filmProfessionalID;
         else
-            this.filmProfessionalID = new FilmProfessionalD(null);
+            this.filmProfessionalID = new FilmProfessionalID(null);
 
         this.firstName = firstName;
         this.secondName = secondName;
@@ -48,15 +48,15 @@ public class FilmProfessional implements Persistable {
         this.biography = biography;
     }
 
-    public FilmProfessionalD getFilmProfessionalID() {
+    public FilmProfessionalID getFilmProfessionalID() {
         return filmProfessionalID;
     }
 
-    public void addMovie(Movie movie) {
+    public void addMovie(MovieID movie) {
         movies.add(movie);
     }
 
-    public Collection<Movie> getMovies() {
+    public Collection<MovieID> getMovies() {
         return movies;
     }
 

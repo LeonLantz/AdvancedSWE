@@ -25,8 +25,8 @@ public class CSVDatabaseManager implements Database { // CSVReader and CSVWriter
         }
     }
 
-    public void saveData(List<Object[]> data, String[] header){
-        CSVWriter csvWriter = new CSVWriter(this.CSV_FOLDER_PATH, true);
+    public void saveData(String fileName, List<Object[]> data, String[] header){
+        CSVWriter csvWriter = new CSVWriter(this.CSV_FOLDER_PATH+fileName, true);
         try {
             csvWriter.writeDataToFile(data,  header);
         } catch (IOException e) {

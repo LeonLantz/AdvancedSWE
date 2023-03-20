@@ -2,13 +2,14 @@ package org.movie.manager.adapters.PersistentRepositories;
 
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
+import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
+import org.movie.manager.adapters.Mapper.MetadataMapper;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
+import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
 
-import java.util.Collection;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public class PersistentFilmProfessionalRepository implements FilmProfessionalRepository {
 
@@ -34,11 +35,22 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
 
     @Override
     public void update(FilmProfessional filmProfessional) {
-        entityManager.remove(entityManager.find(Movie.class, filmProfessional.getFilmProfessionalID()));
+        FilmProfessional filmProfessionalAlt = entityManager.find(filmProfessional.getPrimaryKey());
+        if(filmProfessionalAlt != null){
+            entityManager.remove(filmProfessionalAlt);
+        }
+
         try {
             entityManager.persist(filmProfessional);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+
+        //Save
+        FilmProfessionalsMapper csvFilmProfessionalMapper = new FilmProfessionalsMapper();
+        List<Object[]> csvDataFilmProfessional = new ArrayList<>();
+        List<FilmProfessional> alleFilmProfessional = this.entityManager.find(FilmProfessional.class);
+        alleFilmProfessional.forEach( e -> csvDataFilmProfessional.add( (csvFilmProfessionalMapper.mapData(e) )));
+        csvDB.saveData("FilmProfessional.csv", csvDataFilmProfessional, FilmProfessionalsMapper.getHeader());
     }
 }

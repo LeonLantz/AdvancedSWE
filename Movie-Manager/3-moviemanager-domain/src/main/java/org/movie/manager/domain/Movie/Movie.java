@@ -1,7 +1,7 @@
 package org.movie.manager.domain.Movie;
-import org.movie.manager.domain.FilmProfessional.FilmProfessional;
+import org.movie.manager.domain.FilmProfessional.FilmProfessionalID;
+import org.movie.manager.domain.Metadata.MetadataID;
 import org.movie.manager.domain.Persistable;
-import org.movie.manager.domain.Metadata.Metadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,13 +23,13 @@ public class Movie implements Persistable {
     private int releaseYear;
     private int runningTimeInMin;
 
-    private Metadata metadata;
+    private MetadataID metadataID;
 
-    private Collection<FilmProfessional> directors = new ArrayList<>();;
-    private Collection<FilmProfessional> actors = new ArrayList<>();;
-    private Collection<FilmProfessional> screenwriters = new ArrayList<>();;
+    private Collection<FilmProfessionalID> directorIDs = new ArrayList<>();;
+    private Collection<FilmProfessionalID> actorIDs = new ArrayList<>();;
+    private Collection<FilmProfessionalID> screenwriterIDs = new ArrayList<>();;
 
-    public Movie(MovieID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, Metadata metadata, Collection<FilmProfessional> directors, Collection<FilmProfessional> actors, Collection<FilmProfessional> screenwriters) {
+    public Movie(MovieID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, MetadataID metadataID, Collection<FilmProfessionalID> directorIDs, Collection<FilmProfessionalID> actorIDs, Collection<FilmProfessionalID> screenwriterIDs) {
         if(movieID != null)
             this.movieID = movieID;
         else
@@ -39,10 +39,10 @@ public class Movie implements Persistable {
         this.genre = genre;
         this.releaseYear = releaseYear;
         this.runningTimeInMin = runningTimeInMin;
-        this.metadata = metadata;
-        if (directors != null) this.directors = directors;
-        if (actors != null) this.actors = actors;
-        if (screenwriters != null) this.screenwriters = screenwriters;
+        this.metadataID = metadataID;
+        if (directorIDs != null) this.directorIDs = directorIDs;
+        if (actorIDs != null) this.actorIDs = actorIDs;
+        if (screenwriterIDs != null) this.screenwriterIDs = screenwriterIDs;
     }
 
     public MovieID getMovieID() {
@@ -81,36 +81,36 @@ public class Movie implements Persistable {
         this.runningTimeInMin = runningTimeInMin;
     }
 
-    public Collection<FilmProfessional> getDirectors() {
-        return directors;
+    public Collection<FilmProfessionalID> getDirectorIDs() {
+        return directorIDs;
     }
 
-    public void addDirectors(FilmProfessional director) {
-        directors.add(director);
+    public void addDirectors(FilmProfessionalID director) {
+        directorIDs.add(director);
     }
 
-    public Collection<FilmProfessional> getActors() {
-        return actors;
+    public Collection<FilmProfessionalID> getActorIDs() {
+        return actorIDs;
     }
 
-    public void addActor(FilmProfessional actor) {
-        actors.add(actor);
+    public void addActor(FilmProfessionalID actor) {
+        actorIDs.add(actor);
     }
 
-    public Collection<FilmProfessional> getScreenwriter() {
-        return screenwriters;
+    public Collection<FilmProfessionalID> getScreenwriter() {
+        return screenwriterIDs;
     }
 
-    public void addScreenwriter(FilmProfessional screenwriter) {
-        screenwriters.add(screenwriter);
+    public void addScreenwriter(FilmProfessionalID screenwriter) {
+        screenwriterIDs.add(screenwriter);
     }
 
-    public Metadata getMetadata() {
-        return metadata;
+    public MetadataID getMetadataID() {
+        return metadataID;
     }
 
-    public void setMetadata(Metadata metadata) {
-        this.metadata = metadata;
+    public void setMetadataID(MetadataID metadataID) {
+        this.metadataID = metadataID;
     }
 
     @Override
