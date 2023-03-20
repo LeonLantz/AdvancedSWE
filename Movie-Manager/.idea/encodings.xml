@@ -3,6 +3,8 @@
   <component name="Encoding">
     <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-csvdatabase/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-csvdatabase/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-genericentitymanager/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-genericentitymanager/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-imbd/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-imbd/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/0-moviemanager-plugin-main/Main/src/main/java" charset="UTF-8" />

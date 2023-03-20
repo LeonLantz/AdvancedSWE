@@ -20,6 +20,7 @@
         <module>2-moviemanager-application</module>
         <module>1-moviemanager-adapters</module>
         <module>0-moviemanager-plugin-csvdatabase</module>
+        <module>0-moviemanager-plugin-genericentitymanager</module>
         <module>0-moviemanager-plugin-imbd</module>
         <module>0-moviemanager-plugin-main</module>
     </modules>

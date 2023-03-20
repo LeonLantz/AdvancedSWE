@@ -1,6 +1,6 @@
 package org.movie.manager.adapters.Mapper;
 
-import org.movie.manager.domain.Metadaten.Metadata;
+import org.movie.manager.domain.Metadata.Metadata;
 
 import java.util.Arrays;
 

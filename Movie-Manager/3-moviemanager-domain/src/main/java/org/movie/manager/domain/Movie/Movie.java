@@ -1,11 +1,10 @@
 package org.movie.manager.domain.Movie;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Persistable;
-import org.movie.manager.domain.Metadaten.Metadata;
+import org.movie.manager.domain.Metadata.Metadata;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.UUID;
 
 public class Movie implements Persistable {
 

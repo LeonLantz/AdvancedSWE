@@ -1,4 +1,4 @@
-package org.movie.manager.domain.Metadaten;
+package org.movie.manager.domain.Metadata;
 
 import org.movie.manager.domain.Persistable;
 import org.movie.manager.domain.Movie.Movie;

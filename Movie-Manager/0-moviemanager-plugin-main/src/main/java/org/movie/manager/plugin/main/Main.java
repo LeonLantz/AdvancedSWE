@@ -7,7 +7,7 @@ import org.movie.manager.adapters.IMDBapi;
 import org.movie.manager.adapters.PersistentRepositories.PersistentFilmProfessionalRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMetadataRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMovieRepository;
-import org.movie.manager.application.GenericEntityManager;
+import org.movie.manager.plugin.genericentitymanager.GenericEntityManager;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;

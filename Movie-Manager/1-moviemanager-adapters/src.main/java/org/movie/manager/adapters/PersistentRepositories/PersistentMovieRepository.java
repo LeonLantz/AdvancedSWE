@@ -1,6 +1,7 @@
 package org.movie.manager.adapters.PersistentRepositories;
 
 import org.movie.manager.adapters.Database;
+import org.movie.manager.adapters.EntityManager;
 import org.movie.manager.adapters.Mapper.MovieMapper;
 import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Movie.Movie;
@@ -10,10 +11,10 @@ import java.util.*;
 
 public class PersistentMovieRepository implements MovieRepository {
 
-    private final GenericEntityManager entityManager;
+    private final EntityManager entityManager;
     private Database csvDB;
 
-    public PersistentMovieRepository(GenericEntityManager entityManager, Database csvDB) {
+    public PersistentMovieRepository(EntityManager entityManager, Database csvDB) {
         this.entityManager = entityManager;
         this.csvDB = csvDB;
     }
@@ -21,7 +22,7 @@ public class PersistentMovieRepository implements MovieRepository {
 
     @Override
     public Collection<Movie> getAllMovies() {
-        return entityManager.find(Movie.class);
+        return entityManager.findMovies();
     }
 
     @Override
@@ -41,7 +42,7 @@ public class PersistentMovieRepository implements MovieRepository {
         //Save
         MovieMapper csvMovieMapper = new MovieMapper();
         List<Object[]> csvDataMovie = new ArrayList<>();
-        List<Movie> alleMovies = this.entityManager.find( Movie.class );
+        List<Movie> alleMovies = this.entityManager.findMovies();
         alleMovies.forEach( e -> csvDataMovie.add( (csvMovieMapper.mapData(e) )));
         csvDB.saveData(csvDataMovie, MovieMapper.getHeader());
     }

@@ -9,11 +9,11 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.movie.manager.plugin.main</groupId>
-    <artifactId>0-moviemanager-plugin-main</artifactId>
+    <groupId>org.movie.manager.plugin.genericentitymanager</groupId>
+    <artifactId>0-moviemanager-plugin-genericentitymanager</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
-    <name>0-moviemanager-plugin-main</name>
+    <name>0-moviemanager-plugin-genericentitymanager</name>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -22,29 +22,16 @@
 
     <dependencies>
         <dependency>
-            <groupId>org.movie.manager.application</groupId>
-            <artifactId>2-moviemanager-application</artifactId>
+            <groupId>org.movie.manager.domain</groupId>
+            <artifactId>3-moviemanager-domain</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>org.movie.manager.plugin.genericentitymanager</groupId>
-            <artifactId>0-moviemanager-plugin-genericentitymanager</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.movie.manager.plugin.csvdatabase</groupId>
-            <artifactId>0-moviemanager-plugin-csvdatabase</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.movie.manager.plugin.imbd</groupId>
-            <artifactId>0-moviemanager-plugin-imbd</artifactId>
+            <groupId>org.movie.manager.adapters</groupId>
+            <artifactId>1-moviemanager-adapters</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
-
 </project>

@@ -1,4 +1,4 @@
-package org.movie.manager.domain.Metadaten;
+package org.movie.manager.domain.Metadata;
 
 import java.util.Collection;
 import java.util.Optional;

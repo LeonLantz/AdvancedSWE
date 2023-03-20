@@ -3,7 +3,7 @@ package org.movie.manager.plugin.main;
 import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
 import org.movie.manager.adapters.Mapper.MetadatenMapper;
 import org.movie.manager.adapters.Mapper.MovieMapper;
-import org.movie.manager.domain.Metadaten.*;
+import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;

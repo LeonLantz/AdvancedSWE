@@ -1,11 +1,8 @@
 package org.movie.manager.application.Services;
 
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
-import org.movie.manager.domain.Metadaten.MetadataRepository;
-import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Metadata.MetadataRepository;
 import org.movie.manager.domain.Movie.MovieRepository;
-
-import java.util.Collection;
 
 public class MovieEditService {
 

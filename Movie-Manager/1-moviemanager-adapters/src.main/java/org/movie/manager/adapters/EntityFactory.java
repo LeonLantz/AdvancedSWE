@@ -5,11 +5,10 @@ package org.movie.manager.adapters;
 import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
 import org.movie.manager.adapters.Mapper.MetadatenMapper;
 import org.movie.manager.adapters.Mapper.MovieMapper;
-import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalD;
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
-import org.movie.manager.domain.Metadaten.*;
+import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Movie.Movie;
 
@@ -19,12 +18,12 @@ public class EntityFactory { // for creating a family of objects
 
     private HashMap<String, String> mapOfUnreferencedElements;
 
-    private GenericEntityManager entityManager;
+    private EntityManager entityManager;
     private Database csvDB;
 
     private Persistable persistableElement = null;
 
-    public EntityFactory(GenericEntityManager em, Database csvDB) {
+    public EntityFactory(EntityManager em, Database csvDB) {
         this.entityManager = em;
         this.csvDB = csvDB;
         this.mapOfUnreferencedElements = new HashMap<>();
