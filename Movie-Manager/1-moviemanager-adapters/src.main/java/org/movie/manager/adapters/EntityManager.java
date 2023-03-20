@@ -7,17 +7,14 @@ import org.movie.manager.domain.Persistable;
 import java.util.List;
 
 public interface EntityManager {
-    boolean contains(Persistable element);
+    <T extends Persistable> boolean contains(T element);
 
-    void persist(Persistable element) throws Exception;
-    void remove(Persistable element);
+    <T extends Persistable> void persist(T element) throws Exception;
+    <T extends Persistable> void remove(T element);
 
     Persistable find(Class<?> c, Object key);
 
-//    List<Persistable> find(Class<?> c);
-    List<Movie> findMovies();
-    List<FilmProfessional> findFilmProfessionals();
-    List<Metadata> findMetadata();
+    <T extends Persistable> List<T> find(Class<?> c);
 
-    Persistable find(Object key);
+    <T extends Persistable> T find(Object key);
 }

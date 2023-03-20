@@ -16,29 +16,29 @@ import org.movie.manager.domain.Persistable;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GenericEntityManager implements EntityManager {
+public class GenericEntityManager<T extends Persistable> implements EntityManager {
     private Map<Object, Persistable> allElements;
 
     public GenericEntityManager() {
         allElements = new HashMap();
     }
 
-    public boolean contains(Persistable element) {
+    public <T extends Persistable> boolean contains(T element) {
         return this.allElements.containsKey(element.getPrimaryKey());
     }
 
-    public void persist(Persistable element) throws Exception {
+    public <T extends Persistable> void persist(T element) throws Exception {
         if (this.contains(element)) {
             throw new Exception("Element exist! ");
         } else {
             this.allElements.put(element.getPrimaryKey(), element);
         }
     }
-    public void remove(Persistable element) {
+    public <T extends Persistable> void remove(T element) {
         this.allElements.remove(element.getPrimaryKey());
     }
 
-    public Persistable find(Class<?> c, Object key) {
+    public T find(Class<?> c, Object key) {
         Iterator var4 = this.allElements.values().iterator();
 
         Persistable t;
@@ -50,29 +50,17 @@ public class GenericEntityManager implements EntityManager {
             t = (Persistable)var4.next();
         } while(!c.isInstance(t) || !t.getPrimaryKey().equals(key));
 
-        return (Persistable) t;
+        return (T) t;
     }
 
-    public List<Movie> findMovies() {
+    public <T extends Persistable> List<T> find(Class<?> c) {
         return (List)this.allElements.values().stream().filter((e) -> {
-            return Movie.class.isInstance(e);
+            return c.isInstance(e);
         }).collect(Collectors.toList());
     }
 
-    public List<FilmProfessional> findFilmProfessionals() {
-        return (List)this.allElements.values().stream().filter((e) -> {
-            return FilmProfessional.class.isInstance(e);
-        }).collect(Collectors.toList());
-    }
-
-    public List<Metadata> findMetadata() {
-        return (List)this.allElements.values().stream().filter((e) -> {
-            return Metadata.class.isInstance(e);
-        }).collect(Collectors.toList());
-    }
-
-    public Persistable find(Object key) {
-        return (Persistable) this.allElements.get(key);
+    public T find(Object key) {
+        return (T) this.allElements.get(key);
     }
 }
 

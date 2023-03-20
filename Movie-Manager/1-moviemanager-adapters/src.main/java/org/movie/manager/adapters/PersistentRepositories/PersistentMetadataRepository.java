@@ -22,7 +22,7 @@ public class PersistentMetadataRepository implements MetadataRepository {
 
     @Override
     public Collection<Metadata> getAllMetadata() {
-        return entityManager.findMetadata();
+        return entityManager.find(Metadata.class);
     }
 
     @Override

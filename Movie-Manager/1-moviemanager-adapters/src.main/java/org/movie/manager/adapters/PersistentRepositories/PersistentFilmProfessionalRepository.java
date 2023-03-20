@@ -24,7 +24,7 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
 
     @Override
     public Collection<FilmProfessional> getAllFilmProfessionals() {
-        return entityManager.findFilmProfessionals();
+        return entityManager.find(FilmProfessional.class);
     }
 
     @Override

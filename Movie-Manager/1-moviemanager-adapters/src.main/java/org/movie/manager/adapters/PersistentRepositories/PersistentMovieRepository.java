@@ -21,7 +21,7 @@ public class PersistentMovieRepository implements MovieRepository {
 
     @Override
     public Collection<Movie> getAllMovies() {
-        return entityManager.findMovies();
+        return entityManager.find(Movie.class);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class PersistentMovieRepository implements MovieRepository {
         //Save
         MovieMapper csvMovieMapper = new MovieMapper();
         List<Object[]> csvDataMovie = new ArrayList<>();
-        List<Movie> alleMovies = this.entityManager.findMovies();
+        List<Movie> alleMovies = this.entityManager.find(Movie.class);
         alleMovies.forEach( e -> csvDataMovie.add( (csvMovieMapper.mapData(e) )));
         csvDB.saveData(csvDataMovie, MovieMapper.getHeader());
     }
