@@ -3,7 +3,6 @@ package org.movie.manager.adapters.PersistentRepositories;
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
 import org.movie.manager.adapters.Mapper.MovieMapper;
-import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
 

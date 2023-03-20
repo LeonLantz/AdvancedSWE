@@ -2,7 +2,6 @@ package org.movie.manager.adapters.PersistentRepositories;
 
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
-import org.movie.manager.application.GenericEntityManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
 import org.movie.manager.domain.Movie.Movie;
