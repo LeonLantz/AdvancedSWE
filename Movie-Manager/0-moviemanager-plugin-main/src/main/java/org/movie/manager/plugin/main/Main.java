@@ -11,6 +11,7 @@ import org.movie.manager.plugin.genericentitymanager.GenericEntityManager;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
+import org.movie.manager.plugin.gui.JavaSwingUI;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
 
@@ -55,8 +56,17 @@ public class Main {
         MovieFinderService movieServie = new MovieFinderService(movieRepository, metadataRepository, filmProfessionalRepository);
         MovieEditService movieEditService = new MovieEditService(movieRepository, metadataRepository, filmProfessionalRepository);
 
+        // Initialize JavaSwingUI
+        JavaSwingUI ui = new JavaSwingUI();
+
         // Initialisation and start of an Controller
         Controller controller = new Controller(movieServie, movieEditService, imbdAPI);
+
+        controller.addObserver(ui);
+        ui.addObserver(controller);
+
+        controller.init();
+
 
         //stop movie manager
         System.out.println("Stop movie manager");

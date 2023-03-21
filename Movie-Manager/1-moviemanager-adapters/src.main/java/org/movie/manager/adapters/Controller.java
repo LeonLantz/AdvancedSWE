@@ -1,5 +1,6 @@
 package org.movie.manager.adapters;
 
+import org.movie.manager.adapters.Events.*;
 import org.movie.manager.application.Services.Filter;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
@@ -7,22 +8,73 @@ import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Metadata.Rating;
 import org.movie.manager.domain.Movie.Movie;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
-public class Controller {
+public class Controller implements IGUIEventListener, IUpdateEventSender {
+
+    public enum Commands implements EventCommand {
+
+        SET_KUNDEN( "Controller.setMovies", Collection.class );
+
+        public final Class<?> payloadType;
+        public final String cmdText;
+
+        private Commands( String cmdText, Class<?> payloadType ) {
+            this.cmdText = cmdText;
+            this.payloadType = payloadType;
+        }
+
+        @Override
+        public String getCmdText() {
+            return this.cmdText;
+        }
+
+        @Override
+        public Class<?> getPayloadType() {
+            return this.payloadType;
+        }
+    }
     private MovieFinderService movieFinderService;
     private MovieEditService movieEditService;
 
     private IMDBapi imbdAPI;
+
+    List<EventListener> allListeners = new ArrayList<>();
 
     public Controller(MovieFinderService movieFinderService, MovieEditService movieEditService, IMDBapi imbdAPI) {
         this.movieFinderService = movieFinderService;
         this.movieEditService = movieEditService;
         this.imbdAPI = imbdAPI;
 
+
 //        test();
+    }
+
+    public void init() {
+        fireUpdateEvent(new UpdateEvent(this, Commands.SET_KUNDEN, movieFinderService.getAllMovies()));
+    }
+
+    @Override
+    public void processGUIEvent(GUIEvent event) {
+
+    }
+
+    private void fireUpdateEvent( UpdateEvent ue ) {
+        for (EventListener eventListener : allListeners) {
+            if( eventListener instanceof IUpdateEventListener) {
+                ((IUpdateEventListener)eventListener).processUpdateEvent(ue);
+            }
+        }
+    }
+
+    @Override
+    public boolean addObserver(EventListener eL) {
+        return this.allListeners.add(eL);
+    }
+
+    @Override
+    public boolean removeObserver(EventListener eL) {
+        return this.allListeners.remove(eL);
     }
 
 //    public void test(){

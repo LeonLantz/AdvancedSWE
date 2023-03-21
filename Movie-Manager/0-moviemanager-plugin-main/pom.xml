@@ -45,6 +45,12 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.movie.manager.plugin.gui</groupId>
+            <artifactId>0-moviemanager-plugin-gui</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
 </project>
