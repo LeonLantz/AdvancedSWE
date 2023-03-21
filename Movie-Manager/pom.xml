@@ -23,6 +23,7 @@
         <module>0-moviemanager-plugin-genericentitymanager</module>
         <module>0-moviemanager-plugin-imbd</module>
         <module>0-moviemanager-plugin-main</module>
+        <module>0-moviemanager-plugin-gui</module>
     </modules>
 
 </project>
