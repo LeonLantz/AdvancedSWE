@@ -52,13 +52,8 @@ public class TableComponent extends ObservableComponent {
         //Table editable
         this.table.setDefaultEditor(Object.class, null);
 
-        //Table column width
-        int numColumns = this.table.getColumnCount();
-        for(int i = 0; i < numColumns; i++) {
-            TableColumn tableColumn = this.table.getColumnModel().getColumn(i);
-            tableColumn.setMinWidth(200);
-            tableColumn.setMaxWidth(200);
-        }
+        this.table.getTableHeader().setPreferredSize(new Dimension(0, 50));
+        this.table.getTableHeader().setFont(new Font(Font.SANS_SERIF, Font.BOLD, 15));
 
         //Table selection mode
         table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
