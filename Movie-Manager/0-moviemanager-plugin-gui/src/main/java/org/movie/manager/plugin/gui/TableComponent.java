@@ -10,6 +10,9 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
@@ -78,7 +81,14 @@ public class TableComponent extends ObservableComponent {
         if(!e.getValueIsAdjusting()) {
             int row = this.table.getSelectedRow();
             System.out.println(row);
+            if(row != -1) {
+                IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 500, 500, 350, 250, "Movie Manager", null, false);
+            }
         }
+    }
+
+    public void removeSelection() {
+        this.table.clearSelection();
     }
 
     public void setData(Collection tableData) {
