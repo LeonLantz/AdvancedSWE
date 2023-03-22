@@ -66,7 +66,7 @@ public class Main {
         controller.addObserver(ui);
         ui.addObserver(controller);
         controller.init();
-        IOUtilities.openInJFrame(ui, 600, 500, 800, 300, "CarsharingApp", null, true);
+        IOUtilities.openInJFrame(ui, 900, 600, 200, 200, "Movie Manager", null, true);
 
 
         //stop movie manager
