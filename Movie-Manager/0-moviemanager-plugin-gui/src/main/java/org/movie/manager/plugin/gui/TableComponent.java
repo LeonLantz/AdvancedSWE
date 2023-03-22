@@ -56,8 +56,8 @@ public class TableComponent extends ObservableComponent {
         int numColumns = this.table.getColumnCount();
         for(int i = 0; i < numColumns; i++) {
             TableColumn tableColumn = this.table.getColumnModel().getColumn(i);
-            tableColumn.setMinWidth(100);
-            tableColumn.setMaxWidth(100);
+            tableColumn.setMinWidth(200);
+            tableColumn.setMaxWidth(200);
         }
 
         //Table selection mode
@@ -95,6 +95,14 @@ public class TableComponent extends ObservableComponent {
         }
         this.table.setModel(new DefaultTableModel(vectorData, vectorColumns));
         table.setDefaultRenderer(Object.class, new AttributeTableCellRenderer());
+
+        int numColumns = this.table.getColumnCount();
+        for(int i = 0; i < numColumns; i++) {
+            TableColumn tableColumn = this.table.getColumnModel().getColumn(i);
+            tableColumn.setMinWidth(200);
+            tableColumn.setMaxWidth(200);
+        }
+
         this.table.updateUI();
     }
 
