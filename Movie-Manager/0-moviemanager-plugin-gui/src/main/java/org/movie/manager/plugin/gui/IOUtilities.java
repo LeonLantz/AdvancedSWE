@@ -31,7 +31,7 @@ public class IOUtilities {
                     }
                 });
             }
-
+            frame.setResizable(false);
             frame.setVisible(true);
             return frame;
         }
