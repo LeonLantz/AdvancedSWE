@@ -3,10 +3,16 @@ package org.movie.manager.plugin.gui;
 import org.movie.manager.adapters.Events.*;
 import org.movie.manager.domain.Movie.Movie;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.text.Style;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.Collection;
 
 public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
@@ -35,7 +41,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     private TableComponent tableComponent;
     private JPanel headerPanel, contentPanel, footerPanel, marginLPanel, marginRPanel;
-    private JLabel headlineLabel;
+    private JLabel headlineLabel, dhbwImageLabel;
 
     public JavaSwingUI() {
         initUI();
@@ -51,7 +57,12 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         headlineLabel = new JLabel("Movie Manager");
         headlineLabel.setFont(new Font(Font.SANS_SERIF, 1, 30));
         headlineLabel.setBorder(new EmptyBorder(0,50,0,0));
+        dhbwImageLabel = new JLabel(getDHBWImage());
+        dhbwImageLabel.setPreferredSize(new Dimension(200, 70));
+        headerPanel.add(dhbwImageLabel, BorderLayout.EAST);
         headerPanel.add(headlineLabel, BorderLayout.CENTER);
+
+
 
         contentPanel = new JPanel(new BorderLayout(0,0));
         contentPanel.setPreferredSize(new Dimension(900, 460));
@@ -83,6 +94,33 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         this.add(headerPanel, BorderLayout.NORTH);
         this.add(contentPanel, BorderLayout.CENTER);
         this.add(footerPanel, BorderLayout.SOUTH);
+
+    }
+
+    private ImageIcon getDHBWImage() {
+        ImageIcon imageIcon = null;
+        try {
+            BufferedImage myPicture = ImageIO.read(getFileFromResource("dhbw.png"));
+            imageIcon = new ImageIcon(myPicture);
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+        return imageIcon;
+    }
+
+    private File getFileFromResource(String fileName) throws URISyntaxException {
+
+        ClassLoader classLoader = getClass().getClassLoader();
+        URL resource = classLoader.getResource(fileName);
+        if (resource == null) {
+            throw new IllegalArgumentException("file not found! " + fileName);
+        } else {
+
+            // failed if files have whitespaces or special characters
+            //return new File(resource.getFile());
+
+            return new File(resource.toURI());
+        }
 
     }
 
