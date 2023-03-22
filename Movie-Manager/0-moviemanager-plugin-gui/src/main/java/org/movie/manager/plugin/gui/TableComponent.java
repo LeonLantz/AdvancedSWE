@@ -82,7 +82,7 @@ public class TableComponent extends ObservableComponent {
             int row = this.table.getSelectedRow();
             System.out.println(row);
             if(row != -1) {
-                IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 500, 500, 350, 250, "Movie Manager", null, false);
+                IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 900, 500, 350, 250, "Movie Manager", null, false);
             }
         }
     }
