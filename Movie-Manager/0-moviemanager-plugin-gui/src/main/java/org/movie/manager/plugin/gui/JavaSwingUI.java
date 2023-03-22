@@ -3,6 +3,10 @@ package org.movie.manager.plugin.gui;
 import org.movie.manager.adapters.Events.*;
 import org.movie.manager.domain.Movie.Movie;
 
+import javax.swing.*;
+import java.awt.*;
+import java.util.Collection;
+
 public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
 
     public enum Commands implements EventCommand {
@@ -27,7 +31,19 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         }
     }
 
+    TableComponent tableComponent;
+
     public JavaSwingUI() {
+        initUI();
+    }
+
+    private void initUI() {
+        this.setLayout(new BorderLayout(0,0));
+
+        //Table
+        String[] columnNames = {"Title", "Genre", "Jahr", "Laufzeit(min)"};
+        tableComponent = new TableComponent(Movie.class, columnNames);
+        this.add(tableComponent);
     }
 
     @Override
@@ -37,6 +53,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     @Override
     public void processUpdateEvent(UpdateEvent event) {
-        System.out.println(event.getData());
+        Collection<Movie> m = (Collection) event.getData();
+        this.tableComponent.setData(m);
     }
 }
