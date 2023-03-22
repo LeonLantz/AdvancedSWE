@@ -46,7 +46,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
         headerPanel = new JPanel(new BorderLayout(0,0));
         headerPanel.setPreferredSize(new Dimension(900, 70));
-        headerPanel.setBackground(Color.gray);
+        headerPanel.setBackground(Color.lightGray);
         headerPanel.setBorder(BorderFactory.createMatteBorder(0,0,3,0, Color.BLACK));
         headlineLabel = new JLabel("Movie Manager");
         headlineLabel.setFont(new Font(Font.SANS_SERIF, 1, 30));
@@ -58,16 +58,18 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         contentPanel.setBackground(Color.green);
         marginLPanel = new JPanel();
         marginLPanel.setPreferredSize(new Dimension(50, 460));
-        marginLPanel.setBackground(Color.black);
+        marginLPanel.setBackground(Color.lightGray);
+        marginLPanel.setBorder(BorderFactory.createMatteBorder(0,0,0,3, Color.BLACK));
         contentPanel.add(marginLPanel, BorderLayout.WEST);
         marginRPanel = new JPanel();
         marginRPanel.setPreferredSize(new Dimension(50, 460));
-        marginRPanel.setBackground(Color.black);
+        marginRPanel.setBackground(Color.lightGray);
+        marginRPanel.setBorder(BorderFactory.createMatteBorder(0,3,0,0, Color.BLACK));
         contentPanel.add(marginRPanel, BorderLayout.EAST);
 
         footerPanel = new JPanel(new BorderLayout(0,0));
         footerPanel.setPreferredSize(new Dimension(900, 70));
-        footerPanel.setBackground(Color.red);
+        footerPanel.setBackground(Color.lightGray);
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
 
 
