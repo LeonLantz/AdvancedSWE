@@ -11,6 +11,7 @@ import org.movie.manager.plugin.genericentitymanager.GenericEntityManager;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.plugin.csvdatabase.CSVDatabaseManager;
+import org.movie.manager.plugin.gui.IOUtilities;
 import org.movie.manager.plugin.gui.JavaSwingUI;
 import org.movie.manager.plugin.imbd.OMDBapi;
 import org.movie.manager.plugin.imbd.PropertyManager;
@@ -64,8 +65,8 @@ public class Main {
 
         controller.addObserver(ui);
         ui.addObserver(controller);
-
         controller.init();
+        IOUtilities.openInJFrame(ui, 600, 500, 800, 300, "CarsharingApp", null, true);
 
 
         //stop movie manager
