@@ -23,6 +23,13 @@ public class GUIEditMovie extends ObservableComponent {
             genreField.setValue(movie.getGenre());
             releaseYearField.setValue(String.valueOf(movie.getReleaseYear()));
             runningTimeInMinField.setValue(String.valueOf(movie.getRunningTimeInMin()));
+            ownershipField.setValue(metadata.getAvailability().getOwnership().toString()); //TODO Dropdown
+            nameOrMediumField.setValue(metadata.getAvailability().getNameOrMedium());
+            descriptionField.setValue(metadata.getAvailability().getDescription());
+            imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
+            imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
+            imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
+            ownRatingField.setValue(String.valueOf(metadata.getOwnRating().getRating()));
             //TODO fill remaining fields
         }
     }
@@ -34,7 +41,7 @@ public class GUIEditMovie extends ObservableComponent {
         titelField = new CustomTextField("Titel", "Title of the movie");
         genreField = new CustomTextField("Genre", "Genre of the movie");
         releaseYearField = new CustomTextField("Year of publication", "Release year of the movie");
-        runningTimeInMinField = new CustomTextField("Running time", "Running time of the movie");
+        runningTimeInMinField = new CustomTextField("Running time (min)", "Running time of the movie");
         moviePanel.add(titelField);
         moviePanel.add(genreField);
         moviePanel.add(releaseYearField);
