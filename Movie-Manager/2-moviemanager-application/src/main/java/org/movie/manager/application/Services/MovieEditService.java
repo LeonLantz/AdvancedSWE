@@ -27,8 +27,10 @@ public class MovieEditService {
         if(metadataRepository != null) {
             metadataRepository.update(metadata);
         }
-        for(FilmProfessional fp : filmProfessionals) {
-            filmProfessionalRepository.update(fp);
+        if(filmProfessionals != null) {
+            for(FilmProfessional fp : filmProfessionals) {
+                filmProfessionalRepository.update(fp);
+            }
         }
     }
 }

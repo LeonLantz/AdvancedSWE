@@ -4,6 +4,7 @@ import org.movie.manager.adapters.Events.*;
 import org.movie.manager.application.Services.Filter;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Metadata.Rating;
 import org.movie.manager.domain.Movie.Movie;
@@ -80,6 +81,10 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
                  result = imbdAPI.requestWithIMDBID(event.getData().toString());
             }catch(Exception ex){}
             fireUpdateEvent(new UpdateEvent(this, Commands.SET_IMDBDATA, result));
+        }else if(event.getCmdText().equals("GUIEditMovie.updateMovie")) {
+            ArrayList movieData = (ArrayList)event.getData();
+            movieEditService.saveNewMovie((Movie) movieData.get(0), (Metadata) movieData.get(1), (ArrayList<FilmProfessional>) movieData.get(2));
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
         }
     }
 

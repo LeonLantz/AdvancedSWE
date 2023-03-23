@@ -8,8 +8,7 @@ import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.Movie.Movie;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
@@ -18,7 +17,8 @@ public class GUIEditMovie extends ObservableComponent {
     public enum Commands implements EventCommand {
 
         GET_IMBDbT( "GUIEditMovie.getIMBDbT", String.class),
-        GET_IMBDbID( "GUIEditMovie.getIMBDbID", String.class);
+        GET_IMBDbID( "GUIEditMovie.getIMBDbID", String.class),
+        UPDATE_MOVIE( "GUIEditMovie.updateMovie", ArrayList.class);
 
         public final Class<?> payloadType;
         public final String cmdText;
@@ -155,7 +155,7 @@ public class GUIEditMovie extends ObservableComponent {
         //this.add(filmProfessionalPanel, BorderLayout.EAST);
     }
 
-    private boolean saveNewMovie() {
+    private void saveNewMovie() {
         try {
             Availability availability = new Availability(Ownership.values()[Integer.valueOf(ownershipField.getValue())], nameOrMediumField.getValue(), descriptionField.value);
             IMBDdata imbDdata;
@@ -169,11 +169,15 @@ public class GUIEditMovie extends ObservableComponent {
             Metadata metadata = new Metadata(null, availability, imbDdata, rating, null);
             Movie movie = new Movie(null, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
             metadata.setMovie(movie.getMovieID());
+            ArrayList movieData = new ArrayList();
+            movieData.add(movie);
+            movieData.add(metadata);
+            movieData.add(null);
+            this.fireGUIEvent(new GUIEvent(this, Commands.UPDATE_MOVIE, movieData));
         }catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Incorrect input data");
         }
 
-        return false;
     }
 
     public void setIMBDData(Map<String, String> result) {
