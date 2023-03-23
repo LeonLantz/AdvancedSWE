@@ -17,7 +17,8 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
     public enum Commands implements EventCommand {
 
         SET_MOVIES( "Controller.setMovies", Collection.class ),
-        SET_DETAILDATA( "Controller.setDetailData", Collection.class );
+        SET_DETAILDATA( "Controller.setDetailData", Collection.class ),
+        SET_IMDBDATA("Controller.setIMDBData", Map.class);
 
         public final Class<?> payloadType;
         public final String cmdText;
@@ -37,6 +38,7 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
             return this.payloadType;
         }
     }
+
     private MovieFinderService movieFinderService;
     private MovieEditService movieEditService;
 
@@ -48,8 +50,6 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
         this.movieFinderService = movieFinderService;
         this.movieEditService = movieEditService;
         this.imbdAPI = imbdAPI;
-
-
 //        test();
     }
 
@@ -68,6 +68,18 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
             fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getMoviesWithFilter(filters)));
         }else if(event.getCmdText().equals("JavaSwingUI.setAllMovies")) {
             fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
+        }else if(event.getCmdText().equals("GUIEditMovie.getIMBDbT")) {
+            Map<String, String> result = null;
+            try {
+                result = imbdAPI.requestWithTitle(event.getData().toString());
+            }catch(Exception ex){}
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_IMDBDATA, result));
+        }else if(event.getCmdText().equals("GUIEditMovie.getIMBDbID")) {
+            Map<String, String> result = null;
+            try {
+                 result = imbdAPI.requestWithIMDBID(event.getData().toString());
+            }catch(Exception ex){}
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_IMDBDATA, result));
         }
     }
 

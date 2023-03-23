@@ -1,5 +1,8 @@
 package org.movie.manager.plugin.gui;
 
+import org.movie.manager.adapters.Events.EventCommand;
+import org.movie.manager.adapters.Events.GUIEvent;
+import org.movie.manager.adapters.Events.IGUIEventListener;
 import org.movie.manager.adapters.PropertyManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
@@ -15,6 +18,30 @@ import java.util.Map;
 
 public class GUIEditMovie extends ObservableComponent {
 
+    public enum Commands implements EventCommand {
+
+        GET_IMBDbT( "GUIEditMovie.getIMBDbT", String.class),
+        GET_IMBDbID( "GUIEditMovie.getIMBDbID", String.class);
+
+        public final Class<?> payloadType;
+        public final String cmdText;
+
+        private Commands( String cmdText, Class<?> payloadType ) {
+            this.cmdText = cmdText;
+            this.payloadType = payloadType;
+        }
+
+        @Override
+        public String getCmdText() {
+            return this.cmdText;
+        }
+
+        @Override
+        public Class<?> getPayloadType() {
+            return this.payloadType;
+        }
+    }
+
     CustomTextField titleField, genreField, releaseYearField, runningTimeInMinField;
 
     CustomTextField ownershipField, nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
@@ -23,10 +50,8 @@ public class GUIEditMovie extends ObservableComponent {
 
     JButton editSaveButton, imdbButton;
 
-    org.movie.manager.adapters.PropertyManager propertyManager;
-
-    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, PropertyManager propertyManager) {
-        this.propertyManager = propertyManager;
+    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, IGUIEventListener observer) {
+        this.addObserver(observer);
         this.setLayout(new BorderLayout(0,0));
         initInputFields();
         if(movie != null) {
@@ -67,26 +92,11 @@ public class GUIEditMovie extends ObservableComponent {
 
             imdbButton = new JButton("IMDb Integration");
             imdbButton.addActionListener(e -> {
-                OMDBapi omdBapi = new OMDBapi(propertyManager);
-                String movieTitle = JOptionPane.showInputDialog("Enter movie title to search");
-                try {
-                    Map<String, String> result = omdBapi.requestWithTitle(movieTitle);
-                    System.out.println(result);
-                    titleField.getTextfield().setText(result.get("Title"));
-                    titleField.getTextfield().setForeground(Color.black);
-                    genreField.getTextfield().setText(result.get("Genre"));
-                    genreField.getTextfield().setForeground(Color.black);
-                    releaseYearField.getTextfield().setText(result.get("Year"));
-                    releaseYearField.getTextfield().setForeground(Color.black);
-                    runningTimeInMinField.getTextfield().setText(result.get("Runtime").split(" ")[0]);
-                    runningTimeInMinField.getTextfield().setForeground(Color.black);
-                    imdbIDField.getTextfield().setText(result.get("imdbID"));
-                    imbdRatingField.getTextfield().setText(result.get("imdbRating"));
-                    imbdMetascoreField.getTextfield().setText(result.get("Metascore"));
-
-                }catch(Exception ex) {
-                    System.out.println(ex);
-                    JOptionPane.showMessageDialog(this, "Fehler bei der Anfrage");
+                String result = JOptionPane.showInputDialog("Enter movie title or IMDb-ID to search");
+                if(result.startsWith("tt")) {
+                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbID, result));
+                }else {
+                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbT, result));
                 }
             });
             headerPanel.add(imdbButton, BorderLayout.CENTER);
@@ -152,5 +162,23 @@ public class GUIEditMovie extends ObservableComponent {
     private boolean saveNewMovie() {
         Movie movie = new Movie(null, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), null, null, null, null);
         return false;
+    }
+
+    public void setIMBDData(Map<String, String> result) {
+        if(result == null) {
+            JOptionPane.showMessageDialog(this, "Fehler bei der Anfrage");
+        }else {
+            titleField.getTextfield().setText(result.get("Title"));
+            titleField.getTextfield().setForeground(Color.black);
+            genreField.getTextfield().setText(result.get("Genre"));
+            genreField.getTextfield().setForeground(Color.black);
+            releaseYearField.getTextfield().setText(result.get("Year"));
+            releaseYearField.getTextfield().setForeground(Color.black);
+            runningTimeInMinField.getTextfield().setText(result.get("Runtime").split(" ")[0]);
+            runningTimeInMinField.getTextfield().setForeground(Color.black);
+            imdbIDField.getTextfield().setText(result.get("imdbID"));
+            imbdRatingField.getTextfield().setText(result.get("imdbRating"));
+            imbdMetascoreField.getTextfield().setText(result.get("Metascore"));
+        }
     }
 }

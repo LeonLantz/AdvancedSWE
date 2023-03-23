@@ -19,6 +19,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
 
@@ -51,6 +52,8 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private JButton addMovieButton, addFilterButton, resetFilterButton, setAPIKeyButton;
 
     PropertyManager propertyManager;
+
+    GUIEditMovie guiEditMovieFrame;
 
     public JavaSwingUI(PropertyManager propertyManager) {
         this.propertyManager = propertyManager;
@@ -122,7 +125,8 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         addMovieButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                IOUtilities.openInJDialog(new GUIEditMovie(null, null, null, propertyManager), 600, 550, 350, 250, "Movie Manager", null, false);
+                guiEditMovieFrame = new GUIEditMovie(null, null, null, JavaSwingUI.this);
+                IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
             }
         });
         footerPanel.add(addMovieButton, BorderLayout.EAST);
@@ -185,14 +189,17 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     @Override
     public void processUpdateEvent(UpdateEvent event) {
-        System.out.println("New event: "+ event.getCmdText());
+        System.out.println("New Update Event: "+ event.getCmdText());
         if(event.getCmdText().equals("Controller.setMovies")) {
             Collection<Movie> m = (Collection) event.getData();
             this.tableComponent.setData(m);
         }else if(event.getCmdText().equals("Controller.setDetailData")) {
             ArrayList<Persistable> allMovieData = (ArrayList<Persistable>)event.getData();
-            IOUtilities.openInJDialog(new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2), propertyManager), 600, 550, 350, 250, "Movie Manager", null, false);
+            guiEditMovieFrame = new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2), JavaSwingUI.this);
+            IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
             this.tableComponent.removeSelection();
+        }else if(event.getCmdText().equals("Controller.setIMDBData")) {
+            guiEditMovieFrame.setIMBDData(((Map<String, String>) event.getData()));
         }
 
     }

@@ -54,14 +54,14 @@ public class Main {
         IMDBapi imbdAPI = new OMDBapi(proMan);
 
         // Creation of Services
-        MovieFinderService movieServie = new MovieFinderService(movieRepository, metadataRepository, filmProfessionalRepository);
+        MovieFinderService movieService = new MovieFinderService(movieRepository, metadataRepository, filmProfessionalRepository);
         MovieEditService movieEditService = new MovieEditService(movieRepository, metadataRepository, filmProfessionalRepository);
 
         // Initialize JavaSwingUI
         JavaSwingUI ui = new JavaSwingUI(proMan);
 
         // Initialisation and start of an Controller
-        Controller controller = new Controller(movieServie, movieEditService, imbdAPI);
+        Controller controller = new Controller(movieService, movieEditService, imbdAPI);
 
         controller.addObserver(ui);
         ui.addObserver(controller);
