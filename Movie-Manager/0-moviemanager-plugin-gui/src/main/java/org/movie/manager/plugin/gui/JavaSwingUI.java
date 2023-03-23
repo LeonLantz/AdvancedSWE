@@ -10,6 +10,8 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
@@ -44,6 +46,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private TableComponent tableComponent;
     private JPanel headerPanel, contentPanel, footerPanel, marginLPanel, marginRPanel;
     private JLabel headlineLabel, dhbwImageLabel;
+    private JButton addMovieButton;
 
     public JavaSwingUI() {
         initUI();
@@ -85,6 +88,14 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         footerPanel.setPreferredSize(new Dimension(900, 70));
         footerPanel.setBackground(Color.lightGray);
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
+        addMovieButton = new JButton("Add new Movie");
+        addMovieButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                IOUtilities.openInJDialog(new GUIEditMovie(null, null, null), 900, 500, 350, 250, "Movie Manager", null, false);
+            }
+        });
+        footerPanel.add(addMovieButton, BorderLayout.EAST);
 
         //Table
         String[] columnNames = {"Title", "Genre", "Jahr", "Laufzeit(min)"};
@@ -125,7 +136,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     @Override
     public void processUpdateEvent(UpdateEvent event) {
-        System.out.println(event.getCmdText());
+        System.out.println("New event: "+ event.getCmdText());
         if(event.getCmdText().equals("Controller.setMovies")) {
             Collection<Movie> m = (Collection) event.getData();
             this.tableComponent.setData(m);
