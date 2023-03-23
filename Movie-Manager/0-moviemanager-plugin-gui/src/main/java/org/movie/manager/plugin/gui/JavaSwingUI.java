@@ -122,7 +122,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         addMovieButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                IOUtilities.openInJDialog(new GUIEditMovie(null, null, null, propertyManager), 900, 500, 350, 250, "Movie Manager", null, false);
+                IOUtilities.openInJDialog(new GUIEditMovie(null, null, null, propertyManager), 600, 550, 350, 250, "Movie Manager", null, false);
             }
         });
         footerPanel.add(addMovieButton, BorderLayout.EAST);
@@ -191,7 +191,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
             this.tableComponent.setData(m);
         }else if(event.getCmdText().equals("Controller.setDetailData")) {
             ArrayList<Persistable> allMovieData = (ArrayList<Persistable>)event.getData();
-            IOUtilities.openInJDialog(new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2), propertyManager), 900, 500, 350, 250, "Movie Manager", null, false);
+            IOUtilities.openInJDialog(new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2), propertyManager), 600, 550, 350, 250, "Movie Manager", null, false);
             this.tableComponent.removeSelection();
         }
 
