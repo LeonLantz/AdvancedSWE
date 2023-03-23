@@ -3,12 +3,9 @@ package org.movie.manager.plugin.gui;
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
 import org.movie.manager.adapters.Events.IGUIEventListener;
-import org.movie.manager.adapters.PropertyManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
-import org.movie.manager.domain.Metadata.Metadata;
+import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.Movie.Movie;
-import org.movie.manager.plugin.imbd.OMDBapi;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -44,7 +41,9 @@ public class GUIEditMovie extends ObservableComponent {
 
     CustomTextField titleField, genreField, releaseYearField, runningTimeInMinField;
 
-    CustomTextField ownershipField, nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
+    CustomTextField nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
+
+    CustomComboBox ownershipField;
 
     JPanel moviePanel, metadataPanel, filmProfessionalPanel, headerPanel, footerPanel;
 
@@ -59,7 +58,7 @@ public class GUIEditMovie extends ObservableComponent {
             genreField.setValue(movie.getGenre());
             releaseYearField.setValue(String.valueOf(movie.getReleaseYear()));
             runningTimeInMinField.setValue(String.valueOf(movie.getRunningTimeInMin()));
-            ownershipField.setValue(metadata.getAvailability().getOwnership().toString()); //TODO Dropdown
+            ownershipField.setValue(String.valueOf(metadata.getAvailability().getOwnership().ordinal())); //TODO Dropdown
             nameOrMediumField.setValue(metadata.getAvailability().getNameOrMedium());
             descriptionField.setValue(metadata.getAvailability().getDescription());
             imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
@@ -68,14 +67,11 @@ public class GUIEditMovie extends ObservableComponent {
             ownRatingField.setValue(String.valueOf(metadata.getOwnRating().getRating()));
             //TODO fill remaining fields
             editSaveButton = new JButton("Edit");
-            editSaveButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    if(editSaveButton.getText() == "Edit") {
-                        editSaveButton.setText("Save");
-                    }else {
-                        editSaveButton.setText("Edit");
-                    }
+            editSaveButton.addActionListener(e -> {
+                if(editSaveButton.getText() == "Edit") {
+                    editSaveButton.setText("Save");
+                }else {
+                    editSaveButton.setText("Edit");
                 }
             });
             filmProfessionalPanel.add(editSaveButton, BorderLayout.SOUTH);
@@ -109,8 +105,8 @@ public class GUIEditMovie extends ObservableComponent {
         moviePanel.setPreferredSize(new Dimension(300, 500));
         titleField = new CustomTextField("Titel", "Title of the movie");
         genreField = new CustomTextField("Genre", "Genre of the movie");
-        releaseYearField = new CustomTextField("Year of publication", "Release year of the movie");
-        runningTimeInMinField = new CustomTextField("Running time (min)", "Running time of the movie");
+        releaseYearField = new CustomTextField("Year of publication (Integer)", "Release year of the movie");
+        runningTimeInMinField = new CustomTextField("Running time in minutes (Integer)", "Running time of the movie");
         moviePanel.add(titleField);
         moviePanel.add(genreField);
         moviePanel.add(releaseYearField);
@@ -120,11 +116,11 @@ public class GUIEditMovie extends ObservableComponent {
         metadataPanel = new JPanel();
         metadataPanel.setPreferredSize(new Dimension(300, 500));
         //TODO Dropdown
-        ownershipField = new CustomTextField("Ownership", "Availability of the movie");
+        ownershipField = new CustomComboBox("Ownership", "Availability of the movie", Ownership.getArray());
         nameOrMediumField = new CustomTextField("Name or Medium", "Name or Medium of the movie");
         descriptionField = new CustomTextField("Description", "Description of the movie");
         //TODO Dropdown
-        ownRatingField = new CustomTextField("Own rating", "Own rating of the movie");
+        ownRatingField = new CustomTextField("Own rating from 1 to 10 (Integer)", "Own rating of the movie");
         imdbIDField = new CustomTextField("IMDb ID", "IMDb data of the movie");
         imbdRatingField = new CustomTextField("IMDb rating", "IMDb data of the movie");
         imbdMetascoreField = new CustomTextField("IMDb metascore", "IMDb data of the movie");
@@ -160,7 +156,23 @@ public class GUIEditMovie extends ObservableComponent {
     }
 
     private boolean saveNewMovie() {
-        Movie movie = new Movie(null, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), null, null, null, null);
+        try {
+            Availability availability = new Availability(Ownership.values()[Integer.valueOf(ownershipField.getValue())], nameOrMediumField.getValue(), descriptionField.value);
+            IMBDdata imbDdata;
+            if(imbdMetascoreField.getValue().equals("N/A")) {
+                imbDdata= new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
+            }else {
+                imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
+            }
+
+            Rating rating = new Rating(Integer.valueOf(ownRatingField.getValue()));
+            Metadata metadata = new Metadata(null, availability, imbDdata, rating, null);
+            Movie movie = new Movie(null, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
+            metadata.setMovie(movie.getMovieID());
+        }catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Incorrect input data");
+        }
+
         return false;
     }
 

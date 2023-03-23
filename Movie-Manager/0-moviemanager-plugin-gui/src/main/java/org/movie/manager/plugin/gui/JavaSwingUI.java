@@ -195,7 +195,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
             this.tableComponent.setData(m);
         }else if(event.getCmdText().equals("Controller.setDetailData")) {
             ArrayList<Persistable> allMovieData = (ArrayList<Persistable>)event.getData();
-            guiEditMovieFrame = new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2), JavaSwingUI.this);
+            guiEditMovieFrame = new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), null, JavaSwingUI.this);
             IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
             this.tableComponent.removeSelection();
         }else if(event.getCmdText().equals("Controller.setIMDBData")) {
