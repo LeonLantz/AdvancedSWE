@@ -30,7 +30,7 @@ public class MovieFinderService {
         ArrayList allMovieData = new ArrayList();
         allMovieData.add(this.movieRepository.getMovie(movieID).get());
         allMovieData.add(this.metadataRepository.getMetadata(metadataID).get());
-        allMovieData.add(filmProfessionalRepository.getFilmProfessionalsOfMovie(movieID));
+        //allMovieData.add(filmProfessionalRepository.getFilmProfessionalsOfMovie(movieID));
         return allMovieData;
     }
     public Collection<Movie> getMoviesWithFilter(List<Filter> filters) {

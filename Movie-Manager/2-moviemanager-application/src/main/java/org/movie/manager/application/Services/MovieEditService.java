@@ -3,12 +3,10 @@ package org.movie.manager.application.Services;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
 import org.movie.manager.domain.Metadata.Metadata;
-import org.movie.manager.domain.Metadata.MetadataID;
 import org.movie.manager.domain.Metadata.MetadataRepository;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
-
-import java.util.Optional;
+import java.util.ArrayList;
 
 public class MovieEditService {
 
@@ -22,21 +20,15 @@ public class MovieEditService {
         this.filmProfessionalRepository = filmProfessionalRepository;
     }
 
-    public void updateMovieInformation(Movie movie){
-        MetadataID metadataID = movie.getMetadataID();
-        Optional<Metadata> metadata = metadataRepository.getMetadata(metadataID.getMetadataID());
-        if (!metadata.isEmpty()) {
-            metadataRepository.update(metadata.get());
-        }
-        movieRepository.update(movie);
-    }
-    public void saveNewMovie(Movie movie, Metadata metadata, FilmProfessional filmProfessional){
-        if(movieRepository != null)
+    public void saveNewMovie(Movie movie, Metadata metadata, ArrayList<FilmProfessional> filmProfessionals) {
+        if(movieRepository != null) {
             movieRepository.update(movie);
-        if(metadataRepository != null)
+        }
+        if(metadataRepository != null) {
             metadataRepository.update(metadata);
-        if(filmProfessional != null)
-            filmProfessionalRepository.update(filmProfessional);
+        }
+        for(FilmProfessional fp : filmProfessionals) {
+            filmProfessionalRepository.update(fp);
+        }
     }
-
 }

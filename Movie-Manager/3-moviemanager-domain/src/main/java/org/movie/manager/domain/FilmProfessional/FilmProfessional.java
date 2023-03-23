@@ -2,7 +2,6 @@ package org.movie.manager.domain.FilmProfessional;
 
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
-import org.movie.manager.domain.Movie.Movie;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -14,7 +13,7 @@ public class FilmProfessional implements Persistable {
     private String secondName;
     private String biography; // Anything that might be interesting about a person: e.g. birthday, birthCountry, NumberOscars, etc.
 
-    private Collection<MovieID> movies = new ArrayList<>();
+    private Collection<MovieID> contributeMovies = new ArrayList<>();
 
     public FilmProfessional(FilmProfessionalID filmProfessionalID, String firstName, String secondName, String biography, Collection<MovieID> movies) {
         if(filmProfessionalID != null)
@@ -25,7 +24,7 @@ public class FilmProfessional implements Persistable {
         this.firstName = firstName;
         this.secondName = secondName;
         this.biography = biography;
-        if (movies != null) this.movies = movies;
+        if (movies != null) this.contributeMovies = movies;
     }
 
     public String getFirstName() {
@@ -53,11 +52,11 @@ public class FilmProfessional implements Persistable {
     }
 
     public void addMovie(MovieID movie) {
-        movies.add(movie);
+        contributeMovies.add(movie);
     }
 
-    public Collection<MovieID> getMovies() {
-        return movies;
+    public Collection<MovieID> getContributeMovies() {
+        return contributeMovies;
     }
 
     @Override
