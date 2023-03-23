@@ -7,6 +7,8 @@ import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Metadata.Rating;
 import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Movie.MovieID;
+import org.movie.manager.domain.Persistable;
 
 import java.util.*;
 
@@ -56,7 +58,11 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
 
     @Override
     public void processGUIEvent(GUIEvent event) {
-
+        if(event.getCmdText().equals("TableComponent.rowSelected")) {
+            Movie selectedMovie = movieFinderService.getMovie(((MovieID)event.getData()).getMovieID()).get();
+            Collection<Persistable> c = movieFinderService.getAllMovieData(selectedMovie.getMovieID().getMovieID(), selectedMovie.getMetadataID().getMetadataID());
+            System.out.println(c);
+        }
     }
 
     private void fireUpdateEvent( UpdateEvent ue ) {

@@ -6,11 +6,9 @@ import org.movie.manager.domain.Movie.Movie;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.text.Style;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Collection;
@@ -50,6 +48,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private void initUI() {
         this.setLayout(new BorderLayout(0,0));
 
+        //Header
         headerPanel = new JPanel(new BorderLayout(0,0));
         headerPanel.setPreferredSize(new Dimension(900, 70));
         headerPanel.setBackground(Color.lightGray);
@@ -62,8 +61,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         headerPanel.add(dhbwImageLabel, BorderLayout.EAST);
         headerPanel.add(headlineLabel, BorderLayout.CENTER);
 
-
-
+        //Content
         contentPanel = new JPanel(new BorderLayout(0,0));
         contentPanel.setPreferredSize(new Dimension(900, 460));
         contentPanel.setBackground(Color.green);
@@ -78,23 +76,21 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         marginRPanel.setBorder(BorderFactory.createMatteBorder(0,3,0,0, Color.BLACK));
         contentPanel.add(marginRPanel, BorderLayout.EAST);
 
+        //Footer
         footerPanel = new JPanel(new BorderLayout(0,0));
         footerPanel.setPreferredSize(new Dimension(900, 70));
         footerPanel.setBackground(Color.lightGray);
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
 
-
-
         //Table
         String[] columnNames = {"Title", "Genre", "Jahr", "Laufzeit(min)"};
-        tableComponent = new TableComponent(Movie.class, columnNames);
+        tableComponent = new TableComponent(Movie.class, columnNames, this);
         tableComponent.setPreferredSize(new Dimension(800, 460));
         contentPanel.add(tableComponent, BorderLayout.CENTER);
 
         this.add(headerPanel, BorderLayout.NORTH);
         this.add(contentPanel, BorderLayout.CENTER);
         this.add(footerPanel, BorderLayout.SOUTH);
-
     }
 
     private ImageIcon getDHBWImage() {
@@ -109,24 +105,18 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     }
 
     private File getFileFromResource(String fileName) throws URISyntaxException {
-
         ClassLoader classLoader = getClass().getClassLoader();
         URL resource = classLoader.getResource(fileName);
         if (resource == null) {
             throw new IllegalArgumentException("file not found! " + fileName);
         } else {
-
-            // failed if files have whitespaces or special characters
-            //return new File(resource.getFile());
-
             return new File(resource.toURI());
         }
-
     }
 
     @Override
-    public void processGUIEvent(GUIEvent event) {
-        fireGUIEvent(new GUIEvent(this, Commands.GET_MOVIES, null));
+    public void processGUIEvent(GUIEvent ge) {
+        fireGUIEvent(ge);
     }
 
     @Override

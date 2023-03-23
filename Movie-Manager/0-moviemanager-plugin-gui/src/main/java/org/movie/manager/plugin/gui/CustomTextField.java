@@ -67,5 +67,6 @@ public class CustomTextField extends CustomInputField {
         this.value = value;
         this.textfield.setForeground(Color.black);
         this.textfield.setText(value);
+        this.textfield.setEnabled(false);
     }
 }

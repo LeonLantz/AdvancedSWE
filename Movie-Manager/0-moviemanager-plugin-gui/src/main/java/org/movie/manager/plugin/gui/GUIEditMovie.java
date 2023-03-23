@@ -1,39 +1,34 @@
 package org.movie.manager.plugin.gui;
 
-import org.movie.manager.domain.FilmProfessional.FilmProfessionalID;
-import org.movie.manager.domain.Metadata.IMBDdata;
-import org.movie.manager.domain.Metadata.MetadataID;
-import org.movie.manager.domain.Metadata.Ownership;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
+import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
-import org.movie.manager.domain.Movie.MovieID;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Collection;
 
 public class GUIEditMovie extends ObservableComponent {
 
-    CustomTextField movieIDField, titelField, genreField, releaseYearField, runningTimeInMinField, metadataIDField;
+    CustomTextField titelField, genreField, releaseYearField, runningTimeInMinField;
 
-    // Collection<FilmProfessionalID> directorIDs, Collection<FilmProfessionalID> actorIDs, Collection<FilmProfessionalID> screenwriterIDs)
-    CustomTextField metaDataIDField, ownershipField, nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
-    //MetadataID metadataID, Availability availability, IMBDdata imbDdata, Rating ownRating, MovieID movie
-//    private String iMDBID;
-//    /*
-//    Must be in its own aggregate, not part of a film.
-//    There can be a rating for the film, but it is not necessarily part of it.
-//    Especially if the film is new, this always has no rating.
-//    */
-//
-//    private double iMDBRating;
-//
-//    // METASCORE is a weighted average of reviews from top critics and publications for a given movie
-//    private int metascore;
+    CustomTextField ownershipField, nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
+
     JPanel moviePanel, metadataPanel, filmProfessionalPanel;
 
-    public GUIEditMovie(Movie movie) {
+    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals) {
         this.setLayout(new BorderLayout(0,0));
+        initInputFields();
+        if(movie != null) {
+            titelField.setValue(movie.getTitel());
+            genreField.setValue(movie.getGenre());
+            releaseYearField.setValue(String.valueOf(movie.getReleaseYear()));
+            runningTimeInMinField.setValue(String.valueOf(movie.getRunningTimeInMin()));
+            //TODO fill remaining fields
+        }
+    }
 
+    private void initInputFields() {
+        //Movie Panel (west)
         moviePanel = new JPanel();
         moviePanel.setPreferredSize(new Dimension(300, 500));
         titelField = new CustomTextField("Titel", "Title of the movie");
@@ -45,7 +40,7 @@ public class GUIEditMovie extends ObservableComponent {
         moviePanel.add(releaseYearField);
         moviePanel.add(runningTimeInMinField);
 
-
+        //Metadata Panel (center)
         metadataPanel = new JPanel();
         metadataPanel.setPreferredSize(new Dimension(300, 500));
         //TODO Dropdown
@@ -65,7 +60,7 @@ public class GUIEditMovie extends ObservableComponent {
         metadataPanel.add(imbdMetascoreField);
         metadataPanel.add(ownRatingField);
 
-
+        //FilmProfessional Panel (east)
         filmProfessionalPanel = new JPanel();
         filmProfessionalPanel.setPreferredSize(new Dimension(300, 500));
         filmProfessionalPanel.setBackground(Color.green);
@@ -73,14 +68,5 @@ public class GUIEditMovie extends ObservableComponent {
         this.add(moviePanel, BorderLayout.WEST);
         this.add(metadataPanel, BorderLayout.CENTER);
         this.add(filmProfessionalPanel, BorderLayout.EAST);
-
-        //TODO movieID
-        titelField = new CustomTextField("Titel", "Title of the movie");
-        genreField = new CustomTextField("Genre", "Genre of the movie");
-        releaseYearField = new CustomTextField("Year of publication", "Release year of the movie");
-        runningTimeInMinField = new CustomTextField("Running time", "Running time of the movie");
-
-
-
     }
 }

@@ -1,5 +1,8 @@
 package org.movie.manager.plugin.gui;
 
+import org.movie.manager.adapters.Events.EventCommand;
+import org.movie.manager.adapters.Events.GUIEvent;
+import org.movie.manager.adapters.Events.IGUIEventListener;
 import org.movie.manager.domain.Metadata.MetadataID;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
@@ -10,14 +13,33 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
 
 public class TableComponent extends ObservableComponent {
+
+    public enum Commands implements EventCommand {
+
+        ROW_SELECTED( "TableComponent.rowSelected", MovieID.class );
+        public final Class<?> payloadType;
+        public final String cmdText;
+
+        private Commands( String cmdText, Class<?> payloadType ) {
+            this.cmdText = cmdText;
+            this.payloadType = payloadType;
+        }
+
+        @Override
+        public String getCmdText() {
+            return this.cmdText;
+        }
+
+        @Override
+        public Class<?> getPayloadType() {
+            return this.payloadType;
+        }
+    }
 
     private JTable table;
     private DefaultTableModel tableModel;
@@ -26,9 +48,13 @@ public class TableComponent extends ObservableComponent {
     private Collection<Persistable> tableData;
     private HashMap<Integer, Persistable> persistableElements;
 
-    public TableComponent(Class tableClass, String[] columnNames) {
+    private final IGUIEventListener observer;
+
+    public TableComponent(Class tableClass, String[] columnNames, IGUIEventListener observer) {
         this.tableClass = tableClass;
         this.columnNames = columnNames;
+        this.observer = observer;
+        this.addObserver(observer);
         this.tableData = null;
 
         tableModel = new DefaultTableModel(null, columnNames) {
@@ -82,7 +108,8 @@ public class TableComponent extends ObservableComponent {
             int row = this.table.getSelectedRow();
             System.out.println(row);
             if(row != -1) {
-                IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 900, 500, 350, 250, "Movie Manager", null, false);
+                this.fireGUIEvent(new GUIEvent(this, Commands.ROW_SELECTED, ((Movie)persistableElements.get(row)).getMovieID()));
+                //IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 900, 500, 350, 250, "Movie Manager", null, false);
             }
         }
     }
