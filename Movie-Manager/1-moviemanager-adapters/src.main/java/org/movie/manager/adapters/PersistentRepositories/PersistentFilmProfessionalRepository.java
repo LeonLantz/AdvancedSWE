@@ -8,6 +8,7 @@ import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Movie.MovieID;
 
 import java.util.*;
 
@@ -31,6 +32,21 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
     @Override
     public Optional<FilmProfessional> getFilmProfessional(UUID filmProfessionalID) {
         return Optional.of((FilmProfessional)entityManager.find(FilmProfessional.class, filmProfessionalID));
+    }
+
+    @Override
+    public Collection<FilmProfessional> getFilmProfessionalsOfMovie(UUID movieID) {
+        Collection<FilmProfessional> allFilmProfessionals = entityManager.find(FilmProfessional.class);
+        Collection<FilmProfessional> matchingFilmProfessionals = new ArrayList<>();
+        for(FilmProfessional fp : allFilmProfessionals) {
+            System.out.println(movieID);
+            for(MovieID mID : fp.getMovies()) {
+                if(mID.getMovieID().compareTo(movieID) == 0) {
+                    matchingFilmProfessionals.add(fp);
+                }
+            }
+        }
+        return matchingFilmProfessionals;
     }
 
     @Override

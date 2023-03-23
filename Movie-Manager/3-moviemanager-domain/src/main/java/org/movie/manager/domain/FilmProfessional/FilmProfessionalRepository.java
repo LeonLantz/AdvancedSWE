@@ -9,6 +9,7 @@ public interface FilmProfessionalRepository {
     Collection<FilmProfessional> getAllFilmProfessionals();
 
     Optional<FilmProfessional> getFilmProfessional(UUID FilmProfessionalID);
+    Collection<FilmProfessional> getFilmProfessionalsOfMovie(UUID movieID);
 
     void update(FilmProfessional filmProfessional);
 }

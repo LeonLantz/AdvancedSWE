@@ -4,6 +4,7 @@ import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Metadata.MetadataRepository;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieRepository;
+import org.movie.manager.domain.Persistable;
 
 import java.util.*;
 
@@ -24,6 +25,13 @@ public class MovieFinderService {
     }
     public Optional<Movie> getMovie(UUID movieID){
         return this.movieRepository.getMovie(movieID);
+    }
+    public Collection<Persistable> getAllMovieData(UUID movieID, UUID metadataID){
+        Collection allMovieData = new ArrayList();
+        allMovieData.add(this.movieRepository.getMovie(movieID).get());
+        allMovieData.add(this.metadataRepository.getMetadata(metadataID).get());
+        allMovieData.add(filmProfessionalRepository.getFilmProfessionalsOfMovie(movieID));
+        return allMovieData;
     }
     public Collection<Movie> getMoviesWithFilter(List<Filter> filters) {
         Collection<Movie> filteredMovies = new ArrayList<>();
