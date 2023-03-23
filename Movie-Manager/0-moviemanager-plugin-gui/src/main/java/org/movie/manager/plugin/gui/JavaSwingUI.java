@@ -1,6 +1,7 @@
 package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.*;
+import org.movie.manager.adapters.PropertyManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
@@ -47,9 +48,12 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private TableComponent tableComponent;
     private JPanel headerPanel, contentPanel, footerPanel, marginLPanel, marginRPanel, filterButtonsPanel;
     private JLabel headlineLabel, dhbwImageLabel;
-    private JButton addMovieButton, addFilterButton, resetFilterButton;
+    private JButton addMovieButton, addFilterButton, resetFilterButton, setAPIKeyButton;
 
-    public JavaSwingUI() {
+    PropertyManager propertyManager;
+
+    public JavaSwingUI(PropertyManager propertyManager) {
+        this.propertyManager = propertyManager;
         initUI();
     }
 
@@ -122,6 +126,15 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
             }
         });
         footerPanel.add(addMovieButton, BorderLayout.EAST);
+        setAPIKeyButton = new JButton("Change API-Key");
+        setAPIKeyButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String key = JOptionPane.showInputDialog("Enter the API-key");
+                propertyManager.setProperty("API_KEY", key);
+            }
+        });
+        footerPanel.add(setAPIKeyButton, BorderLayout.WEST);
 
         //Table
         String[] columnNames = {"Title", "Genre", "Jahr", "Laufzeit(min)"};
