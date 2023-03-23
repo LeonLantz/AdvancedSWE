@@ -16,7 +16,8 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
 
     public enum Commands implements EventCommand {
 
-        SET_KUNDEN( "Controller.setMovies", Collection.class );
+        SET_MOVIES( "Controller.setMovies", Collection.class ),
+        SET_DETAILDATA( "Controller.setDetailData", Collection.class );
 
         public final Class<?> payloadType;
         public final String cmdText;
@@ -53,15 +54,15 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
     }
 
     public void init() {
-        fireUpdateEvent(new UpdateEvent(this, Commands.SET_KUNDEN, movieFinderService.getAllMovies()));
+        fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
     }
 
     @Override
     public void processGUIEvent(GUIEvent event) {
         if(event.getCmdText().equals("TableComponent.rowSelected")) {
             Movie selectedMovie = movieFinderService.getMovie(((MovieID)event.getData()).getMovieID()).get();
-            Collection<Persistable> c = movieFinderService.getAllMovieData(selectedMovie.getMovieID().getMovieID(), selectedMovie.getMetadataID().getMetadataID());
-            System.out.println(c);
+            ArrayList<Persistable> allMovieData = movieFinderService.getAllMovieData(selectedMovie.getMovieID().getMovieID(), selectedMovie.getMetadataID().getMetadataID());
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_DETAILDATA, allMovieData));
         }
     }
 

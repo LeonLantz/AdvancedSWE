@@ -26,8 +26,8 @@ public class MovieFinderService {
     public Optional<Movie> getMovie(UUID movieID){
         return this.movieRepository.getMovie(movieID);
     }
-    public Collection<Persistable> getAllMovieData(UUID movieID, UUID metadataID){
-        Collection allMovieData = new ArrayList();
+    public ArrayList<Persistable> getAllMovieData(UUID movieID, UUID metadataID){
+        ArrayList allMovieData = new ArrayList();
         allMovieData.add(this.movieRepository.getMovie(movieID).get());
         allMovieData.add(this.metadataRepository.getMetadata(metadataID).get());
         allMovieData.add(filmProfessionalRepository.getFilmProfessionalsOfMovie(movieID));

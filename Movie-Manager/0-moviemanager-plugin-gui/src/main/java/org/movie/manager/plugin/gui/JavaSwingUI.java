@@ -1,7 +1,10 @@
 package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.*;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
+import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Persistable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -11,6 +14,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
@@ -121,7 +125,15 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     @Override
     public void processUpdateEvent(UpdateEvent event) {
-        Collection<Movie> m = (Collection) event.getData();
-        this.tableComponent.setData(m);
+        System.out.println(event.getCmdText());
+        if(event.getCmdText().equals("Controller.setMovies")) {
+            Collection<Movie> m = (Collection) event.getData();
+            this.tableComponent.setData(m);
+        }else if(event.getCmdText().equals("Controller.setDetailData")) {
+            ArrayList<Persistable> allMovieData = (ArrayList<Persistable>)event.getData();
+            IOUtilities.openInJDialog(new GUIEditMovie((Movie)allMovieData.get(0), (Metadata) allMovieData.get(1), (Collection<FilmProfessional>) allMovieData.get(2)), 900, 500, 350, 250, "Movie Manager", null, false);
+            this.tableComponent.removeSelection();
+        }
+
     }
 }

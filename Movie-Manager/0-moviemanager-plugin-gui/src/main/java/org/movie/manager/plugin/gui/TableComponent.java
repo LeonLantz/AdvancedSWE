@@ -109,7 +109,6 @@ public class TableComponent extends ObservableComponent {
             System.out.println(row);
             if(row != -1) {
                 this.fireGUIEvent(new GUIEvent(this, Commands.ROW_SELECTED, ((Movie)persistableElements.get(row)).getMovieID()));
-                //IOUtilities.openInJDialog(this, new GUIEditMovie((Movie)persistableElements.get(row)), 900, 500, 350, 250, "Movie Manager", null, false);
             }
         }
     }

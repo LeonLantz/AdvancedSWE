@@ -37,7 +37,7 @@ public class IOUtilities {
         }
     }
 
-    public static JDialog openInJDialog(TableComponent tableComponent, Container content, int width, int height, int posx, int posy, String title, Color bgColor, boolean exitToOS) {
+    public static JDialog openInJDialog(Container content, int width, int height, int posx, int posy, String title, Color bgColor, boolean exitToOS) {
         if (content == null) {
             throw new IllegalArgumentException("container must be given!");
         } else {
@@ -60,7 +60,6 @@ public class IOUtilities {
                         dialog.setEnabled(false);
                         dialog.setVisible(false);
                         dialog.getContentPane().removeAll();
-                        tableComponent.removeSelection();
                     }
                 });
             }
