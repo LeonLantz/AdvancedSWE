@@ -25,9 +25,9 @@ public class Movie implements Persistable {
 
     private MetadataID metadataID;
 
-    private Collection<FilmProfessionalID> directorIDs = new ArrayList<>();;
-    private Collection<FilmProfessionalID> actorIDs = new ArrayList<>();;
-    private Collection<FilmProfessionalID> screenwriterIDs = new ArrayList<>();;
+    private Collection<FilmProfessionalID> directorIDs = new ArrayList<>();
+    private Collection<FilmProfessionalID> actorIDs = new ArrayList<>();
+    private Collection<FilmProfessionalID> screenwriterIDs = new ArrayList<>();
 
     public Movie(MovieID movieID, String titel, String genre, int releaseYear, int runningTimeInMin, MetadataID metadataID, Collection<FilmProfessionalID> directorIDs, Collection<FilmProfessionalID> actorIDs, Collection<FilmProfessionalID> screenwriterIDs) {
         if(movieID != null)

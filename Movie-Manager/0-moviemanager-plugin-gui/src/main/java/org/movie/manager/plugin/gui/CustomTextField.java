@@ -69,4 +69,9 @@ public class CustomTextField extends CustomInputField {
         this.textfield.setText(value);
         this.textfield.setEnabled(false);
     }
+
+    @Override
+    public String getValue() {
+        return this.textfield.getText();
+    }
 }
