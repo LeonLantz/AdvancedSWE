@@ -63,6 +63,11 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
             Movie selectedMovie = movieFinderService.getMovie(((MovieID)event.getData()).getMovieID()).get();
             ArrayList<Persistable> allMovieData = movieFinderService.getAllMovieData(selectedMovie.getMovieID().getMovieID(), selectedMovie.getMetadataID().getMetadataID());
             fireUpdateEvent(new UpdateEvent(this, Commands.SET_DETAILDATA, allMovieData));
+        }else if(event.getCmdText().equals("GUIAddFilter.setMoviesWithFilter")) {
+            ArrayList<Filter> filters = ((ArrayList<Filter>) event.getData());
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getMoviesWithFilter(filters)));
+        }else if(event.getCmdText().equals("JavaSwingUI.setAllMovies")) {
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
         }
     }
 

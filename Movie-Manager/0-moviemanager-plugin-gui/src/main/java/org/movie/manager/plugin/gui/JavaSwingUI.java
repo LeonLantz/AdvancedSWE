@@ -23,7 +23,8 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     public enum Commands implements EventCommand {
 
-        GET_MOVIES( "JavaSwingUI.getMovies", Movie[].class );
+        SET_ALLMOVIES("JavaSwingUI.setAllMovies", null);
+
         public final Class<?> payloadType;
         public final String cmdText;
 
@@ -34,7 +35,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
         @Override
         public String getCmdText() {
-            return null;
+            return this.cmdText;
         }
 
         @Override
@@ -44,9 +45,9 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     }
 
     private TableComponent tableComponent;
-    private JPanel headerPanel, contentPanel, footerPanel, marginLPanel, marginRPanel;
+    private JPanel headerPanel, contentPanel, footerPanel, marginLPanel, marginRPanel, filterButtonsPanel;
     private JLabel headlineLabel, dhbwImageLabel;
-    private JButton addMovieButton;
+    private JButton addMovieButton, addFilterButton, resetFilterButton;
 
     public JavaSwingUI() {
         initUI();
@@ -62,11 +63,36 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         headerPanel.setBorder(BorderFactory.createMatteBorder(0,0,3,0, Color.BLACK));
         headlineLabel = new JLabel("Movie Manager");
         headlineLabel.setFont(new Font(Font.SANS_SERIF, 1, 30));
-        headlineLabel.setBorder(new EmptyBorder(0,50,0,0));
+        headlineLabel.setBorder(new EmptyBorder(0,50,0,100));
         dhbwImageLabel = new JLabel(getDHBWImage());
         dhbwImageLabel.setPreferredSize(new Dimension(200, 70));
         headerPanel.add(dhbwImageLabel, BorderLayout.EAST);
-        headerPanel.add(headlineLabel, BorderLayout.CENTER);
+        headerPanel.add(headlineLabel, BorderLayout.WEST);
+
+        filterButtonsPanel = new JPanel();
+        filterButtonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
+        filterButtonsPanel.setBackground(Color.lightGray);
+
+        addFilterButton = new JButton("Add Filter");
+        addFilterButton.addActionListener(e -> {
+            System.out.println("Add Filter");
+            IOUtilities.openInJDialog(new GUIAddFilter(this,this), 300, 500, 350, 250, "Add Filter", null, false);
+        });
+        addFilterButton.setPreferredSize(new Dimension(110,60));
+        addFilterButton.setVisible(true);
+        filterButtonsPanel.add(addFilterButton);
+
+        resetFilterButton = new JButton("Reset Filter");
+        resetFilterButton.addActionListener(e -> {
+            System.out.println("Reset");
+            this.fireGUIEvent(new GUIEvent(this, Commands.SET_ALLMOVIES, null));
+            changeFilterButtons();
+        });
+        resetFilterButton.setPreferredSize(new Dimension(110,60));
+        resetFilterButton.setVisible(false);
+        filterButtonsPanel.add(resetFilterButton);
+
+        headerPanel.add(filterButtonsPanel, BorderLayout.CENTER);
 
         //Content
         contentPanel = new JPanel(new BorderLayout(0,0));
@@ -117,6 +143,16 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
             System.out.println(e.getMessage());
         }
         return imageIcon;
+    }
+
+    public void changeFilterButtons() {
+        if(resetFilterButton.isVisible()) {
+            resetFilterButton.setVisible(false);
+            addFilterButton.setVisible(true);
+        }else {
+            resetFilterButton.setVisible(true);
+            addFilterButton.setVisible(false);
+        }
     }
 
     private File getFileFromResource(String fileName) throws URISyntaxException {
