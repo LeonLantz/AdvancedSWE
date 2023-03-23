@@ -47,10 +47,10 @@ public class MovieFinderService {
 
                     switch (filter.getName()) {
                         case "ownratingBigger":
-                            passFilter &= metadata.getOwnRating().getRating() >= (int) filter.getValue();
+                            passFilter &= metadata.getOwnRating().getRating() > (int) filter.getValue();
                             break;
                         case "ownratingSmaller":
-                            passFilter &= metadata.getOwnRating().getRating() <= (int) filter.getValue();
+                            passFilter &= metadata.getOwnRating().getRating() < (int) filter.getValue();
                             break;
                         case "ownership":
                             passFilter &= metadata.getAvailability().getOwnership().toString() == filter.getValue();
