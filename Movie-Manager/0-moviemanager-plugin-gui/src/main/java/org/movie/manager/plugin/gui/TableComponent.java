@@ -106,7 +106,6 @@ public class TableComponent extends ObservableComponent {
     private void handleSelectionEvent(ListSelectionEvent e) {
         if(!e.getValueIsAdjusting()) {
             int row = this.table.getSelectedRow();
-            System.out.println(row);
             if(row != -1) {
                 this.fireGUIEvent(new GUIEvent(this, Commands.ROW_SELECTED, ((Movie)persistableElements.get(row)).getMovieID()));
             }

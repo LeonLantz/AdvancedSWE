@@ -39,7 +39,6 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
         Collection<FilmProfessional> allFilmProfessionals = entityManager.find(FilmProfessional.class);
         Collection<FilmProfessional> matchingFilmProfessionals = new ArrayList<>();
         for(FilmProfessional fp : allFilmProfessionals) {
-            System.out.println(movieID);
             for(MovieID mID : fp.getMovies()) {
                 if(mID.getMovieID().compareTo(movieID) == 0) {
                     matchingFilmProfessionals.add(fp);
