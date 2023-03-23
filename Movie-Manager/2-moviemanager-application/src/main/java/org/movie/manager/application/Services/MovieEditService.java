@@ -22,7 +22,7 @@ public class MovieEditService {
         this.filmProfessionalRepository = filmProfessionalRepository;
     }
 
-    public void updateMovieInformations(Movie movie){
+    public void updateMovieInformation(Movie movie){
         MetadataID metadataID = movie.getMetadataID();
         Optional<Metadata> metadata = metadataRepository.getMetadata(metadataID.getMetadataID());
         if (!metadata.isEmpty()) {
