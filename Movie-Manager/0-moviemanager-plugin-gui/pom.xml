@@ -28,12 +28,6 @@
             <version>1.0</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>org.movie.manager.plugin.imbd</groupId>
-            <artifactId>0-moviemanager-plugin-imbd</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
-        </dependency>
     </dependencies>
 
 </project>
