@@ -19,7 +19,7 @@ public class GUIEditMovie extends ObservableComponent {
 
     CustomTextField ownershipField, nameOrMediumField, descriptionField, imdbIDField, imbdRatingField, imbdMetascoreField, ownRatingField;
 
-    JPanel moviePanel, metadataPanel, filmProfessionalPanel;
+    JPanel moviePanel, metadataPanel, filmProfessionalPanel, headerPanel, footerPanel;
 
     JButton editSaveButton, imdbButton;
 
@@ -63,7 +63,7 @@ public class GUIEditMovie extends ObservableComponent {
                 System.out.println("Save movie");
                 saveNewMovie();
             });
-            filmProfessionalPanel.add(editSaveButton, BorderLayout.SOUTH);
+            footerPanel.add(editSaveButton, BorderLayout.CENTER);
 
             imdbButton = new JButton("IMDb Integration");
             imdbButton.addActionListener(e -> {
@@ -89,7 +89,7 @@ public class GUIEditMovie extends ObservableComponent {
                     JOptionPane.showMessageDialog(this, "Fehler bei der Anfrage");
                 }
             });
-            metadataPanel.add(imdbButton);
+            headerPanel.add(imdbButton, BorderLayout.CENTER);
         }
     }
 
@@ -136,9 +136,17 @@ public class GUIEditMovie extends ObservableComponent {
         SimpleListComponent simpleListComponent = new SimpleListComponent("Film Professionals");
         filmProfessionalPanel.add(simpleListComponent, BorderLayout.CENTER);
 
+        headerPanel = new JPanel(new BorderLayout(0,0));
+        headerPanel.setPreferredSize(new Dimension(600, 30));
+        this.add(headerPanel, BorderLayout.NORTH);
+
+        footerPanel = new JPanel(new BorderLayout(0,0));
+        footerPanel.setPreferredSize(new Dimension(600, 50));
+        this.add(footerPanel, BorderLayout.SOUTH);
+
         this.add(moviePanel, BorderLayout.WEST);
         this.add(metadataPanel, BorderLayout.CENTER);
-        this.add(filmProfessionalPanel, BorderLayout.EAST);
+        //this.add(filmProfessionalPanel, BorderLayout.EAST);
     }
 
     private boolean saveNewMovie() {

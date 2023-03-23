@@ -26,9 +26,9 @@ public class FilmProfessionalsMapper {
         atts[Header.SECONDNAME.ordinal()] = filmProfessionalData.getSecondName();
         atts[Header.BIOGRAPHY.ordinal()] = filmProfessionalData.getBiography();
 
-        if(filmProfessionalData.getMovies().size() != 0) {
+        if(filmProfessionalData.getContributeMovies().size() != 0) {
             StringJoiner sjMovie = new StringJoiner(",");
-            filmProfessionalData.getMovies().forEach((e) -> sjMovie.add(e.getMovieID().toString()));
+            filmProfessionalData.getContributeMovies().forEach((e) -> sjMovie.add(e.getMovieID().toString()));
             atts[Header.MOVIES.ordinal()] = sjMovie.toString();
         } else {
             atts[Header.MOVIES.ordinal()] = " ";

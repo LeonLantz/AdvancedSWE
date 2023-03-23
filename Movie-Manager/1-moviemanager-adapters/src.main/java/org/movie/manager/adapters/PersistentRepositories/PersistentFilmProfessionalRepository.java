@@ -3,11 +3,8 @@ package org.movie.manager.adapters.PersistentRepositories;
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.EntityManager;
 import org.movie.manager.adapters.Mapper.FilmProfessionalsMapper;
-import org.movie.manager.adapters.Mapper.MetadataMapper;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
-import org.movie.manager.domain.Metadata.Metadata;
-import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 
 import java.util.*;
@@ -39,7 +36,7 @@ public class PersistentFilmProfessionalRepository implements FilmProfessionalRep
         Collection<FilmProfessional> allFilmProfessionals = entityManager.find(FilmProfessional.class);
         Collection<FilmProfessional> matchingFilmProfessionals = new ArrayList<>();
         for(FilmProfessional fp : allFilmProfessionals) {
-            for(MovieID mID : fp.getMovies()) {
+            for(MovieID mID : fp.getContributeMovies()) {
                 if(mID.getMovieID().compareTo(movieID) == 0) {
                     matchingFilmProfessionals.add(fp);
                 }
