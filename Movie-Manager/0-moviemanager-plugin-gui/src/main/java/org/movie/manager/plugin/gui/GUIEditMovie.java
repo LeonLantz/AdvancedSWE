@@ -9,6 +9,8 @@ import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -106,12 +108,17 @@ public class GUIEditMovie extends ObservableComponent {
             if (editSaveButton.getText() == "Edit") {
                 this.setWindowState(true);
                 this.editSaveButton.setText("Save");
+                metadataPanel.remove(editSaveButton);
+                metadataPanel.updateUI();
+                footerPanel.add(editSaveButton, BorderLayout.CENTER);
             } else {
                 this.saveMovie();
                 this.setWindowState(false);
             }
         });
-        footerPanel.add(editSaveButton, BorderLayout.CENTER);
+        editSaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        editSaveButton.setPreferredSize(new Dimension(120,65));
+        metadataPanel.add(editSaveButton);
     }
 
     private void initInputFields() {
