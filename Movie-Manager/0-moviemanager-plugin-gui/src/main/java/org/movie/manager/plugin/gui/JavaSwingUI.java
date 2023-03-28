@@ -9,6 +9,7 @@ import org.movie.manager.domain.Persistable;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -51,9 +52,11 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private JLabel headlineLabel, dhbwImageLabel;
     private JButton addMovieButton, addFilterButton, resetFilterButton, setAPIKeyButton;
 
-    PropertyManager propertyManager;
+    private PropertyManager propertyManager;
 
-    GUIEditMovie guiEditMovieFrame;
+    private GUIEditMovie guiEditMovieFrame;
+
+    private Border emptyBorder;
 
     public JavaSwingUI(PropertyManager propertyManager) {
         this.propertyManager = propertyManager;
@@ -62,6 +65,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     private void initUI() {
         this.setLayout(new BorderLayout(0,0));
+        emptyBorder = BorderFactory.createEmptyBorder();
 
         //Header
         headerPanel = new JPanel(new BorderLayout(0,0));
@@ -71,7 +75,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         headlineLabel = new JLabel("Movie Manager");
         headlineLabel.setFont(new Font(Font.SANS_SERIF, 1, 30));
         headlineLabel.setBorder(new EmptyBorder(0,50,0,100));
-        dhbwImageLabel = new JLabel(getDHBWImage());
+        dhbwImageLabel = new JLabel(getImage("dhbw.png"));
         dhbwImageLabel.setPreferredSize(new Dimension(200, 70));
         headerPanel.add(dhbwImageLabel, BorderLayout.EAST);
         headerPanel.add(headlineLabel, BorderLayout.WEST);
@@ -80,16 +84,18 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         filterButtonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
         filterButtonsPanel.setBackground(Color.lightGray);
 
-        addFilterButton = new JButton("Add Filter");
+        addFilterButton = new JButton(getImage("filter.png"));
         addFilterButton.addActionListener(e -> {
             System.out.println("Add Filter");
             IOUtilities.openInJDialog(new GUIAddFilter(this,this), 300, 500, 350, 250, "Add Filter", null, false);
         });
         addFilterButton.setPreferredSize(new Dimension(110,60));
         addFilterButton.setVisible(true);
+        addFilterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addFilterButton.setBorder(emptyBorder);
         filterButtonsPanel.add(addFilterButton);
 
-        resetFilterButton = new JButton("Reset Filter");
+        resetFilterButton = new JButton(getImage("del_filter.png"));
         resetFilterButton.addActionListener(e -> {
             System.out.println("Reset");
             this.fireGUIEvent(new GUIEvent(this, Commands.SET_ALLMOVIES, null));
@@ -97,6 +103,8 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         });
         resetFilterButton.setPreferredSize(new Dimension(110,60));
         resetFilterButton.setVisible(false);
+        resetFilterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        resetFilterButton.setBorder(emptyBorder);
         filterButtonsPanel.add(resetFilterButton);
 
         headerPanel.add(filterButtonsPanel, BorderLayout.CENTER);
@@ -121,23 +129,21 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         footerPanel.setPreferredSize(new Dimension(900, 70));
         footerPanel.setBackground(Color.lightGray);
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
-        addMovieButton = new JButton("Add new Movie");
-        addMovieButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                guiEditMovieFrame = new GUIEditMovie(null, null, null, JavaSwingUI.this);
-                IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
-            }
+        addMovieButton = new JButton(getImage("add.png"));
+        addMovieButton.addActionListener(e -> {
+            guiEditMovieFrame = new GUIEditMovie(null, null, null, JavaSwingUI.this);
+            IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
         });
+        addMovieButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        addMovieButton.setBorder(emptyBorder);
         footerPanel.add(addMovieButton, BorderLayout.EAST);
-        setAPIKeyButton = new JButton("Change API-Key");
-        setAPIKeyButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String key = JOptionPane.showInputDialog("Enter the API-key");
-                propertyManager.setProperty("API_KEY", key);
-            }
+        setAPIKeyButton = new JButton(getImage("api.png"));
+        setAPIKeyButton.addActionListener(e -> {
+            String key = JOptionPane.showInputDialog("Enter the API-key");
+            propertyManager.setProperty("API_KEY", key);
         });
+        setAPIKeyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        setAPIKeyButton.setBorder(emptyBorder);
         footerPanel.add(setAPIKeyButton, BorderLayout.WEST);
 
         //Table
@@ -151,10 +157,10 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         this.add(footerPanel, BorderLayout.SOUTH);
     }
 
-    private ImageIcon getDHBWImage() {
+    private ImageIcon getImage(String fileName) {
         ImageIcon imageIcon = null;
         try {
-            BufferedImage myPicture = ImageIO.read(getFileFromResource("dhbw.png"));
+            BufferedImage myPicture = ImageIO.read(getFileFromResource(fileName));
             imageIcon = new ImageIcon(myPicture);
         }catch (Exception e) {
             System.out.println(e.getMessage());
