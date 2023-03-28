@@ -131,7 +131,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
         addMovieButton = new JButton(getImage("add.png"));
         addMovieButton.addActionListener(e -> {
-            guiEditMovieFrame = new GUIEditMovie(null, null, null, JavaSwingUI.this);
+            guiEditMovieFrame = new GUIEditMovie(JavaSwingUI.this);
             IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
         });
         addMovieButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -190,12 +190,13 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
     @Override
     public void processGUIEvent(GUIEvent ge) {
+        System.out.println("New GUIEvent: "+ ge.getCmdText());
         fireGUIEvent(ge);
     }
 
     @Override
     public void processUpdateEvent(UpdateEvent event) {
-        System.out.println("New Update Event: "+ event.getCmdText());
+        System.out.println("New UpdateEvent: "+ event.getCmdText());
         if(event.getCmdText().equals("Controller.setMovies")) {
             Collection<Movie> m = (Collection) event.getData();
             this.tableComponent.setData(m);

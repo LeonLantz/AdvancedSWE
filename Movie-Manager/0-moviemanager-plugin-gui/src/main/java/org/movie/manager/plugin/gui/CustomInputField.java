@@ -5,6 +5,7 @@ import org.movie.manager.adapters.Events.EventCommand;
 public abstract class CustomInputField extends ObservableComponent {
 
     public abstract void setValue(String value);
+    public abstract void setEnabledState(Boolean enabled);
 
     public enum Commands implements EventCommand {
 

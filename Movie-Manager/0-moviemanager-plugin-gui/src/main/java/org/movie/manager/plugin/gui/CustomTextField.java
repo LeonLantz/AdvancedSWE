@@ -71,6 +71,11 @@ public class CustomTextField extends CustomInputField {
     }
 
     @Override
+    public void setEnabledState(Boolean enabled) {
+        this.textfield.setEnabled(enabled);
+    }
+
+    @Override
     public String getValue() {
         return this.textfield.getText();
     }

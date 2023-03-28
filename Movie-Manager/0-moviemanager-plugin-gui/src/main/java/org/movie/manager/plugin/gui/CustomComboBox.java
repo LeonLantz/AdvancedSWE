@@ -62,6 +62,11 @@ public class CustomComboBox extends CustomInputField {
     }
 
     @Override
+    public void setEnabledState(Boolean enabled) {
+        this.comboBox.setEnabled(enabled);
+    }
+
+    @Override
     public String getValue() {
         return String.valueOf(this.comboBox.getSelectedIndex());
     }

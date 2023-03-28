@@ -6,6 +6,8 @@ import org.movie.manager.adapters.Events.IGUIEventListener;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.Movie.Movie;
+import org.movie.manager.domain.Movie.MovieID;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
@@ -16,14 +18,14 @@ public class GUIEditMovie extends ObservableComponent {
 
     public enum Commands implements EventCommand {
 
-        GET_IMBDbT( "GUIEditMovie.getIMBDbT", String.class),
-        GET_IMBDbID( "GUIEditMovie.getIMBDbID", String.class),
-        UPDATE_MOVIE( "GUIEditMovie.updateMovie", ArrayList.class);
+        GET_IMBDbT("GUIEditMovie.getIMBDbT", String.class),
+        GET_IMBDbID("GUIEditMovie.getIMBDbID", String.class),
+        UPDATE_MOVIE("GUIEditMovie.updateMovie", ArrayList.class);
 
         public final Class<?> payloadType;
         public final String cmdText;
 
-        private Commands( String cmdText, Class<?> payloadType ) {
+        private Commands(String cmdText, Class<?> payloadType) {
             this.cmdText = cmdText;
             this.payloadType = payloadType;
         }
@@ -49,54 +51,67 @@ public class GUIEditMovie extends ObservableComponent {
 
     JButton editSaveButton, imdbButton;
 
+    MovieID movieID;
+    MetadataID metadataID;
+
+    public GUIEditMovie(IGUIEventListener observer) {
+        this.addObserver(observer);
+        this.setLayout(new BorderLayout(0, 0));
+        movieID = null;
+        metadataID = null;
+        initInputFields();
+        imdbIDField.setValue("not set");
+        imbdMetascoreField.setValue("not set");
+        imbdRatingField.setValue("not set");
+        editSaveButton = new JButton("Save");
+        editSaveButton.addActionListener(e -> {
+            System.out.println("Save movie");
+            saveMovie();
+        });
+        footerPanel.add(editSaveButton, BorderLayout.CENTER);
+
+        imdbButton = new JButton("IMDb Integration");
+        imdbButton.addActionListener(e -> {
+            String result = JOptionPane.showInputDialog("Enter movie title or IMDb-ID to search");
+            if (result.startsWith("tt")) {
+                this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbID, result));
+            } else {
+                this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbT, result));
+            }
+        });
+        headerPanel.add(imdbButton, BorderLayout.CENTER);
+    }
+
     public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, IGUIEventListener observer) {
         this.addObserver(observer);
-        this.setLayout(new BorderLayout(0,0));
+        this.setLayout(new BorderLayout(0, 0));
+        movieID = movie.getMovieID();
+        metadataID = metadata.getMetadataID();
         initInputFields();
-        if(movie != null) {
-            titleField.setValue(movie.getTitel());
-            genreField.setValue(movie.getGenre());
-            releaseYearField.setValue(String.valueOf(movie.getReleaseYear()));
-            runningTimeInMinField.setValue(String.valueOf(movie.getRunningTimeInMin()));
-            ownershipField.setValue(String.valueOf(metadata.getAvailability().getOwnership().ordinal())); //TODO Dropdown
-            nameOrMediumField.setValue(metadata.getAvailability().getNameOrMedium());
-            descriptionField.setValue(metadata.getAvailability().getDescription());
-            imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
-            imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
-            imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
-            ownRatingField.setValue(String.valueOf(metadata.getOwnRating().getRating()));
-            //TODO fill remaining fields
-            editSaveButton = new JButton("Edit");
-            editSaveButton.addActionListener(e -> {
-                if(editSaveButton.getText() == "Edit") {
-                    editSaveButton.setText("Save");
-                }else {
-                    editSaveButton.setText("Edit");
-                }
-            });
-            filmProfessionalPanel.add(editSaveButton, BorderLayout.SOUTH);
-        } else {
-            imdbIDField.setValue("not set");
-            imbdMetascoreField.setValue("not set");
-            imbdRatingField.setValue("not set");
-            editSaveButton = new JButton("Save");
-            editSaveButton.addActionListener(e -> {
-                System.out.println("Save movie");
-                saveNewMovie();
-            });
-            footerPanel.add(editSaveButton, BorderLayout.CENTER);
-
-            imdbButton = new JButton("IMDb Integration");
-            imdbButton.addActionListener(e -> {
-                String result = JOptionPane.showInputDialog("Enter movie title or IMDb-ID to search");
-                if(result.startsWith("tt")) {
-                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbID, result));
-                }else {
-                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbT, result));
-                }
-            });
-            headerPanel.add(imdbButton, BorderLayout.CENTER);
-        }
+        titleField.setValue(movie.getTitel());
+        genreField.setValue(movie.getGenre());
+        releaseYearField.setValue(String.valueOf(movie.getReleaseYear()));
+        runningTimeInMinField.setValue(String.valueOf(movie.getRunningTimeInMin()));
+        ownershipField.setValue(String.valueOf(metadata.getAvailability().getOwnership().ordinal())); //TODO Dropdown
+        nameOrMediumField.setValue(metadata.getAvailability().getNameOrMedium());
+        descriptionField.setValue(metadata.getAvailability().getDescription());
+        imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
+        imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
+        imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
+        ownRatingField.setValue(String.valueOf(metadata.getOwnRating().getRating()));
+        //TODO fill remaining fields
+        editSaveButton = new JButton("Edit");
+        editSaveButton.setVisible(true);
+        editSaveButton.addActionListener(e -> {
+            if (editSaveButton.getText() == "Edit") {
+                this.setWindowState(true);
+                this.editSaveButton.setText("Save");
+            } else {
+                this.saveMovie();
+                this.setWindowState(false);
+            }
+        });
+        footerPanel.add(editSaveButton, BorderLayout.CENTER);
     }
 
     private void initInputFields() {
@@ -142,11 +157,11 @@ public class GUIEditMovie extends ObservableComponent {
         SimpleListComponent simpleListComponent = new SimpleListComponent("Film Professionals");
         filmProfessionalPanel.add(simpleListComponent, BorderLayout.CENTER);
 
-        headerPanel = new JPanel(new BorderLayout(0,0));
+        headerPanel = new JPanel(new BorderLayout(0, 0));
         headerPanel.setPreferredSize(new Dimension(600, 30));
         this.add(headerPanel, BorderLayout.NORTH);
 
-        footerPanel = new JPanel(new BorderLayout(0,0));
+        footerPanel = new JPanel(new BorderLayout(0, 0));
         footerPanel.setPreferredSize(new Dimension(600, 50));
         this.add(footerPanel, BorderLayout.SOUTH);
 
@@ -155,35 +170,66 @@ public class GUIEditMovie extends ObservableComponent {
         //this.add(filmProfessionalPanel, BorderLayout.EAST);
     }
 
-    private void saveNewMovie() {
+    private void saveMovie() {
         try {
             Availability availability = new Availability(Ownership.values()[Integer.valueOf(ownershipField.getValue())], nameOrMediumField.getValue(), descriptionField.value);
             IMBDdata imbDdata;
-            if(imbdMetascoreField.getValue().equals("N/A")) {
-                imbDdata= new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
-            }else {
+            if (imbdMetascoreField.getValue().equals("N/A")) {
+                imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
+            } else {
                 imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
             }
 
             Rating rating = new Rating(Integer.valueOf(ownRatingField.getValue()));
-            Metadata metadata = new Metadata(null, availability, imbDdata, rating, null);
-            Movie movie = new Movie(null, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
+            Metadata metadata = new Metadata(this.metadataID, availability, imbDdata, rating, null);
+            Movie movie = new Movie(this.movieID, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
             metadata.setMovie(movie.getMovieID());
             ArrayList movieData = new ArrayList();
             movieData.add(movie);
             movieData.add(metadata);
             movieData.add(null);
             this.fireGUIEvent(new GUIEvent(this, Commands.UPDATE_MOVIE, movieData));
-        }catch (Exception ex) {
+            //Disable GUI Window
+            if(imdbButton != null) {
+                imdbButton.setVisible(false);
+            }
+            this.setWindowState(false);
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Incorrect input data");
         }
 
     }
 
+    private void setWindowState(Boolean editable) {
+        if (editable) {
+            titleField.setEnabledState(true);
+            genreField.setEnabledState(true);
+            releaseYearField.setEnabledState(true);
+            runningTimeInMinField.setEnabledState(true);
+            ownershipField.setEnabledState(true);
+            nameOrMediumField.setEnabledState(true);
+            descriptionField.setEnabledState(true);
+            ownershipField.setEnabledState(true);
+            ownRatingField.setEnabledState(true);
+            editSaveButton.setVisible(true);
+        } else {
+            titleField.setEnabledState(false);
+            genreField.setEnabledState(false);
+            releaseYearField.setEnabledState(false);
+            runningTimeInMinField.setEnabledState(false);
+            ownershipField.setEnabledState(false);
+            nameOrMediumField.setEnabledState(false);
+            descriptionField.setEnabledState(false);
+            ownershipField.setEnabledState(false);
+            ownRatingField.setEnabledState(false);
+            editSaveButton.setVisible(false);
+        }
+    }
+
     public void setIMBDData(Map<String, String> result) {
-        if(result == null) {
+        if (result == null) {
             JOptionPane.showMessageDialog(this, "Fehler bei der Anfrage");
-        }else {
+        } else {
             titleField.getTextfield().setText(result.get("Title"));
             titleField.getTextfield().setForeground(Color.black);
             genreField.getTextfield().setText(result.get("Genre"));
