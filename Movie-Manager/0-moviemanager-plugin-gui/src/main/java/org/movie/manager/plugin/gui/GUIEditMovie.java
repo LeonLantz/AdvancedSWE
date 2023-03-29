@@ -121,7 +121,6 @@ public class GUIEditMovie extends ObservableComponent {
                 footerPanel.add(editSaveButton, BorderLayout.CENTER);
             } else {
                 this.saveMovie();
-                this.setWindowState(false);
             }
         });
         editSaveButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
