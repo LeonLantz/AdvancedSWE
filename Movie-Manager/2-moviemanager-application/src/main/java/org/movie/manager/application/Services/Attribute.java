@@ -1,4 +1,4 @@
-package org.movie.manager.plugin.gui;
+package org.movie.manager.application.Services;
 
 import java.util.ArrayList;
 import java.util.List;

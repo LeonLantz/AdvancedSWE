@@ -3,6 +3,7 @@ package org.movie.manager.plugin.gui;
 import org.movie.manager.adapters.Events.*;
 import org.movie.manager.adapters.IMDBapi;
 import org.movie.manager.adapters.PropertyManager;
+import org.movie.manager.application.Services.Attribute;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
+import java.util.Vector;
 
 public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
 
@@ -216,7 +218,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     public void processUpdateEvent(UpdateEvent event) {
         System.out.println("New UpdateEvent: "+ event.getCmdText());
         if(event.getCmdText().equals("Controller.setMovies")) {
-            Collection<Movie> m = (Collection) event.getData();
+            Vector<Vector<Attribute>> m = (Vector<Vector<Attribute>>) event.getData();
             this.tableComponent.setData(m);
         }else if(event.getCmdText().equals("Controller.setDetailData")) {
             ArrayList<Persistable> allMovieData = (ArrayList<Persistable>)event.getData();

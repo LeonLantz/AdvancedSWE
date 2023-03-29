@@ -3,7 +3,7 @@ package org.movie.manager.plugin.gui;
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
 import org.movie.manager.adapters.Events.IGUIEventListener;
-import org.movie.manager.domain.Metadata.MetadataID;
+import org.movie.manager.application.Services.Attribute;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Vector;
@@ -46,7 +47,7 @@ public class TableComponent extends ObservableComponent {
     private Class tableClass;
     private String[] columnNames;
     private Collection<Persistable> tableData;
-    private HashMap<Integer, Persistable> persistableElements;
+    private ArrayList<MovieID> movieIDs;
 
     private final IGUIEventListener observer;
 
@@ -107,7 +108,7 @@ public class TableComponent extends ObservableComponent {
         if(!e.getValueIsAdjusting()) {
             int row = this.table.getSelectedRow();
             if(row != -1) {
-                this.fireGUIEvent(new GUIEvent(this, Commands.ROW_SELECTED, ((Movie)persistableElements.get(row)).getMovieID()));
+                this.fireGUIEvent(new GUIEvent(this, Commands.ROW_SELECTED, movieIDs.get(row)));
             }
         }
     }
@@ -116,15 +117,23 @@ public class TableComponent extends ObservableComponent {
         this.table.clearSelection();
     }
 
-    public void setData(Collection tableData) {
-        this.tableData = tableData;
-        Vector<Vector<Attribute>> vectorData = this.convertAndMapPersistable();
+    public void setData(Vector<Vector<Attribute>> vectorData) {
+        //Remove MovieID from visible data
+        this.movieIDs = new ArrayList<>();
+        vectorData.forEach(v-> {
+            this.movieIDs.add((MovieID) v.get(0).getValue());
+            v.remove(0);
+        });
+
         Vector<String> vectorColumns = new Vector<>();
-        for(String s : columnNames) {
+        for(String s : this.columnNames) {
             vectorColumns.add(s);
         }
+
+
+
         this.table.setModel(new DefaultTableModel(vectorData, vectorColumns));
-        table.setDefaultRenderer(Object.class, new AttributeTableCellRenderer());
+        this.table.setDefaultRenderer(Object.class, new AttributeTableCellRenderer());
 
         int numColumns = this.table.getColumnCount();
         for(int i = 0; i < numColumns; i++) {
@@ -134,46 +143,5 @@ public class TableComponent extends ObservableComponent {
         }
 
         this.table.updateUI();
-    }
-
-    private Vector<Vector<Attribute>> convertAndMapPersistable() {
-        this.persistableElements = new HashMap(this.tableData.size());
-        Vector<Vector<Attribute>> dataVec = new Vector(this.tableData.size());
-        int[] ii = new int[1];
-        this.tableData.forEach((e) -> {
-            int var10004 = ii[0];
-            int var10001 = ii[0];
-            ii[0] = var10004 + 1;
-            this.persistableElements.put(var10001, e);
-            Vector<Attribute> vecTmp = new Vector();
-            Attribute.filterVisibleAttributes(persistableToVector(e)).forEach((a) -> {
-                vecTmp.add(a);
-            });
-            dataVec.add(vecTmp);
-        });
-        return dataVec;
-    }
-
-    private Vector<Attribute> persistableToVector(Persistable persistable) {
-        Vector<Attribute> vec = new Vector();
-        if (persistable instanceof Movie) {
-            vec.add(new Attribute("movieID", persistable, MovieID.class, ((Movie) persistable).getMovieID(), null, false  ));
-            vec.add(new Attribute("title", persistable, String.class, ((Movie) persistable).getTitel(), null, true  ));
-            vec.add(new Attribute("genre", persistable, String.class, ((Movie) persistable).getGenre(), null, true  ));
-            vec.add(new Attribute("releaseYear", persistable, Integer.class, ((Movie) persistable).getReleaseYear(), null, true  ));
-            vec.add(new Attribute("runningTimeInMin", persistable, Integer.class, ((Movie) persistable).getRunningTimeInMin(), null, true  ));
-            vec.add(new Attribute("metadataID", persistable, MetadataID.class, ((Movie) persistable).getMetadataID(), null, false  ));
-            vec.add(new Attribute("directorIDs", persistable, Collection.class, ((Movie) persistable).getDirectorIDs(), null, false  ));
-            vec.add(new Attribute("actorIDs", persistable, Collection.class, ((Movie) persistable).getActorIDs(), null, false  ));
-            vec.add(new Attribute("screenwriterIDs", persistable, Collection.class, ((Movie) persistable).getScreenwriter(), null, false  ));
-        }
-        return vec;
-    }
-
-    private Persistable vectorToPersistable(Vector<Attribute> vector) {
-        if(vector.get(0).getDedicatedInstance().getClass().equals(Movie.class)) {
-            //TODO
-        }
-        return null;
     }
 }

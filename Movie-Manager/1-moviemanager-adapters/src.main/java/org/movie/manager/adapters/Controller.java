@@ -1,6 +1,7 @@
 package org.movie.manager.adapters;
 
 import org.movie.manager.adapters.Events.*;
+import org.movie.manager.application.Services.Attribute;
 import org.movie.manager.application.Services.Filter;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
@@ -17,7 +18,7 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
 
     public enum Commands implements EventCommand {
 
-        SET_MOVIES( "Controller.setMovies", Collection.class ),
+        SET_MOVIES( "Controller.setMovies", Vector.class ),
         SET_DETAILDATA( "Controller.setDetailData", Collection.class ),
         SET_IMDBDATA("Controller.setIMDBData", Map.class);
 
@@ -55,7 +56,7 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
     }
 
     public void init() {
-        fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
+        fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMoviesInTableFormat()));
     }
 
     @Override
@@ -66,9 +67,9 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
             fireUpdateEvent(new UpdateEvent(this, Commands.SET_DETAILDATA, allMovieData));
         }else if(event.getCmdText().equals("GUIAddFilter.setMoviesWithFilter")) {
             ArrayList<Filter> filters = ((ArrayList<Filter>) event.getData());
-            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getMoviesWithFilter(filters)));
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getMoviesWithFilterInTableFormat(filters)));
         }else if(event.getCmdText().equals("JavaSwingUI.setAllMovies")) {
-            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMoviesInTableFormat()));
         }else if(event.getCmdText().equals("GUIEditMovie.getIMBDbT")) {
             Map<String, String> result = null;
             try {
@@ -84,7 +85,7 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
         }else if(event.getCmdText().equals("GUIEditMovie.updateMovie")) {
             ArrayList movieData = (ArrayList)event.getData();
             movieEditService.saveNewMovie((Movie) movieData.get(0), (Metadata) movieData.get(1), (ArrayList<FilmProfessional>) movieData.get(2));
-            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMovies()));
+            fireUpdateEvent(new UpdateEvent(this, Commands.SET_MOVIES, movieFinderService.getAllMoviesInTableFormat()));
         }
     }
 

@@ -1,5 +1,7 @@
 package org.movie.manager.plugin.gui;
 
+import org.movie.manager.application.Services.Attribute;
+
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.table.TableCellRenderer;

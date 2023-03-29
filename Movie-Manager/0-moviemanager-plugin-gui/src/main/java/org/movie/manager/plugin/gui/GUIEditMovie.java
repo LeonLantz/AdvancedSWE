@@ -219,6 +219,7 @@ public class GUIEditMovie extends ObservableComponent {
             }
             this.setWindowState(false);
         } catch (Exception ex) {
+            System.out.println(ex);
             JOptionPane.showMessageDialog(this, "Incorrect input data");
         }
 
