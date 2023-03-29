@@ -141,8 +141,16 @@ public class EntityFactory { // for creating a family of objects
         Availability availability = new Availability(ownership, nameOrMedium, description);
         //imbDdata
         String iMDBID = csvData[MetadataMapper.Header.IMBDID.ordinal()];
-        double iMDBRating = Double.parseDouble(csvData[MetadataMapper.Header.IMDBRATING.ordinal()]);
-        int metascore = Integer.parseInt(csvData[MetadataMapper.Header.METASCORE.ordinal()]);
+        String iMDBRatingString = csvData[MetadataMapper.Header.IMDBRATING.ordinal()];
+        double iMDBRating =-1;
+        if(!iMDBRatingString.equals("")){
+            iMDBRating = Double.parseDouble(iMDBRatingString);
+        }
+        String metascoreString = csvData[MetadataMapper.Header.METASCORE.ordinal()];
+        int metascore =-1;
+        if(!metascoreString.equals("")){
+            metascore = Integer.parseInt(metascoreString);
+        }
         IMBDdata imbDdata = new IMBDdata(iMDBID, iMDBRating, metascore );
         //ownRating
         int rating = Integer.parseInt(csvData[MetadataMapper.Header.RATING.ordinal()]);

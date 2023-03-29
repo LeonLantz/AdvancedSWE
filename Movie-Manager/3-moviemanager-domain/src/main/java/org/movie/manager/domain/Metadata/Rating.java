@@ -16,8 +16,10 @@ public final class Rating {
     private final int rating;
 
     public Rating(int rating) {
-        if(rating <1 && rating >10){
-            throw new IllegalArgumentException("Rating must be between 1 and 10");
+        if(rating <1 || rating >10){
+            if(rating !=-1){ // -1 = not set
+                throw new IllegalArgumentException("Rating must be between 1 and 10");
+            }
         }
         this.rating = rating;
     }
