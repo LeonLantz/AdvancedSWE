@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -89,7 +90,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
         addFilterButton = new JButton(getImage("filter.png"));
         addFilterButton.addActionListener(e -> {
-            System.out.println("Add Filter");
+            System.out.println("New GUIEvent: JavaSwingUI.filterUI");
             IOUtilities.openInJDialog(new GUIAddFilter(this,this), 300, 500, 350, 250, "Add Filter", null, false);
         });
         addFilterButton.setPreferredSize(new Dimension(110,60));
@@ -100,7 +101,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
 
         resetFilterButton = new JButton(getImage("del_filter.png"));
         resetFilterButton.addActionListener(e -> {
-            System.out.println("Reset");
+            System.out.println("New GUIEvent: JavaSwingUI.filterReset");
             this.fireGUIEvent(new GUIEvent(this, Commands.SET_ALLMOVIES, null));
             changeFilterButtons();
         });
@@ -134,6 +135,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         footerPanel.setBorder(BorderFactory.createMatteBorder(3,0,0,0, Color.BLACK));
         addMovieButton = new JButton(getImage("add.png"));
         addMovieButton.addActionListener(e -> {
+            System.out.println("New GUIEvent: JavaSwingUI.addMovieUI");
             guiEditMovieFrame = new GUIEditMovie(JavaSwingUI.this);
             IOUtilities.openInJDialog(guiEditMovieFrame, 600, 550, 350, 250, "Movie Manager", null, false);
         });
@@ -142,9 +144,17 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         footerPanel.add(addMovieButton, BorderLayout.EAST);
         setAPIKeyButton = new JButton(getImage("api.png"));
         setAPIKeyButton.addActionListener(e -> {
+            System.out.println("New GUIEvent: JavaSwingUI.APIKeyUI");
             String key = JOptionPane.showInputDialog("Enter the API-key");
-            propertyManager.setProperty("API_KEY", key);
-            imdBapi.setApiKeyFromPropertyManager();
+            if(key != null) {
+                propertyManager.setProperty("API_KEY", key);
+                try {
+                    propertyManager.saveConfiguration();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
+                imdBapi.setApiKeyFromPropertyManager();
+            }
         });
         setAPIKeyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         setAPIKeyButton.setBorder(emptyBorder);
