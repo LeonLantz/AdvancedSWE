@@ -58,7 +58,7 @@ public class Main {
         MovieEditService movieEditService = new MovieEditService(movieRepository, metadataRepository, filmProfessionalRepository);
 
         // Initialize JavaSwingUI
-        JavaSwingUI ui = new JavaSwingUI(proMan);
+        JavaSwingUI ui = new JavaSwingUI(proMan, imbdAPI);
 
         // Initialisation and start of an Controller
         Controller controller = new Controller(movieService, movieEditService, imbdAPI);

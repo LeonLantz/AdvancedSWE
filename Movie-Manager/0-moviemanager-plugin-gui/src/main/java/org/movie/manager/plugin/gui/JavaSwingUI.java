@@ -1,6 +1,7 @@
 package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.*;
+import org.movie.manager.adapters.IMDBapi;
 import org.movie.manager.adapters.PropertyManager;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
@@ -53,13 +54,15 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private JButton addMovieButton, addFilterButton, resetFilterButton, setAPIKeyButton;
 
     private PropertyManager propertyManager;
+    private IMDBapi imdBapi;
 
     private GUIEditMovie guiEditMovieFrame;
 
     private Border emptyBorder;
 
-    public JavaSwingUI(PropertyManager propertyManager) {
+    public JavaSwingUI(PropertyManager propertyManager, IMDBapi imdBapi) {
         this.propertyManager = propertyManager;
+        this.imdBapi = imdBapi;
         initUI();
     }
 
@@ -141,6 +144,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         setAPIKeyButton.addActionListener(e -> {
             String key = JOptionPane.showInputDialog("Enter the API-key");
             propertyManager.setProperty("API_KEY", key);
+            imdBapi.setApiKeyFromPropertyManager();
         });
         setAPIKeyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         setAPIKeyButton.setBorder(emptyBorder);
