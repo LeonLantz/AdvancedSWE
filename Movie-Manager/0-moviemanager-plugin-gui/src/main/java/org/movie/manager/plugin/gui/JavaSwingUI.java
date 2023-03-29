@@ -95,6 +95,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         });
         addFilterButton.setPreferredSize(new Dimension(110,60));
         addFilterButton.setVisible(true);
+        addFilterButton.setBackground(null);
         addFilterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         addFilterButton.setBorder(emptyBorder);
         filterButtonsPanel.add(addFilterButton);
@@ -107,6 +108,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         });
         resetFilterButton.setPreferredSize(new Dimension(110,60));
         resetFilterButton.setVisible(false);
+        resetFilterButton.setBackground(null);
         resetFilterButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         resetFilterButton.setBorder(emptyBorder);
         filterButtonsPanel.add(resetFilterButton);
@@ -141,6 +143,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
         });
         addMovieButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         addMovieButton.setBorder(emptyBorder);
+        addMovieButton.setBackground(null);
         footerPanel.add(addMovieButton, BorderLayout.EAST);
         setAPIKeyButton = new JButton(getImage("api.png"));
         setAPIKeyButton.addActionListener(e -> {
@@ -156,6 +159,7 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
                 imdBapi.setApiKeyFromPropertyManager();
             }
         });
+        setAPIKeyButton.setBackground(null);
         setAPIKeyButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
         setAPIKeyButton.setBorder(emptyBorder);
         footerPanel.add(setAPIKeyButton, BorderLayout.WEST);
