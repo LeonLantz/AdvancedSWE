@@ -75,10 +75,12 @@ public class GUIEditMovie extends ObservableComponent {
         imdbButton = new JButton("IMDb Integration");
         imdbButton.addActionListener(e -> {
             String result = JOptionPane.showInputDialog("Enter movie title or IMDb-ID to search");
-            if (result.startsWith("tt")) {
-                this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbID, result));
-            } else {
-                this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbT, result));
+            if(result != null) {
+                if (result.startsWith("tt")) {
+                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbID, result));
+                } else {
+                    this.fireGUIEvent(new GUIEvent(this, Commands.GET_IMBDbT, result));
+                }
             }
         });
         headerPanel.add(imdbButton, BorderLayout.CENTER);
@@ -97,9 +99,15 @@ public class GUIEditMovie extends ObservableComponent {
         ownershipField.setValue(String.valueOf(metadata.getAvailability().getOwnership().ordinal())); //TODO Dropdown
         nameOrMediumField.setValue(metadata.getAvailability().getNameOrMedium());
         descriptionField.setValue(metadata.getAvailability().getDescription());
-        imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
-        imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
-        imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
+        if(metadata.getImbDdata() != null) {
+            imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
+            imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
+            imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
+        }else {
+            imdbIDField.setValue("not set");
+            imbdRatingField.setValue("not set");
+            imbdMetascoreField.setValue("not set");
+        }
         ownRatingField.setValue(String.valueOf(metadata.getOwnRating().getRating()));
         //TODO fill remaining fields
         editSaveButton = new JButton("Edit");
@@ -137,11 +145,9 @@ public class GUIEditMovie extends ObservableComponent {
         //Metadata Panel (center)
         metadataPanel = new JPanel();
         metadataPanel.setPreferredSize(new Dimension(300, 500));
-        //TODO Dropdown
         ownershipField = new CustomComboBox("Ownership", "Availability of the movie", Ownership.getArray());
         nameOrMediumField = new CustomTextField("Name or Medium", "Name or Medium of the movie");
         descriptionField = new CustomTextField("Description", "Description of the movie");
-        //TODO Dropdown
         ownRatingField = new CustomTextField("Own rating from 1 to 10 (Integer)", "Own rating of the movie");
         imdbIDField = new CustomTextField("IMDb ID", "IMDb data of the movie");
         imbdRatingField = new CustomTextField("IMDb rating", "IMDb data of the movie");
@@ -181,13 +187,24 @@ public class GUIEditMovie extends ObservableComponent {
         try {
             Availability availability = new Availability(Ownership.values()[Integer.valueOf(ownershipField.getValue())], nameOrMediumField.getValue(), descriptionField.value);
             IMBDdata imbDdata;
-            if (imbdMetascoreField.getValue().equals("N/A")) {
-                imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
-            } else {
-                imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
+            System.out.println(imdbIDField.getValue());
+            if(imdbIDField.getValue().contains("not set")) {
+                imbDdata = null;
+            }else {
+                if (imbdMetascoreField.getValue().equals("N/A")) {
+                    imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
+                } else {
+                    imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
+                }
             }
 
-            Rating rating = new Rating(Integer.valueOf(ownRatingField.getValue()));
+            Rating rating;
+            System.out.println(ownRatingField.getValue());
+            if (ownRatingField.getValue().contains("Own rating of the movie")) {
+                rating = new Rating(-1);
+            }else {
+                rating = new Rating(Integer.valueOf(ownRatingField.getValue()));
+            }
             Metadata metadata = new Metadata(this.metadataID, availability, imbDdata, rating, null);
             Movie movie = new Movie(this.movieID, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
             metadata.setMovie(movie.getMovieID());
