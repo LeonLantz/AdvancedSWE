@@ -1,6 +1,6 @@
 package org.movie.manager.application.Services;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Movie.MovieRepository;
