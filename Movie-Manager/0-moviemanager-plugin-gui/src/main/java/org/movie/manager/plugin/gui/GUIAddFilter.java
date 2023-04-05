@@ -2,7 +2,7 @@ package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
-import org.movie.manager.adapters.Events.IGUIEventListener;
+import org.movie.manager.adapters.Events.GUIEventListener;
 import org.movie.manager.application.Services.Filter;
 import javax.swing.*;
 import java.awt.*;
@@ -36,7 +36,7 @@ public class GUIAddFilter extends ObservableComponent {
     CustomTextField orbField, orsField;
     JButton setFilterButton;
 
-    public GUIAddFilter(JavaSwingUI parent, IGUIEventListener listener) {
+    public GUIAddFilter(JavaSwingUI parent, GUIEventListener listener) {
         this.setLayout(new BorderLayout(0,0));
         this.addObserver(listener);
         JPanel panel = new JPanel(new FlowLayout());

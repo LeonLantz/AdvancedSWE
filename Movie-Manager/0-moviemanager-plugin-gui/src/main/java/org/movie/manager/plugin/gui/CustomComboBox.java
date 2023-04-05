@@ -1,7 +1,5 @@
 package org.movie.manager.plugin.gui;
 
-import org.movie.manager.adapters.Events.IGUIEventListener;
-
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;

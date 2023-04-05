@@ -12,7 +12,7 @@ import org.movie.manager.domain.Persistable;
 
 import java.util.*;
 
-public class Controller implements IGUIEventListener, IUpdateEventSender {
+public class Controller implements GUIEventListener, UpdateEventSender {
 
     public enum Commands implements EventCommand {
 
@@ -89,8 +89,8 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
 
     private void fireUpdateEvent( UpdateEvent ue ) {
         for (EventListener eventListener : allListeners) {
-            if( eventListener instanceof IUpdateEventListener) {
-                ((IUpdateEventListener)eventListener).processUpdateEvent(ue);
+            if( eventListener instanceof UpdateEventListener) {
+                ((UpdateEventListener)eventListener).processUpdateEvent(ue);
             }
         }
     }

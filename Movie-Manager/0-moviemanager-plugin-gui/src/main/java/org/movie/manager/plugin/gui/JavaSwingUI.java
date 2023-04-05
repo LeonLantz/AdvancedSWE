@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.Vector;
 
-public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
+public class JavaSwingUI extends ObservableComponent implements GUIEventListener, UpdateEventListener {
 
     public enum Commands implements EventCommand {
 

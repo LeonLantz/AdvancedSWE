@@ -2,15 +2,13 @@ package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
-import org.movie.manager.adapters.Events.IGUIEventListener;
+import org.movie.manager.adapters.Events.GUIEventListener;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +54,7 @@ public class GUIEditMovie extends ObservableComponent {
     MovieID movieID;
     MetadataID metadataID;
 
-    public GUIEditMovie(IGUIEventListener observer) {
+    public GUIEditMovie(GUIEventListener observer) {
         this.addObserver(observer);
         this.setLayout(new BorderLayout(0, 0));
         movieID = null;
@@ -86,7 +84,7 @@ public class GUIEditMovie extends ObservableComponent {
         headerPanel.add(imdbButton, BorderLayout.CENTER);
     }
 
-    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, IGUIEventListener observer) {
+    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, GUIEventListener observer) {
         this.addObserver(observer);
         this.setLayout(new BorderLayout(0, 0));
         movieID = movie.getMovieID();
