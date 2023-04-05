@@ -1,13 +1,11 @@
 package org.movie.manager.adapters;
 
 import org.movie.manager.adapters.Events.*;
-import org.movie.manager.application.Services.Attribute;
 import org.movie.manager.application.Services.Filter;
 import org.movie.manager.application.Services.MovieEditService;
 import org.movie.manager.application.Services.MovieFinderService;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
-import org.movie.manager.domain.Metadata.Rating;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
@@ -44,11 +42,11 @@ public class Controller implements IGUIEventListener, IUpdateEventSender {
     private MovieFinderService movieFinderService;
     private MovieEditService movieEditService;
 
-    private IMDBapi imbdAPI;
+    private IMDbAPI imbdAPI;
 
     List<EventListener> allListeners = new ArrayList<>();
 
-    public Controller(MovieFinderService movieFinderService, MovieEditService movieEditService, IMDBapi imbdAPI) {
+    public Controller(MovieFinderService movieFinderService, MovieEditService movieEditService, IMDbAPI imbdAPI) {
         this.movieFinderService = movieFinderService;
         this.movieEditService = movieEditService;
         this.imbdAPI = imbdAPI;

@@ -3,7 +3,7 @@ package org.movie.manager.plugin.main;
 import org.movie.manager.adapters.Database;
 import org.movie.manager.adapters.Controller;
 import org.movie.manager.adapters.EntityFactory;
-import org.movie.manager.adapters.IMDBapi;
+import org.movie.manager.adapters.IMDbAPI;
 import org.movie.manager.adapters.PersistentRepositories.PersistentFilmProfessionalRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMetadataRepository;
 import org.movie.manager.adapters.PersistentRepositories.PersistentMovieRepository;
@@ -51,7 +51,7 @@ public class Main {
         }
 
         // Creation of IMBD-API
-        IMDBapi imbdAPI = new OMDBapi(proMan);
+        IMDbAPI imbdAPI = new OMDBapi(proMan);
 
         // Creation of Services
         MovieFinderService movieService = new MovieFinderService(movieRepository, metadataRepository, filmProfessionalRepository);

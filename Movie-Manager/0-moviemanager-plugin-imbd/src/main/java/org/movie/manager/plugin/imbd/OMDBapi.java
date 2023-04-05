@@ -1,6 +1,6 @@
 package org.movie.manager.plugin.imbd;
 
-import org.movie.manager.adapters.IMDBapi;
+import org.movie.manager.adapters.IMDbAPI;
 import org.movie.manager.adapters.PropertyManager;
 
 import java.io.*;
@@ -18,7 +18,7 @@ import org.json.JSONObject;
 
     FREE: 1,000 daily limit
  */
-public class OMDBapi implements IMDBapi {
+public class OMDBapi implements IMDbAPI {
 
     private String apiKey;
 
