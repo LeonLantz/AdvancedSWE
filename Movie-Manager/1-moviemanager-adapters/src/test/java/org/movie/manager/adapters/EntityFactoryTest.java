@@ -37,7 +37,7 @@ public class EntityFactoryTest {
     @Test
     public void shouldCreateMetadata() throws Exception {
         EntityManager entityManager = EasyMock.createMock(EntityManager.class);
-        Persistable metadata = new Metadata(new MetadataID(UUID.fromString("317b5174-f3d1-4690-9038-3e205522c773")), new Availability(Ownership.PHYSICALLY, "DVD", ""), new IMBDdata("tt0050083", 9.0, 97), new Rating(10), new MovieID(UUID.fromString("739100ba-f611-4355-9975-a6ccc1569890")));
+        Persistable metadata = new Metadata(new MetadataID(UUID.fromString("317b5174-f3d1-4690-9038-3e205522c773")), new Availability(Ownership.PHYSICALLY, "DVD", ""), new IMDbData("tt0050083", 9.0, 97), new Rating(10), new MovieID(UUID.fromString("739100ba-f611-4355-9975-a6ccc1569890")));
         String[] data = {
                 "317b5174-f3d1-4690-9038-3e205522c773",
                 "PHYSICALLY",

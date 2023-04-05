@@ -63,16 +63,16 @@ public class CreateFiles {
             Availability availability2 = new Availability(Ownership.ONLINE, "Amazon", "HD");
             Availability availability3 = new Availability(Ownership.PHYSICALLY, "DVD", "");
 
-            IMBDdata imbDdata1 = new IMBDdata("tt0050083", 9.0, 97);
-            IMBDdata imbDdata2 = new IMBDdata("tt0468569", 9.0, 84);
-            IMBDdata imbDdata3 = new IMBDdata("tt0137523", 8.8, 66);
+            IMDbData IMDbData1 = new IMDbData("tt0050083", 9.0, 97);
+            IMDbData IMDbData2 = new IMDbData("tt0468569", 9.0, 84);
+            IMDbData IMDbData3 = new IMDbData("tt0137523", 8.8, 66);
 
             Rating rating9 = new Rating(9);
             Rating rating10 = new Rating(10);
 
-            Metadata metadata1 = new Metadata(null, availability1, imbDdata1, rating10, movie1.getMovieID() );
-            Metadata metadata2 = new Metadata(null, availability2, imbDdata2, rating9, movie2.getMovieID() );
-            Metadata metadata3 = new Metadata(null, availability3, imbDdata3, rating9, movie3.getMovieID());
+            Metadata metadata1 = new Metadata(null, availability1, IMDbData1, rating10, movie1.getMovieID() );
+            Metadata metadata2 = new Metadata(null, availability2, IMDbData2, rating9, movie2.getMovieID() );
+            Metadata metadata3 = new Metadata(null, availability3, IMDbData3, rating9, movie3.getMovieID());
 
             movie1.setMetadataID(metadata1.getMetadataID());
             movie2.setMetadataID(metadata2.getMetadataID());

@@ -2,7 +2,6 @@ package org.movie.manager.domain.Metadata;
 
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
-import org.movie.manager.domain.Movie.Movie;
 
 public class Metadata implements Persistable {
 
@@ -10,20 +9,20 @@ public class Metadata implements Persistable {
 
     private Availability availability;
 
-    private IMBDdata imbDdata;
+    private IMDbData IMDbData;
 
     private Rating ownRating;
 
     private MovieID movie;
 
-    public Metadata(MetadataID metadataID, Availability availability, IMBDdata imbDdata, Rating ownRating, MovieID movie) {
+    public Metadata(MetadataID metadataID, Availability availability, IMDbData IMDbData, Rating ownRating, MovieID movie) {
         if(metadataID != null)
             this.metadataID = metadataID;
         else
             this.metadataID = new MetadataID(null);
 
         this.availability = availability;
-        this.imbDdata = imbDdata;
+        this.IMDbData = IMDbData;
         this.ownRating = ownRating;
         this.movie = movie;
     }
@@ -40,12 +39,12 @@ public class Metadata implements Persistable {
         this.availability = availability;
     }
 
-    public IMBDdata getImbDdata() {
-        return imbDdata;
+    public IMDbData getImbDdata() {
+        return IMDbData;
     }
 
-    public void setImbDdata(IMBDdata imbDdata) {
-        this.imbDdata = imbDdata;
+    public void setImbDdata(IMDbData IMDbData) {
+        this.IMDbData = IMDbData;
     }
 
     public Rating getOwnRating() {
