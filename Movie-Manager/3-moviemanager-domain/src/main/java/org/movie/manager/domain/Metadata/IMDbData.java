@@ -1,6 +1,6 @@
 package org.movie.manager.domain.Metadata;
 
-public class IMBDdata {
+public class IMDbData {
 
     private String iMDBID;
     /*
@@ -9,15 +9,15 @@ public class IMBDdata {
     Especially if the film is new, this always has no rating.
     */
 
-    private double iMDBRating;
+    private double iMDbRating;
 
     // METASCORE is a weighted average of reviews from top critics and publications for a given movie
     private int metascore;
 
 
-    public IMBDdata(String iMDBID, double iMDBRating, int metascore) {
+    public IMDbData(String iMDBID, double iMDbRating, int metascore) {
         this.iMDBID = iMDBID;
-        this.iMDBRating = iMDBRating;
+        this.iMDbRating = iMDbRating;
         this.metascore = metascore;
     }
 
@@ -29,12 +29,12 @@ public class IMBDdata {
         this.iMDBID = iMDBID;
     }
 
-    public double getiMDBRating() {
-        return iMDBRating;
+    public double getiMDbRating() {
+        return iMDbRating;
     }
 
-    public void setiMDBRating(double iMDBRating) {
-        this.iMDBRating = iMDBRating;
+    public void setiMDbRating(double iMDbRating) {
+        this.iMDbRating = iMDbRating;
     }
 
     public int getMetascore() {

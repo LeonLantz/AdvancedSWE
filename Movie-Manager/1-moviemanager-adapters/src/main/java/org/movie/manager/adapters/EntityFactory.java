@@ -151,7 +151,7 @@ public class EntityFactory { // for creating a family of objects
         if(!metascoreString.equals("")){
             metascore = Integer.parseInt(metascoreString);
         }
-        IMBDdata imbDdata = new IMBDdata(iMDBID, iMDBRating, metascore );
+        IMDbData IMDbData = new IMDbData(iMDBID, iMDBRating, metascore );
         //ownRating
         int rating = Integer.parseInt(csvData[MetadataMapper.Header.RATING.ordinal()]);
         Rating ownRating = new Rating(rating);
@@ -165,7 +165,7 @@ public class EntityFactory { // for creating a family of objects
         }
 
 
-        persistableElement = new Metadata(metaDataID, availability, imbDdata, ownRating, movieID);
+        persistableElement = new Metadata(metaDataID, availability, IMDbData, ownRating, movieID);
 
         entityManager.persist(persistableElement);
 
