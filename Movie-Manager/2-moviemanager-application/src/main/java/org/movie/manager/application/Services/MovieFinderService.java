@@ -40,6 +40,7 @@ public class MovieFinderService {
         ArrayList allMovieData = new ArrayList();
         allMovieData.add(this.movieRepository.getMovie(movieID).get());
         allMovieData.add(this.metadataRepository.getMetadata(metadataID).get());
+        //TODO: add film professionals
         //allMovieData.add(filmProfessionalRepository.getFilmProfessionalsOfMovie(movieID));
         return allMovieData;
     }

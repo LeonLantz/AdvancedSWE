@@ -164,34 +164,3 @@ public class MovieFinderServiceTest {
         );
     }
 }
-
-
-
-//    Collection<Movie> filteredMovies = new ArrayList<>();
-//    Collection<Movie> allMovies = this.getAllMovies();
-//
-//        for (Movie movie : allMovies) {
-//                boolean passFilter = true;
-//                for (Filter filter : filters) {
-//                Optional<Metadata> metadataOptional = metadataRepository.getMetadata(movie.getMetadataID().getMetadataID());
-//        Metadata metadata;
-//        if (metadataOptional != null) {
-//        metadata = metadataOptional.get();
-//
-//        switch (filter.getName()) {
-//        case "ownratingBigger":
-//        passFilter &= metadata.getOwnRating().getRating() > (int) filter.getValue();
-//        break;
-//        case "ownratingSmaller":
-//        passFilter &= metadata.getOwnRating().getRating() < (int) filter.getValue();
-//        break;
-//        case "ownership":
-//        passFilter &= metadata.getAvailability().getOwnership().toString() == filter.getValue();
-//        break;
-//default:
-//        break;
-//        }
-//        if (!passFilter) {
-//        break;
-//        }
-//        }
