@@ -2,15 +2,13 @@ package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
-import org.movie.manager.adapters.Events.IGUIEventListener;
+import org.movie.manager.adapters.Events.GUIEventListener;
 import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.*;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -56,7 +54,7 @@ public class GUIEditMovie extends ObservableComponent {
     MovieID movieID;
     MetadataID metadataID;
 
-    public GUIEditMovie(IGUIEventListener observer) {
+    public GUIEditMovie(GUIEventListener observer) {
         this.addObserver(observer);
         this.setLayout(new BorderLayout(0, 0));
         movieID = null;
@@ -86,7 +84,7 @@ public class GUIEditMovie extends ObservableComponent {
         headerPanel.add(imdbButton, BorderLayout.CENTER);
     }
 
-    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, IGUIEventListener observer) {
+    public GUIEditMovie(Movie movie, Metadata metadata, Collection<FilmProfessional> filmProfessionals, GUIEventListener observer) {
         this.addObserver(observer);
         this.setLayout(new BorderLayout(0, 0));
         movieID = movie.getMovieID();
@@ -101,7 +99,7 @@ public class GUIEditMovie extends ObservableComponent {
         descriptionField.setValue(metadata.getAvailability().getDescription());
         if(metadata.getImbDdata() != null) {
             imdbIDField.setValue(metadata.getImbDdata().getiMDBID());
-            imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDBRating()));
+            imbdRatingField.setValue(String.valueOf(metadata.getImbDdata().getiMDbRating()));
             imbdMetascoreField.setValue(String.valueOf(metadata.getImbDdata().getMetascore()));
         }else {
             imdbIDField.setValue("not set");
@@ -185,15 +183,15 @@ public class GUIEditMovie extends ObservableComponent {
     private void saveMovie() {
         try {
             Availability availability = new Availability(Ownership.values()[Integer.valueOf(ownershipField.getValue())], nameOrMediumField.getValue(), descriptionField.value);
-            IMBDdata imbDdata;
+            IMDbData IMDbData;
             System.out.println(imdbIDField.getValue());
             if(imdbIDField.getValue().contains("not set")) {
-                imbDdata = null;
+                IMDbData = null;
             }else {
                 if (imbdMetascoreField.getValue().equals("N/A")) {
-                    imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
+                    IMDbData = new IMDbData(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), -1);
                 } else {
-                    imbDdata = new IMBDdata(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
+                    IMDbData = new IMDbData(imdbIDField.getValue(), Double.valueOf(imbdRatingField.getValue()), Integer.valueOf(imbdMetascoreField.getValue()));
                 }
             }
 
@@ -204,7 +202,7 @@ public class GUIEditMovie extends ObservableComponent {
             }else {
                 rating = new Rating(Integer.valueOf(ownRatingField.getValue()));
             }
-            Metadata metadata = new Metadata(this.metadataID, availability, imbDdata, rating, null);
+            Metadata metadata = new Metadata(this.metadataID, availability, IMDbData, rating, null);
             Movie movie = new Movie(this.movieID, titleField.getValue(), genreField.getValue(), Integer.valueOf(releaseYearField.getValue()), Integer.valueOf(runningTimeInMinField.getValue()), metadata.getMetadataID(), null, null, null);
             metadata.setMovie(movie.getMovieID());
             ArrayList movieData = new ArrayList();

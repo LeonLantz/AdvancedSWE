@@ -1,8 +1,8 @@
 package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.GUIEvent;
-import org.movie.manager.adapters.Events.IGUIEventListener;
-import org.movie.manager.adapters.Events.IUpdateEventListener;
+import org.movie.manager.adapters.Events.GUIEventListener;
+import org.movie.manager.adapters.Events.UpdateEventListener;
 import org.movie.manager.adapters.Events.UpdateEvent;
 
 import javax.swing.*;
@@ -36,8 +36,8 @@ public abstract class ObservableComponent extends JComponent {
 
         while(var2.hasNext()) {
             EventListener el = (EventListener)var2.next();
-            if (el instanceof IGUIEventListener) {
-                ((IGUIEventListener)el).processGUIEvent(ge);
+            if (el instanceof GUIEventListener) {
+                ((GUIEventListener)el).processGUIEvent(ge);
             }
         }
 
@@ -48,8 +48,8 @@ public abstract class ObservableComponent extends JComponent {
 
         while(var2.hasNext()) {
             EventListener el = (EventListener)var2.next();
-            if (el instanceof IUpdateEventListener) {
-                ((IUpdateEventListener)el).processUpdateEvent(ue);
+            if (el instanceof UpdateEventListener) {
+                ((UpdateEventListener)el).processUpdateEvent(ue);
             }
         }
 

@@ -1,10 +1,9 @@
 package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.*;
-import org.movie.manager.adapters.IMDBapi;
+import org.movie.manager.adapters.IMDbAPI;
 import org.movie.manager.adapters.PropertyManager;
 import org.movie.manager.application.Services.Attribute;
-import org.movie.manager.domain.FilmProfessional.FilmProfessional;
 import org.movie.manager.domain.Metadata.Metadata;
 import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Persistable;
@@ -14,19 +13,16 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
 import java.util.Vector;
 
-public class JavaSwingUI extends ObservableComponent implements IGUIEventListener, IUpdateEventListener {
+public class JavaSwingUI extends ObservableComponent implements GUIEventListener, UpdateEventListener {
 
     public enum Commands implements EventCommand {
 
@@ -57,13 +53,13 @@ public class JavaSwingUI extends ObservableComponent implements IGUIEventListene
     private JButton addMovieButton, addFilterButton, resetFilterButton, setAPIKeyButton;
 
     private PropertyManager propertyManager;
-    private IMDBapi imdBapi;
+    private IMDbAPI imdBapi;
 
     private GUIEditMovie guiEditMovieFrame;
 
     private Border emptyBorder;
 
-    public JavaSwingUI(PropertyManager propertyManager, IMDBapi imdBapi) {
+    public JavaSwingUI(PropertyManager propertyManager, IMDbAPI imdBapi) {
         this.propertyManager = propertyManager;
         this.imdBapi = imdBapi;
         initUI();

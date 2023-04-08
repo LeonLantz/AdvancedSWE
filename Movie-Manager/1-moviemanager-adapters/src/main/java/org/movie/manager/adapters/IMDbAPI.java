@@ -2,7 +2,7 @@ package org.movie.manager.adapters;
 
 import java.util.Map;
 
-public interface IMDBapi {
+public interface IMDbAPI {
 
     void setApiKeyFromPropertyManager();
     Map<String, String> requestWithTitle(String movieTitle);

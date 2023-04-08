@@ -2,9 +2,8 @@ package org.movie.manager.plugin.gui;
 
 import org.movie.manager.adapters.Events.EventCommand;
 import org.movie.manager.adapters.Events.GUIEvent;
-import org.movie.manager.adapters.Events.IGUIEventListener;
+import org.movie.manager.adapters.Events.GUIEventListener;
 import org.movie.manager.application.Services.Attribute;
-import org.movie.manager.domain.Movie.Movie;
 import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Persistable;
 import javax.swing.*;
@@ -15,7 +14,6 @@ import javax.swing.table.TableColumn;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.Vector;
 
 public class TableComponent extends ObservableComponent {
@@ -49,9 +47,9 @@ public class TableComponent extends ObservableComponent {
     private Collection<Persistable> tableData;
     private ArrayList<MovieID> movieIDs;
 
-    private final IGUIEventListener observer;
+    private final GUIEventListener observer;
 
-    public TableComponent(Class tableClass, String[] columnNames, IGUIEventListener observer) {
+    public TableComponent(Class tableClass, String[] columnNames, GUIEventListener observer) {
         this.tableClass = tableClass;
         this.columnNames = columnNames;
         this.observer = observer;

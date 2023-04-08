@@ -34,7 +34,7 @@ public class MetadataMapper {
         }
         if(medadataData.getImbDdata() != null){
             atts[Header.IMBDID.ordinal()] = medadataData.getImbDdata().getiMDBID();
-            atts[Header.IMDBRATING.ordinal()] = String.valueOf(medadataData.getImbDdata().getiMDBRating());
+            atts[Header.IMDBRATING.ordinal()] = String.valueOf(medadataData.getImbDdata().getiMDbRating());
             atts[Header.METASCORE.ordinal()] = String.valueOf(medadataData.getImbDdata().getMetascore());
         }else{
             atts[Header.IMBDID.ordinal()] = null;
