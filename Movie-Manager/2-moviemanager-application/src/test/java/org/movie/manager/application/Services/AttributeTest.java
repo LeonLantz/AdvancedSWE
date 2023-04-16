@@ -29,4 +29,16 @@ public class AttributeTest {
                 .contains(attributeNameOne)
                 .contains(attributeNameTwo);
     }
+
+    @Test
+    public void shouldExtractVisibleAttributeNames() {
+        Object o = new Object();
+        String attributeNameOne = "AttributeNameOne";
+        String attributeNameTwo = "AttributeNameTwo";
+        Attribute attribute1 = new Attribute(attributeNameOne, o, Object.class, null, null, false);
+        Attribute attribute2 = new Attribute(attributeNameTwo, o, Object.class, null, null, true);
+        assertThat(Attribute.extractVisibleAttributeNames(List.of(attribute1, attribute2)))
+                .hasSize(1)
+                .contains(attributeNameTwo);
+    }
 }

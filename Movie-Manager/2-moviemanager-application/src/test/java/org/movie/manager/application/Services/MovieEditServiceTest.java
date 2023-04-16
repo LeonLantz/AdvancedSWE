@@ -1,41 +1,40 @@
 package org.movie.manager.application.Services;
 
 import org.junit.jupiter.api.Test;
+import org.movie.manager.domain.FilmProfessional.FilmProfessional;
+import org.movie.manager.domain.FilmProfessional.FilmProfessionalRepository;
+import org.movie.manager.domain.Metadata.Metadata;
+import org.movie.manager.domain.Metadata.MetadataRepository;
 import org.movie.manager.domain.Movie.Movie;
-import org.movie.manager.domain.Movie.MovieID;
 import org.movie.manager.domain.Movie.MovieRepository;
 import org.easymock.EasyMock;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MovieEditServiceTest {
     @Test
     public void shouldSaveNewMovie() {
         MovieRepository movieRepository = EasyMock.createMock(MovieRepository.class);
+        MetadataRepository metadataRepository = EasyMock.createMock(MetadataRepository.class);
+        FilmProfessionalRepository filmProfessionalRepository = EasyMock.createMock(FilmProfessionalRepository.class);
         Movie movie = new Movie(null, null, null, 0, 0, null, null, null, null);
-        movieRepository.update(movie);
-        EasyMock.replay(movieRepository);
+        Metadata metadata = new Metadata(null, null, null, null, null);
+        FilmProfessional filmProfessional = new FilmProfessional(null, null, null, null, null);
 
-        MovieEditService codeUnderTest = new MovieEditService(movieRepository, null, null);
-        codeUnderTest.saveNewMovie(movie, null, null);
+        movieRepository.update(movie);
+        metadataRepository.update(metadata);
+        filmProfessionalRepository.update(filmProfessional);
+
+        EasyMock.replay(movieRepository);
+        EasyMock.replay(metadataRepository);
+        EasyMock.replay(filmProfessionalRepository);
+
+        MovieEditService codeUnderTest = new MovieEditService(movieRepository, metadataRepository, filmProfessionalRepository);
+        codeUnderTest.saveNewMovie(movie, metadata, new ArrayList<>(Arrays.asList(filmProfessional)));
 
         EasyMock.verify(movieRepository);
+        EasyMock.verify(metadataRepository);
+        EasyMock.verify(filmProfessionalRepository);
     }
-
-//    @Test
-//    public void shouldUpdateMovie() {
-//        MovieRepository movieRepository = EasyMock.createMock(MovieRepository.class);
-//        MovieID movieID = new MovieID(UUID.randomUUID());
-//        Movie movie = new Movie(movieID, "created", null, 0, 0, null, null, null, null);
-//        Movie movie2 = new Movie(movieID, "edited", null, 0, 0, null, null, null, null);
-//        movieRepository.update(movie);
-//        movieRepository.update(movie2);
-//        EasyMock.replay(movieRepository);
-//
-//        MovieEditService codeUnderTest = new MovieEditService(movieRepository, null, null);
-//        codeUnderTest.saveNewMovie(movie, null, null);
-//        codeUnderTest.saveNewMovie(movie2, null, null);
-//
-//        EasyMock.verify(movieRepository);
-//    }
 
 }
